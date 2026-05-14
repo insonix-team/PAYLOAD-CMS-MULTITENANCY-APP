@@ -8,16 +8,15 @@ import {
 } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
-import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { fileURLToPath } from 'url'
 
-import Users from './collections/Users'
 import { Media } from './collections/Media'
+import { HomeTemplate } from './templates/HomeTemplate'
 import Tenants from './collections/Tenants'
-import Pages from './collections/Pages'
-import { Layouts } from './collections/Layouts'
-import { HomeTemplate } from './collections/template.ts/HomeTemplate'
-import { HomePage } from './collections/HomePage'
+import Users from './collections/Users'
+import { AboutTemplate } from './templates/AboutTemplate'
+import { Pages } from './collections/Pages'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -30,7 +29,7 @@ export default buildConfig({
     },
   },
 
-  collections: [Users, Media, Tenants, Pages, Layouts, HomeTemplate, HomePage],
+  collections: [Users, Media, Tenants, Pages, HomeTemplate, AboutTemplate],
 
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [

@@ -71,9 +71,8 @@ export interface Config {
     media: Media;
     tenants: Tenant;
     pages: Page;
-    layouts: Layout;
     'home-templates': HomeTemplate;
-    'home-page': HomePage;
+    'about-templates': AboutTemplate;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -85,9 +84,8 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     tenants: TenantsSelect<false> | TenantsSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
-    layouts: LayoutsSelect<false> | LayoutsSelect<true>;
     'home-templates': HomeTemplatesSelect<false> | HomeTemplatesSelect<true>;
-    'home-page': HomePageSelect<false> | HomePageSelect<true>;
+    'about-templates': AboutTemplatesSelect<false> | AboutTemplatesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -196,17 +194,40 @@ export interface Page {
   id: string;
   title: string;
   slug: string;
-  layout?:
+  templateType: 'home' | 'about' | 'contact' | 'services';
+  homeTemplate?: (string | null) | HomeTemplate;
+  aboutTemplate?: (string | null) | AboutTemplate;
+  content?:
     | (
         | {
             title: string;
             subtitle?: string | null;
+            image?: (string | null) | Media;
+            ctaText?: string | null;
+            ctaLink?: string | null;
+            alignment?: ('left' | 'center' | 'right') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'hero';
           }
         | {
-            text?: {
+            title?: string | null;
+            features?:
+              | {
+                  icon?: string | null;
+                  title: string;
+                  description: string;
+                  id?: string | null;
+                }[]
+              | null;
+            columns?: ('2' | '3' | '4') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'features';
+          }
+        | {
+            title?: string | null;
+            content: {
               root: {
                 type: string;
                 children: {
@@ -220,222 +241,26 @@ export interface Page {
                 version: number;
               };
               [k: string]: unknown;
-            } | null;
+            };
+            image?: (string | null) | Media;
+            imagePosition?: ('left' | 'right') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'content';
           }
         | {
-            email?: string | null;
-            phone?: string | null;
-            subject?: string | null;
-            message?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'contactForm';
-          }
-        | {
-            layoutStyle?: ('side-by-side' | 'stacked' | 'overlay') | null;
-            imagePosition?: ('left' | 'right') | null;
-            image?: (string | null) | Media;
-            isBackgroundImage?: boolean | null;
-            theme?: ('light' | 'dark') | null;
-            padding?: ('small' | 'medium' | 'large') | null;
-            alignment?: ('left' | 'center' | 'right') | null;
-            heading?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            description?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            buttons?:
-              | {
-                  label?: string | null;
-                  url?: string | null;
-                  variant?: ('primary' | 'secondary' | 'outline') | null;
-                  size?: ('small' | 'medium' | 'large') | null;
-                  openInNewTab?: boolean | null;
-                  id?: string | null;
-                }[]
-              | null;
-            maxWidth?: ('full' | 'container') | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'contentWithImage';
-          }
-        | {
-            content?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'text';
-          }
-        | {
-            image?: (string | null) | Media;
-            caption?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'image';
-          }
-        | {
-            heading?: string | null;
-            items?:
-              | {
-                  name?: string | null;
-                  role?: string | null;
-                  review?: string | null;
-                  rating?: number | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'testimonials';
-          }
-        | {
-            heading?: string | null;
-            subtext?: string | null;
-            buttonText?: string | null;
-            buttonLink?: string | null;
+            title: string;
+            description?: string | null;
+            buttonText: string;
+            buttonLink: string;
+            backgroundColor?: ('primary' | 'secondary' | 'dark') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'cta';
           }
-        | {
-            heading?: string | null;
-            items?:
-              | {
-                  text?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
-            style?: ('bullet' | 'number' | 'check') | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'list';
-          }
-        | {
-            heading?: string | null;
-            faqs?:
-              | {
-                  question?: string | null;
-                  answer?: {
-                    root: {
-                      type: string;
-                      children: {
-                        type: any;
-                        version: number;
-                        [k: string]: unknown;
-                      }[];
-                      direction: ('ltr' | 'rtl') | null;
-                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                      indent: number;
-                      version: number;
-                    };
-                    [k: string]: unknown;
-                  } | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'faq';
-          }
-        | {
-            heading?: string | null;
-            columns?: ('2' | '3' | '4') | null;
-            cards?:
-              | {
-                  image?: (string | null) | Media;
-                  title?: string | null;
-                  description?: string | null;
-                  link?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'cards';
-          }
       )[]
     | null;
   tenant: string | Tenant;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "layouts".
- */
-export interface Layout {
-  id: string;
-  type: 'header' | 'footer';
-  layout: (
-    | {
-        logo?: string | null;
-        links?:
-          | {
-              label?: string | null;
-              url?: string | null;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'header';
-      }
-    | {
-        text?: string | null;
-        links?:
-          | {
-              label?: string | null;
-              url?: string | null;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'footer';
-      }
-  )[];
-  tenant?: (string | null) | Tenant;
   updatedAt: string;
   createdAt: string;
 }
@@ -518,16 +343,16 @@ export interface HomeTemplate {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "home-page".
+ * via the `definition` "about-templates".
  */
-export interface HomePage {
+export interface AboutTemplate {
   id: string;
-  title?: string | null;
+  name: string;
+  description?: string | null;
   /**
-   * Select a template for your home page (content will populate after save)
+   * Predefined blocks structure for this template
    */
-  template?: (string | null) | HomeTemplate;
-  content?:
+  blocks?:
     | (
         | {
             title: string;
@@ -634,16 +459,12 @@ export interface PayloadLockedDocument {
         value: string | Page;
       } | null)
     | ({
-        relationTo: 'layouts';
-        value: string | Layout;
-      } | null)
-    | ({
         relationTo: 'home-templates';
         value: string | HomeTemplate;
       } | null)
     | ({
-        relationTo: 'home-page';
-        value: string | HomePage;
+        relationTo: 'about-templates';
+        value: string | AboutTemplate;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -747,7 +568,10 @@ export interface TenantsSelect<T extends boolean = true> {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
-  layout?:
+  templateType?: T;
+  homeTemplate?: T;
+  aboutTemplate?: T;
+  content?:
     | T
     | {
         hero?:
@@ -755,177 +579,47 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               title?: T;
               subtitle?: T;
+              image?: T;
+              ctaText?: T;
+              ctaLink?: T;
+              alignment?: T;
+              id?: T;
+              blockName?: T;
+            };
+        features?:
+          | T
+          | {
+              title?: T;
+              features?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              columns?: T;
               id?: T;
               blockName?: T;
             };
         content?:
           | T
           | {
-              text?: T;
-              id?: T;
-              blockName?: T;
-            };
-        contactForm?:
-          | T
-          | {
-              email?: T;
-              phone?: T;
-              subject?: T;
-              message?: T;
-              id?: T;
-              blockName?: T;
-            };
-        contentWithImage?:
-          | T
-          | {
-              layoutStyle?: T;
-              imagePosition?: T;
-              image?: T;
-              isBackgroundImage?: T;
-              theme?: T;
-              padding?: T;
-              alignment?: T;
-              heading?: T;
-              description?: T;
-              buttons?:
-                | T
-                | {
-                    label?: T;
-                    url?: T;
-                    variant?: T;
-                    size?: T;
-                    openInNewTab?: T;
-                    id?: T;
-                  };
-              maxWidth?: T;
-              id?: T;
-              blockName?: T;
-            };
-        text?:
-          | T
-          | {
+              title?: T;
               content?: T;
-              id?: T;
-              blockName?: T;
-            };
-        image?:
-          | T
-          | {
               image?: T;
-              caption?: T;
-              id?: T;
-              blockName?: T;
-            };
-        testimonials?:
-          | T
-          | {
-              heading?: T;
-              items?:
-                | T
-                | {
-                    name?: T;
-                    role?: T;
-                    review?: T;
-                    rating?: T;
-                    id?: T;
-                  };
+              imagePosition?: T;
               id?: T;
               blockName?: T;
             };
         cta?:
           | T
           | {
-              heading?: T;
-              subtext?: T;
+              title?: T;
+              description?: T;
               buttonText?: T;
               buttonLink?: T;
-              id?: T;
-              blockName?: T;
-            };
-        list?:
-          | T
-          | {
-              heading?: T;
-              items?:
-                | T
-                | {
-                    text?: T;
-                    id?: T;
-                  };
-              style?: T;
-              id?: T;
-              blockName?: T;
-            };
-        faq?:
-          | T
-          | {
-              heading?: T;
-              faqs?:
-                | T
-                | {
-                    question?: T;
-                    answer?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        cards?:
-          | T
-          | {
-              heading?: T;
-              columns?: T;
-              cards?:
-                | T
-                | {
-                    image?: T;
-                    title?: T;
-                    description?: T;
-                    link?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-      };
-  tenant?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "layouts_select".
- */
-export interface LayoutsSelect<T extends boolean = true> {
-  type?: T;
-  layout?:
-    | T
-    | {
-        header?:
-          | T
-          | {
-              logo?: T;
-              links?:
-                | T
-                | {
-                    label?: T;
-                    url?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        footer?:
-          | T
-          | {
-              text?: T;
-              links?:
-                | T
-                | {
-                    label?: T;
-                    url?: T;
-                    id?: T;
-                  };
+              backgroundColor?: T;
               id?: T;
               blockName?: T;
             };
@@ -999,12 +693,12 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "home-page_select".
+ * via the `definition` "about-templates_select".
  */
-export interface HomePageSelect<T extends boolean = true> {
-  title?: T;
-  template?: T;
-  content?:
+export interface AboutTemplatesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  blocks?:
     | T
     | {
         hero?:

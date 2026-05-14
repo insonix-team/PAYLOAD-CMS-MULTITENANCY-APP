@@ -1,9 +1,9 @@
 // collections/HomeTemplate.ts
 
-import { ContentBlock } from '@/template-blocks/ContentBlock'
-import { CtaBlock } from '@/template-blocks/CtaBlock'
-import { FeaturesBlock } from '@/template-blocks/FeaturesBlock'
-import { HeroBlock } from '@/template-blocks/HeroBlock'
+import { ContentBlock } from '@/blocks/ContentBlock'
+import { CtaBlock } from '@/blocks/CtaBlock'
+import { FeaturesBlock } from '@/blocks/FeaturesBlock'
+import { HeroBlock } from '@/blocks/HeroBlock'
 import type { CollectionConfig } from 'payload'
 
 export const HomeTemplate: CollectionConfig = {
