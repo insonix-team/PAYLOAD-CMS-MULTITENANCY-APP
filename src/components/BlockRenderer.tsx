@@ -1,0 +1,52 @@
+import { CardsBlockUI } from './blocks/CardsBlockUI'
+import { ListBlockUI } from './blocks/ListBlockUI'
+import { FAQBlockUI } from './blocks/FAQBlockUI'
+import { TestimonialsBlockUI } from './blocks/TestimonialsBlockUI'
+import { CTABlockUI } from './blocks/CTABlockUI'
+import { TextBlockUI } from './blocks/TextBlockUI'
+import { ImageBlockUI } from './blocks/ImageBlockUI'
+import { ContentWithImageBlock } from './blocks/ContentWithImageBlocksUi'
+
+type Props = {
+  blocks: any[]
+  tenant: string
+}
+
+export const BlockRenderer = ({ blocks, tenant }: Props) => {
+  if (!blocks) return null
+
+  return (
+    <>
+      {blocks.map((block, index) => {
+        switch (block.blockType) {
+          case 'contentWithImage':
+            return <ContentWithImageBlock key={index} data={block} tenant={tenant} />
+
+          case 'cards':
+            return <CardsBlockUI key={index} data={block} />
+
+          case 'list':
+            return <ListBlockUI key={index} data={block} />
+
+          case 'faq':
+            return <FAQBlockUI key={index} data={block} />
+
+          case 'testimonials':
+            return <TestimonialsBlockUI key={index} data={block} />
+
+          case 'cta':
+            return <CTABlockUI key={index} data={block} tenant={tenant} />
+
+          case 'text':
+            return <TextBlockUI key={index} data={block} />
+
+          case 'image':
+            return <ImageBlockUI key={index} data={block} />
+
+          default:
+            return null
+        }
+      })}
+    </>
+  )
+}
