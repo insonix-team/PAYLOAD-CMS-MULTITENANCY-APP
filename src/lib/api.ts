@@ -20,7 +20,6 @@ export const getTenant = async (slug: string) => {
     cache: 'no-store',
   })
   const data = await res.json()
-  console.log(data)
 
   return data?.docs?.[0]
 }
@@ -99,7 +98,7 @@ export const getPages = async (tenantSlug: string, slug: string) => {
     const result = await payload.find({
       collection: 'pages',
       where: { tenant: { equals: tenant.id }, slug: { equals: slug } },
-      depth: 0,
+      depth: 3,
     })
     return result
   }

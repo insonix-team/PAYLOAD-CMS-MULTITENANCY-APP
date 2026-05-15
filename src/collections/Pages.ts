@@ -39,6 +39,11 @@ export const Pages: any = {
       type: 'select',
       required: true,
       options: TEMPLATE_TYPE_OPTIONS,
+      admin: {
+        components: {
+          Field: '@/components/TemplateTypeSelect#TemplateTypeSelect',
+        },
+      },
     },
 
     {
@@ -46,8 +51,7 @@ export const Pages: any = {
       type: 'relationship',
       relationTo: 'home-templates',
       admin: {
-        condition: (data: any, siblingData: any) =>
-          siblingData?.templateType === TEMPLATE_TYPES.HOME,
+        condition: (data: any, siblingData: any) => siblingData?.templateType === TEMPLATE_TYPES.HOME,
       },
     },
     {
@@ -55,8 +59,7 @@ export const Pages: any = {
       type: 'relationship',
       relationTo: 'about-templates' as any,
       admin: {
-        condition: (data: any, siblingData: any) =>
-          siblingData?.templateType === TEMPLATE_TYPES.ABOUT,
+        condition: (data: any, siblingData: any) => siblingData?.templateType === TEMPLATE_TYPES.ABOUT,
       },
     },
 
@@ -66,12 +69,7 @@ export const Pages: any = {
       blocks: [HeroBlock, FeaturesBlock, ContentBlock, CtaBlock],
       admin: {
         condition: (data: any, siblingData: any) => {
-          return !!(
-            siblingData?.homeTemplate ||
-            siblingData?.aboutTemplate ||
-            siblingData?.contactTemplate ||
-            siblingData?.servicesTemplate
-          )
+          return !!(siblingData?.homeTemplate || siblingData?.aboutTemplate || siblingData?.contactTemplate || siblingData?.servicesTemplate)
         },
       },
     },
@@ -131,9 +129,7 @@ export const Pages: any = {
                 if ('image' in cleanedBlock) cleanedBlock.image = null
                 if ('file' in cleanedBlock) cleanedBlock.file = null
               } else if (operation === 'update' && isTemplateChanged) {
-                const existingBlock = originalDoc?.content?.find(
-                  (b: any) => b.id === block.id || b.blockType === block.blockType,
-                )
+                const existingBlock = originalDoc?.content?.find((b: any) => b.id === block.id || b.blockType === block.blockType)
                 if ('image' in cleanedBlock) {
                   cleanedBlock.image = existingBlock?.image || null
                 }
@@ -142,10 +138,6 @@ export const Pages: any = {
               return cleanedBlock
             })
           }
-        }
-
-        if (operation === 'update' && originalDoc?.content && !isTemplateChanged) {
-          data.content = originalDoc.content
         }
 
         if (!data.slug && data.title) {

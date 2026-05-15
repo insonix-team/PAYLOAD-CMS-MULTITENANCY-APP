@@ -6,6 +6,8 @@ import { CTABlockUI } from './blocks/CTABlockUI'
 import { TextBlockUI } from './blocks/TextBlockUI'
 import { ImageBlockUI } from './blocks/ImageBlockUI'
 import { ContentWithImageBlock } from './blocks/ContentWithImageBlocksUi'
+import { HeroBlock } from './HeroBlock'
+import { FeaturesBlock } from './FeaturesBlock'
 
 type Props = {
   blocks: any[]
@@ -42,7 +44,10 @@ export const BlockRenderer = ({ blocks, tenant }: Props) => {
 
           case 'image':
             return <ImageBlockUI key={index} data={block} />
-
+          case 'hero':
+            return <HeroBlock key={index} data={block} />
+          case 'features':
+            return <FeaturesBlock key={index} {...block} />
           default:
             return null
         }
