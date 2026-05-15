@@ -73,6 +73,8 @@ export interface Config {
     pages: Page;
     'home-templates': HomeTemplate;
     'about-templates': AboutTemplate;
+    headers: Header;
+    footers: Footer;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +88,8 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     'home-templates': HomeTemplatesSelect<false> | HomeTemplatesSelect<true>;
     'about-templates': AboutTemplatesSelect<false> | AboutTemplatesSelect<true>;
+    headers: HeadersSelect<false> | HeadersSelect<true>;
+    footers: FootersSelect<false> | FootersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -424,6 +428,92 @@ export interface AboutTemplate {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "headers".
+ */
+export interface Header {
+  id: string;
+  name: string;
+  tenant: string | Tenant;
+  layout: (
+    | {
+        logo?: (string | null) | Media;
+        menuItems?:
+          | {
+              label: string;
+              url: string;
+              id?: string | null;
+            }[]
+          | null;
+        showButton?: boolean | null;
+        buttonLabel?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'headerSimple';
+      }
+    | {
+        logo?: (string | null) | Media;
+        announcementText?: string | null;
+        menuItems?:
+          | {
+              label?: string | null;
+              url?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'headerCentered';
+      }
+  )[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footers".
+ */
+export interface Footer {
+  id: string;
+  name: string;
+  tenant: string | Tenant;
+  layout: (
+    | {
+        copyrightText?: string | null;
+        socialLinks?:
+          | {
+              platform?: string | null;
+              url?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'footerSimple';
+      }
+    | {
+        columns?:
+          | {
+              title?: string | null;
+              links?:
+                | {
+                    label?: string | null;
+                    url?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'footerColumns';
+      }
+  )[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -469,6 +559,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'about-templates';
         value: string | AboutTemplate;
+      } | null)
+    | ({
+        relationTo: 'headers';
+        value: string | Header;
+      } | null)
+    | ({
+        relationTo: 'footers';
+        value: string | Footer;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -755,6 +853,98 @@ export interface AboutTemplatesSelect<T extends boolean = true> {
               buttonText?: T;
               buttonLink?: T;
               backgroundColor?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "headers_select".
+ */
+export interface HeadersSelect<T extends boolean = true> {
+  name?: T;
+  tenant?: T;
+  layout?:
+    | T
+    | {
+        headerSimple?:
+          | T
+          | {
+              logo?: T;
+              menuItems?:
+                | T
+                | {
+                    label?: T;
+                    url?: T;
+                    id?: T;
+                  };
+              showButton?: T;
+              buttonLabel?: T;
+              id?: T;
+              blockName?: T;
+            };
+        headerCentered?:
+          | T
+          | {
+              logo?: T;
+              announcementText?: T;
+              menuItems?:
+                | T
+                | {
+                    label?: T;
+                    url?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footers_select".
+ */
+export interface FootersSelect<T extends boolean = true> {
+  name?: T;
+  tenant?: T;
+  layout?:
+    | T
+    | {
+        footerSimple?:
+          | T
+          | {
+              copyrightText?: T;
+              socialLinks?:
+                | T
+                | {
+                    platform?: T;
+                    url?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        footerColumns?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    title?: T;
+                    links?:
+                      | T
+                      | {
+                          label?: T;
+                          url?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };

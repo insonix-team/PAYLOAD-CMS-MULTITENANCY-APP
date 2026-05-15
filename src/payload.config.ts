@@ -1,11 +1,5 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import {
-  BoldFeature,
-  ItalicFeature,
-  lexicalEditor,
-  LinkFeature,
-  UnderlineFeature,
-} from '@payloadcms/richtext-lexical'
+import { BoldFeature, ItalicFeature, lexicalEditor, LinkFeature, UnderlineFeature } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
@@ -17,6 +11,8 @@ import Tenants from './collections/Tenants'
 import Users from './collections/Users'
 import { AboutTemplate } from './templates/AboutTemplate'
 import { HomeTemplate } from './templates/HomeTemplate'
+import Footers from './collections/Footers'
+import Headers from './collections/Headers'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -29,17 +25,10 @@ export default buildConfig({
     components: {},
   },
 
-  collections: [Users, Media, Tenants, Pages, HomeTemplate, AboutTemplate],
+  collections: [Users, Media, Tenants, Pages, HomeTemplate, AboutTemplate, Headers, Footers],
 
   editor: lexicalEditor({
-    features: ({ defaultFeatures }) => [
-      ...defaultFeatures,
-
-      BoldFeature(),
-      ItalicFeature(),
-      UnderlineFeature(),
-      LinkFeature(),
-    ],
+    features: ({ defaultFeatures }) => [...defaultFeatures, BoldFeature(), ItalicFeature(), UnderlineFeature(), LinkFeature()],
   }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

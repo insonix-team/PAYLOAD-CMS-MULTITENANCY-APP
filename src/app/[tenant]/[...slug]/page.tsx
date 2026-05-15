@@ -1,5 +1,7 @@
 import { BlockRenderer } from '@/components/BlockRenderer'
-import { getPages, getTenant } from '@/lib/api'
+import FooterRenderer from '@/components/footer/FooterRenderer'
+import HeaderRenderer from '@/components/headers/HeaderRenderer'
+import { getFooter, getHeader, getPages, getTenant } from '@/lib/api'
 import ThemeRegistry from '@/providers/ThemeRegistry'
 import { notFound } from 'next/navigation'
 
@@ -17,14 +19,15 @@ export default async function DynamicPage({ params }: { params: { tenant: string
   if (!page) return notFound()
 
   const tenantDetails = await getTenant(tenant)
-
-  console.log('tenantDetails', tenantDetails, 'page', page, pageSlug)
-
+  const header = await getHeader(tenantDetails?.slug || '')
+  const footer = await getFooter(tenantDetails?.slug || '')
   return (
     <html>
       <body>
         <ThemeRegistry themeKey={tenantDetails?.theme || 'green'}>
+          <HeaderRenderer header={header} />
           <BlockRenderer blocks={page?.layout || page?.content} tenant={tenant} />
+          <FooterRenderer footer={footer} />
         </ThemeRegistry>
       </body>
     </html>
