@@ -160,6 +160,9 @@ export interface Tenant {
   id: string;
   name: string;
   slug: string;
+  smtpUser?: string | null;
+  smtpPassword?: string | null;
+  domain?: string | null;
   /**
    * Select UI theme for this tenant
    */
@@ -263,6 +266,7 @@ export interface Page {
   tenant: string | Tenant;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -557,6 +561,9 @@ export interface MediaSelect<T extends boolean = true> {
 export interface TenantsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  smtpUser?: T;
+  smtpPassword?: T;
+  domain?: T;
   theme?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -627,6 +634,7 @@ export interface PagesSelect<T extends boolean = true> {
   tenant?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

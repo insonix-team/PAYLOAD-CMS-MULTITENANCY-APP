@@ -12,12 +12,11 @@ import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 
 import { Media } from './collections/Media'
-import { HomeTemplate } from './templates/HomeTemplate'
+import { Pages } from './collections/Pages'
 import Tenants from './collections/Tenants'
 import Users from './collections/Users'
 import { AboutTemplate } from './templates/AboutTemplate'
-import { Pages } from './collections/Pages'
-
+import { HomeTemplate } from './templates/HomeTemplate'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -27,6 +26,7 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {},
   },
 
   collections: [Users, Media, Tenants, Pages, HomeTemplate, AboutTemplate],

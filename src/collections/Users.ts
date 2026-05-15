@@ -7,6 +7,11 @@ const Users: CollectionConfig = {
 
   access: {
     create: ({ req }) => {
+      // Allow first user creation without auth
+      if (!req.user) {
+        return true
+      }
+
       return !!req.user
     },
 
@@ -18,6 +23,7 @@ const Users: CollectionConfig = {
 
       // Tenant users can only read users from their tenant
       const tenant = req.user?.tenant
+
       return {
         tenant: {
           equals: typeof tenant === 'string' ? tenant : tenant?.id,
@@ -33,6 +39,7 @@ const Users: CollectionConfig = {
 
       // Tenant users can only update users from their tenant
       const tenant = req.user?.tenant
+
       return {
         tenant: {
           equals: typeof tenant === 'string' ? tenant : tenant?.id,
@@ -44,6 +51,33 @@ const Users: CollectionConfig = {
       // Only superadmin can delete users
       return req.user?.role === 'superadmin'
     },
+  },
+
+  hooks: {
+    beforeChange: [
+      async ({ data, req, operation }) => {
+        if (operation !== 'create') {
+          return data
+        }
+
+        // Count existing users
+        const users = await req.payload.find({
+          collection: 'users',
+          limit: 1,
+        })
+
+        // First user becomes superadmin
+        if (users.totalDocs === 0) {
+          return {
+            ...data,
+            role: 'superadmin',
+            tenant: undefined,
+          }
+        }
+
+        return data
+      },
+    ],
   },
 
   fields: [
@@ -74,7 +108,17 @@ const Users: CollectionConfig = {
 
       hooks: {
         beforeValidate: [
-          ({ req, value }) => {
+          async ({ req, value }) => {
+            // Check if first user
+            const users = await req.payload.find({
+              collection: 'users',
+              limit: 1,
+            })
+
+            if (users.totalDocs === 0) {
+              return 'superadmin'
+            }
+
             // Non-superadmin users always create tenant users
             if (req.user?.role !== 'superadmin') {
               return 'tenant'
@@ -93,7 +137,7 @@ const Users: CollectionConfig = {
 
       relationTo: 'tenants' as CollectionSlug,
 
-      required: true,
+      required: false,
 
       admin: {
         condition: (_, __, { user }) => {
@@ -104,10 +148,22 @@ const Users: CollectionConfig = {
 
       hooks: {
         beforeValidate: [
-          ({ req, value }) => {
+          async ({ req, value }) => {
+            // Check if first user
+            const users = await req.payload.find({
+              collection: 'users',
+              limit: 1,
+            })
+
+            // First superadmin doesn't need tenant
+            if (users.totalDocs === 0) {
+              return undefined
+            }
+
             // Auto assign tenant for tenant users
             if (req.user?.role !== 'superadmin') {
               const tenant = req.user?.tenant
+
               return typeof tenant === 'string' ? tenant : tenant?.id
             }
 

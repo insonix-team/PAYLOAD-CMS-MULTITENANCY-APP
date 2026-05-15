@@ -7,6 +7,21 @@ import { CollectionSlug } from 'payload'
 
 export const Pages: any = {
   slug: 'pages',
+  versions: {
+    drafts: true,
+  },
+
+  admin: {
+    livePreview: {
+      url: ({ data }: { data: any }) => {
+        return `http://localhost:3000/api/live-preview?slug=${data?.slug}`
+      },
+    },
+
+    preview: (data: any) => {
+      return `http://localhost:3000/${data?.slug}`
+    },
+  },
   fields: [
     {
       name: 'title',

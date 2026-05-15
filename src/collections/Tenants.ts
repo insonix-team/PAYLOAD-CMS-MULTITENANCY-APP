@@ -21,7 +21,22 @@ const Tenants: CollectionConfig = {
       required: true,
       unique: true,
     },
-
+    {
+      name: 'smtpUser',
+      type: 'text',
+      required: false,
+    },
+    {
+      name: 'smtpPassword',
+      type: 'text',
+      required: false,
+    },
+    {
+      name: 'domain',
+      type: 'text',
+      required: false,
+      unique: true,
+    },
     {
       name: 'theme',
       type: 'text',
