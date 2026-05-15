@@ -6,7 +6,7 @@ export const themes = {
       mode: 'light',
       primary: { main: '#2563eb' },
       secondary: { main: '#9333ea' },
-      background: { default: '#ffffff' },
+      background: { default: '#899edbce' },
     },
   }),
 

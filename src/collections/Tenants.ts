@@ -4,7 +4,7 @@ const Tenants: CollectionConfig = {
   slug: 'tenants',
   admin: { useAsTitle: 'name' },
   access: {
-    read: ({ req: { user } }) => user?.role === 'superadmin',
+    read: ({ req: { user } }) => true,
     create: ({ req: { user } }) => user?.role === 'superadmin',
     update: ({ req: { user } }) => user?.role === 'superadmin',
     delete: ({ req: { user } }) => user?.role === 'superadmin',

@@ -14,7 +14,7 @@ export const Pages: any = {
   admin: {
     livePreview: {
       url: ({ data }: { data: any }) => {
-        return `http://localhost:3000/api/live-preview?slug=${data?.slug}`
+        return `/api/live-preview?slug=${data?.slug}`
       },
     },
 
