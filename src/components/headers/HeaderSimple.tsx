@@ -1,15 +1,6 @@
-'use client'
-
 import Link from 'next/link'
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Container,
-  Stack,
-  Box,
-} from '@mui/material'
+
+import { AppBar, Toolbar, Typography, Button, Container, Stack, Box } from '@mui/material'
 
 type MenuItem = {
   label: string
@@ -30,13 +21,7 @@ type Props = {
   buttonUrl?: string
 }
 
-export default function HeaderSimple({
-  logo,
-  menuItems = [],
-  showButton,
-  buttonLabel,
-  buttonUrl,
-}: Props) {
+export default function HeaderSimple({ logo, menuItems = [], showButton, buttonLabel, buttonUrl }: Props) {
   return (
     <AppBar
       position="sticky"
@@ -55,7 +40,6 @@ export default function HeaderSimple({
             justifyContent: 'space-between',
           }}
         >
-          {/* LEFT */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             {logo?.url ? (
               <Box
@@ -68,13 +52,10 @@ export default function HeaderSimple({
                 }}
               />
             ) : (
-              <Typography variant="h6" >
-                LOGO
-              </Typography>
+              <Typography variant="h6">LOGO</Typography>
             )}
           </Box>
 
-          {/* CENTER MENU */}
           <Stack
             direction="row"
             spacing={3}
@@ -110,7 +91,6 @@ export default function HeaderSimple({
             ))}
           </Stack>
 
-          {/* RIGHT BUTTON */}
           <Box>
             {showButton && (
               <Button

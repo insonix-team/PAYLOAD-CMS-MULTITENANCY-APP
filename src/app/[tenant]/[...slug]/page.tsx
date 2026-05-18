@@ -23,7 +23,7 @@ export default async function DynamicPage({ params }: { params: { tenant: string
   const footer = await getFooter(tenantDetails?.slug || '')
   return (
     <html>
-      <body>
+      <body style={{ margin: 0, padding: 0, boxSizing: 'border-box' }}>
         <ThemeRegistry themeKey={tenantDetails?.theme || 'green'}>
           <HeaderRenderer header={header} />
           <BlockRenderer blocks={page?.layout || page?.content} tenant={tenant} />
