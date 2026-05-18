@@ -13,13 +13,23 @@ export const Pages: any = {
 
   admin: {
     livePreview: {
-      url: ({ data }: { data: any }) => {
-        return `/api/live-preview?slug=${data?.slug}`
-      },
-    },
+      url: async ({ data, req }: { data: any; req: any }) => {
+        let tenantSlug = ''
 
-    preview: (data: any) => {
-      return `http://localhost:3000/${data?.slug}`
+        if (data.tenant) {
+          try {
+            const tenant = await req.payload.findByID({
+              collection: 'tenants',
+              id: data.tenant,
+            })
+            tenantSlug = tenant?.slug
+          } catch (error) {
+            console.error('Failed to fetch tenant:', error)
+          }
+        }
+
+        return `/api/live-preview?slug=${data?.slug}&tenant=${tenantSlug}&t=${Date.now()}`
+      },
     },
   },
   fields: [

@@ -6,14 +6,18 @@ export async function GET(request: Request) {
   try {
     const url = new URL(request.url)
     const slug = url.searchParams.get('slug') || ''
+    const tenant = url.searchParams.get('tenant') || ''
 
-    if (!slug) {
-      return new Response('Missing slug', { status: 400 })
+    if (!slug || !tenant) {
+      return new Response('Missing slug or tenant', { status: 400 })
     }
 
-    const destination = `/${slug}`
-    return Response.redirect(destination, 302)
-  } catch (err) {
-    return new Response('Error processing live preview', { status: 500 })
+    // Build URL with tenant and slug
+    const destination = new URL(`/${tenant}/${slug}`, request.url)
+
+    return Response.redirect(destination.toString(), 302)
+  } catch (err: any) {
+    console.error('Error:', err)
+    return new Response(`Error: ${err.message}`, { status: 500 })
   }
 }
