@@ -13,6 +13,8 @@ import { AboutTemplate } from './templates/AboutTemplate'
 import { HomeTemplate } from './templates/HomeTemplate'
 import Footers from './collections/Footers'
 import Headers from './collections/Headers'
+import { s3Storage } from '@payloadcms/storage-s3'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -38,5 +40,23 @@ export default buildConfig({
     url: process.env.DATABASE_URL || '',
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    s3Storage({
+      collections: {
+        media: {
+          prefix: 'media', // Optional: folder structure in your bucket
+        },
+      },
+      bucket: process.env.MINIO_BUCKET || 'my-media',
+      config: {
+        endpoint: process.env.MINIO_ENDPOINT || 'http://localhost:9000',
+        forcePathStyle: true, // CRITICAL for MinIO!
+        region: process.env.MINIO_REGION || 'us-east-1',
+        credentials: {
+          accessKeyId: process.env.MINIO_ACCESS_KEY || 'minioadmin',
+          secretAccessKey: process.env.MINIO_SECRET_KEY || 'minioadmin',
+        },
+      },
+    }),
+  ],
 })
