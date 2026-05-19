@@ -22,7 +22,16 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    components: {},
+    components: {
+      header: ['@/components/CustomNav'],
+      Nav: '@/components/CustomSidebar',
+      views: {
+        customDashboard: {
+          Component: '@/components/views/CustomDashboard',
+          path: '/custom-dashboard',
+        },
+      },
+    },
   },
 
   collections: [Users, Media, Tenants, Pages, HomeTemplate, AboutTemplate, Headers, Footers],
