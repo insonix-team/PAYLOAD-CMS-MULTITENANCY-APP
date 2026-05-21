@@ -18,7 +18,12 @@ export const AboutTemplate: CollectionConfig = {
     },
     {
       name: 'description',
-      type: 'textarea',
+      type: 'text',
+      admin: {
+        components: {
+          Field: '@/components/TipTapEditor',
+        },
+      },
     },
     {
       name: 'blocks',
