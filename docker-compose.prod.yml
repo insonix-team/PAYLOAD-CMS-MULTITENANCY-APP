@@ -1,28 +1,17 @@
-version: '3.8'
-
 services:
   payload:
     build:
       context: .
       dockerfile: Dockerfile
+
     container_name: payload-app
+
     restart: unless-stopped
+
     ports:
       - '5200:5200'
+
     env_file:
       - .env
-    depends_on:
-      - mongo
+
     command: node server.js
-
-  mongo:
-    image: mongo:7
-    container_name: payload-mongo
-    restart: unless-stopped
-    ports:
-      - '27017:27017'
-    volumes:
-      - mongodb_data:/data/db
-
-volumes:
-  mongodb_data:
