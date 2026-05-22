@@ -1,18 +1,18 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { BoldFeature, ItalicFeature, lexicalEditor, LinkFeature, UnderlineFeature } from '@payloadcms/richtext-lexical'
+import { s3Storage } from '@payloadcms/storage-s3'
 import path from 'path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
-
+import Footers from './collections/Footers'
+import Headers from './collections/Headers'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import Tenants from './collections/Tenants'
 import Users from './collections/Users'
 import { AboutTemplate } from './templates/AboutTemplate'
 import { HomeTemplate } from './templates/HomeTemplate'
-import Footers from './collections/Footers'
-import Headers from './collections/Headers'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -47,5 +47,21 @@ export default buildConfig({
     url: process.env.DATABASE_URI || '',
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket: 'payload-media',
+      config: {
+        credentials: {
+          accessKeyId: 'inxptk',
+          secretAccessKey: 'Inxptk@10',
+        },
+        region: 'us-east-1',
+        endpoint: 'http://YOUR_VPS_IP:9000',
+        forcePathStyle: true,
+      },
+    }),
+  ],
 })
