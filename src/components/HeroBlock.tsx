@@ -47,6 +47,9 @@ export const HeroBlock = ({ data }: HeroBlockProps) => {
             </a>
           )}
         </div>
+        <div className="bg-blue-500 text-white p-8 text-center">
+          <h1 className="text-4xl font-bold">Tailwind is working! 🎉</h1>
+        </div>
 
         {image && image.url && (
           <div className="mt-12 flex justify-center">

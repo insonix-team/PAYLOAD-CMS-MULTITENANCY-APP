@@ -4,6 +4,7 @@ import HeaderRenderer from '@/components/headers/HeaderRenderer'
 import { getFooter, getHeader, getPages, getTenant } from '@/lib/api'
 import ThemeRegistry from '@/providers/ThemeRegistry'
 import { notFound } from 'next/navigation'
+import '../../globals.css'
 
 export default async function DynamicPage({ params }: { params: { tenant: string; slug?: string[] } }) {
   const p = await params
