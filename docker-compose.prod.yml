@@ -5,12 +5,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: payload-app:latest
+    container_name: payload-app
+    restart: unless-stopped
     ports:
       - '5200:5200'
-    environment:
-      - NODE_ENV=production
-      - PORT=5200
     env_file:
       - .env
     depends_on:
@@ -18,11 +16,13 @@ services:
     command: node server.js
 
   mongo:
-    image: mongo:latest
+    image: mongo:7
+    container_name: payload-mongo
     restart: unless-stopped
+    ports:
+      - '27017:27017'
     volumes:
-      - data:/data/db
-    environment: {}
+      - mongodb_data:/data/db
 
 volumes:
-  data:
+  mongodb_data:
