@@ -1,3 +1,5 @@
+"use client"
+
 export const CTABlockUI = ({ data, tenant }: any) => {
   return (
     <section className="py-16 text-center bg-black text-white">
