@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  payload:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: payload-app:latest
+    ports:
+      - '5200:5200'
+    environment:
+      - NODE_ENV=production
+      - PORT=5200
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+    command: node server.js
+
+  mongo:
+    image: mongo:latest
+    restart: unless-stopped
+    volumes:
+      - data:/data/db
+    environment: {}
+
+volumes:
+  data:
