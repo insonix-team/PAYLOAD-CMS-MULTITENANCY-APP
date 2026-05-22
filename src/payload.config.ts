@@ -55,11 +55,11 @@ export default buildConfig({
       bucket: 'payload-media',
       config: {
         credentials: {
-          accessKeyId: 'inxptk',
-          secretAccessKey: 'Inxptk@10',
+          accessKeyId: process.env.MINIO_ACCESSKEY || '',
+          secretAccessKey: process.env.MINIO_SECRETEKEY || '',
         },
         region: 'us-east-1',
-        endpoint: 'http://YOUR_VPS_IP:9000',
+        endpoint: process.env.MINIO_ENDPOINT,
         forcePathStyle: true,
       },
     }),
