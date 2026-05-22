@@ -34,7 +34,7 @@ const Tenants: CollectionConfig = {
     {
       name: 'domain',
       type: 'text',
-      required: false,
+      required: true,
       unique: true,
     },
     {

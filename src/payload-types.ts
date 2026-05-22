@@ -166,7 +166,7 @@ export interface Tenant {
   slug: string;
   smtpUser?: string | null;
   smtpPassword?: string | null;
-  domain?: string | null;
+  domain: string;
   /**
    * Select UI theme for this tenant
    */
