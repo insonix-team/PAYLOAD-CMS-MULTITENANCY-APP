@@ -14,7 +14,7 @@ COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 # Prefer yarn or npm ci when lockfiles exist; otherwise fall back to `npm install`.
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
+  elif [ -f package-lock.json ]; then npm ci || npm install; \
   else npm install; \
   fi
 
