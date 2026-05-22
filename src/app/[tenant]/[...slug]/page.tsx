@@ -31,20 +31,12 @@ export default async function DynamicPage({ params }: { params: { slug?: string[
   const footer = await getFooter()
 
   return (
-    <div
-      style={{
-        margin: 0,
-        padding: 0,
-        boxSizing: 'border-box',
-      }}
-    >
-      <ThemeRegistry themeKey={tenantDetails?.theme || 'green'}>
-        <HeaderRenderer header={header} />
+    <ThemeRegistry themeKey={tenantDetails?.theme || 'green'}>
+      <HeaderRenderer header={header} />
 
-        <BlockRenderer blocks={page?.layout || page?.content} tenant={tenantDetails?.slug} />
+      <BlockRenderer blocks={page?.layout || page?.content} tenant={tenantDetails?.slug} />
 
-        <FooterRenderer footer={footer} />
-      </ThemeRegistry>
-    </div>
+      <FooterRenderer footer={footer} />
+    </ThemeRegistry>
   )
 }

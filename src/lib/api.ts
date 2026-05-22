@@ -120,7 +120,7 @@ export const getFooter = async () => {
   return result.docs[0]?.layout || null
 }
 
-export const getPages = async (tenantSlug: string, slug: string) => {
+export const getPages = async (slug: string) => {
   const tenant = await getTenant()
 
   if (!tenant) {
