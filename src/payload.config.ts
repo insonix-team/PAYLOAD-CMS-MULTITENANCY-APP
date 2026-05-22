@@ -3,6 +3,7 @@ import { BoldFeature, ItalicFeature, lexicalEditor, LinkFeature, UnderlineFeatur
 import { s3Storage } from '@payloadcms/storage-s3'
 import path from 'path'
 import { buildConfig } from 'payload'
+// @ts-ignore
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 import Footers from './collections/Footers'
