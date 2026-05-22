@@ -25,6 +25,7 @@ import { SubscriptFeatureClient as SubscriptFeatureClient_e70f5e05f09f93e00b997e
 import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { default as default_b4adb2dd9e33ad3d73567604a12518b9 } from '@/components/CustomSidebar'
 import { default as default_17ea6b3b7a598429b2fedaf012508946 } from '@/components/CustomNav'
+import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { default as default_ae19a2dcb676c4a00cd12f22ea165e8f } from '@/components/views/CustomDashboard'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -57,6 +58,7 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#StrikethroughFeatureClient": StrikethroughFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@/components/CustomSidebar#default": default_b4adb2dd9e33ad3d73567604a12518b9,
   "@/components/CustomNav#default": default_17ea6b3b7a598429b2fedaf012508946,
+  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
   "@/components/views/CustomDashboard#default": default_ae19a2dcb676c4a00cd12f22ea165e8f,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }
