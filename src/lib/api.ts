@@ -4,29 +4,6 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_SITE
 const isServer = typeof window === 'undefined'
 const isLocal = process.env.NODE_ENV === 'development'
 
-// export const getTenant = async (slug: string) => {
-//   const encoded = encodeURIComponent(slug || '')
-
-//   if (isServer) {
-//     const { getPayload } = await import('payload')
-//     const configModule = await import('@payload-config')
-//     const payload = await getPayload({ config: (configModule as any).default })
-//     const result = await payload.find({
-//       collection: 'tenants',
-//       where: { slug: { equals: slug } },
-//       depth: 0,
-//     })
-//     return result?.docs?.[0]
-//   }
-
-//   const res = await fetch(`${BASE_URL}/api/tenants?where[slug][equals]=${encoded}`, {
-//     cache: 'no-store',
-//   })
-//   const data = await res.json()
-
-//   return data?.docs?.[0]
-// }
-
 export const getTenant = async (tenantSlug: string | null = null) => {
   const query = isLocal
     ? {
@@ -43,9 +20,12 @@ export const getTenant = async (tenantSlug: string | null = null) => {
       equals: query.value,
     },
   }
+  console.log('where--->', where)
 
   // Server-side
   if (isServer) {
+    console.log('isServer--->', isServer)
+
     const { getPayload } = await import('payload')
     const configModule = await import('@payload-config')
 
@@ -58,7 +38,7 @@ export const getTenant = async (tenantSlug: string | null = null) => {
       where,
       depth: 0,
     })
-
+    console.log('Result--->', result)
     return result?.docs?.[0]
   }
 
@@ -68,8 +48,10 @@ export const getTenant = async (tenantSlug: string | null = null) => {
   const res = await fetch(`${BASE_URL}/api/tenants?where[${query.field}][equals]=${encodedValue}`, {
     cache: 'no-store',
   })
+  console.log('encodedValue--->', encodedValue)
 
   const data = await res.json()
+  console.log('data--->', data)
 
   return data?.docs?.[0]
 }
