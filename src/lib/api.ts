@@ -39,7 +39,6 @@ export const getTenant = async (tenantSlug: string | null = null) => {
       depth: 0,
     })
     base_url = `https://${result?.docs?.[0]?.domain}`
-    console.log('Result--->', result)
     return result?.docs?.[0]
   }
 
@@ -50,7 +49,6 @@ export const getTenant = async (tenantSlug: string | null = null) => {
   })
 
   const data = await res.json()
-  console.log('data--->', data)
 
   return data?.docs?.[0]
 }
