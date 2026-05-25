@@ -13,7 +13,7 @@ export default function CustomNav() {
 
   // Define your navigation structure
   const navItems = [
-    { href: `/custom-dashboard`, label: 'Dashboard', icon: '📊' },
+    { href: `/custom-dashboard`, label: 'Analytics', icon: '📊' },
     { href: '/collections/pages', label: 'Pages', icon: '📄' },
     { href: '/collections/media', label: 'Media', icon: '🖼️' },
     { href: '/collections/users', label: 'Users', icon: '👥' },
