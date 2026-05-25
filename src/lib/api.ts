@@ -2,6 +2,7 @@ import { getCurrentDomain } from './tenant'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_SITE_URL || `http://localhost:${process.env.PORT || 3000}`
 const isServer = typeof window === 'undefined'
+const isLocal = process.env.NODE_ENV === 'development'
 
 // export const getTenant = async (slug: string) => {
 //   const encoded = encodeURIComponent(slug || '')
@@ -27,7 +28,7 @@ const isServer = typeof window === 'undefined'
 // }
 
 export const getTenant = async (tenantSlug: string | null = null) => {
-  const query = tenantSlug
+  const query = isLocal
     ? {
         field: 'slug',
         value: tenantSlug,
