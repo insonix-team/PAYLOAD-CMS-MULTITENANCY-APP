@@ -42,7 +42,7 @@ export const Pages: any = {
       name: 'slug',
       type: 'text',
       required: true,
-      unique: true,
+      unique: false,
     },
     {
       name: 'templateType',
