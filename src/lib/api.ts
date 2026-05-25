@@ -4,6 +4,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_SITE
 const isServer = typeof window === 'undefined'
 const isLocal = process.env.NODE_ENV === 'development'
 
+console.log('---->', isLocal, isServer, BASE_URL)
 export const getTenant = async (tenantSlug: string | null = null) => {
   const query = isLocal
     ? {
