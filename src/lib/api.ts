@@ -4,7 +4,6 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_SITE
 const isServer = typeof window === 'undefined'
 const isLocal = process.env.NODE_ENV === 'development'
 
-console.log('---->', isLocal, isServer, BASE_URL)
 export const getTenant = async (tenantSlug: string | null = null) => {
   const query = isLocal
     ? {
@@ -21,12 +20,12 @@ export const getTenant = async (tenantSlug: string | null = null) => {
       equals: query.value,
     },
   }
-  console.log('where--->', where)
 
   // Server-side
-  if (isServer) {
-    console.log('isServer--->', isServer)
 
+  let base_url = BASE_URL
+
+  if (isServer) {
     const { getPayload } = await import('payload')
     const configModule = await import('@payload-config')
 
@@ -39,17 +38,16 @@ export const getTenant = async (tenantSlug: string | null = null) => {
       where,
       depth: 0,
     })
+    base_url = `https://${result?.docs?.[0]?.domain}`
     console.log('Result--->', result)
     return result?.docs?.[0]
   }
 
-  // Client-side
   const encodedValue = encodeURIComponent(query.value || '')
 
-  const res = await fetch(`${BASE_URL}/api/tenants?where[${query.field}][equals]=${encodedValue}`, {
+  const res = await fetch(`${base_url}/api/tenants?where[${query.field}][equals]=${encodedValue}`, {
     cache: 'no-store',
   })
-  console.log('encodedValue--->', encodedValue)
 
   const data = await res.json()
   console.log('data--->', data)
@@ -137,7 +135,11 @@ export const getPages = async (slug: string, tenantSlug: string | null = null) =
   }
 
   const encodedSlug = encodeURIComponent(slug || '')
-  const res = await fetch(`${BASE_URL}/api/pages?where[tenant][equals]=${tenant.id}&where[slug][equals]=${encodedSlug}`, { cache: 'no-store' })
+  let base_url = BASE_URL
+  if (isServer) {
+    base_url = `https://${tenant?.domain}`
+  }
+  const res = await fetch(`${base_url}/api/pages?where[tenant][equals]=${tenant.id}&where[slug][equals]=${encodedSlug}`, { cache: 'no-store' })
 
   return res.json()
 }

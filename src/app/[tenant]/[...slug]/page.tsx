@@ -10,7 +10,7 @@ export default async function DynamicPage({ params }: { params: { tenant?: strin
   const p = await params
 
   const slugArr = p?.slug || []
-  const pageSlug = slugArr.join('/')
+  const pageSlug = slugArr?.join('/')
   const tenantSlug = p?.tenant ? (p?.tenant ?? null) : null
 
   // tenant auto-detected from domain
