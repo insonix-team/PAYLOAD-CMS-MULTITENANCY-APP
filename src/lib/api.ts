@@ -26,9 +26,24 @@ const isServer = typeof window === 'undefined'
 //   return data?.docs?.[0]
 // }
 
-export const getTenant = async () => {
-  const domain = await getCurrentDomain()
+export const getTenant = async (tenantSlug: string | null = null) => {
+  const query = tenantSlug
+    ? {
+        field: 'slug',
+        value: tenantSlug,
+      }
+    : {
+        field: 'domain',
+        value: await getCurrentDomain(),
+      }
 
+  const where = {
+    [query.field]: {
+      equals: query.value,
+    },
+  }
+
+  // Server-side
   if (isServer) {
     const { getPayload } = await import('payload')
     const configModule = await import('@payload-config')
@@ -39,20 +54,17 @@ export const getTenant = async () => {
 
     const result = await payload.find({
       collection: 'tenants',
-      where: {
-        domain: {
-          equals: domain,
-        },
-      },
+      where,
       depth: 0,
     })
 
     return result?.docs?.[0]
   }
 
-  const encoded = encodeURIComponent(domain)
+  // Client-side
+  const encodedValue = encodeURIComponent(query.value || '')
 
-  const res = await fetch(`${BASE_URL}/api/tenants?where[domain][equals]=${encoded}`, {
+  const res = await fetch(`${BASE_URL}/api/tenants?where[${query.field}][equals]=${encodedValue}`, {
     cache: 'no-store',
   })
 
@@ -61,8 +73,8 @@ export const getTenant = async () => {
   return data?.docs?.[0]
 }
 
-export const getHeader = async () => {
-  const tenant = await getTenant()
+export const getHeader = async (tenantSlug: string | null = null) => {
+  const tenant = await getTenant(tenantSlug || undefined)
 
   if (!tenant) {
     return null
@@ -90,8 +102,8 @@ export const getHeader = async () => {
   return result?.docs[0]?.layout || null
 }
 
-export const getFooter = async () => {
-  const tenant = await getTenant()
+export const getFooter = async (tenantSlug: string | null = null) => {
+  const tenant = await getTenant(tenantSlug || undefined)
 
   if (!tenant) {
     return null
@@ -120,8 +132,8 @@ export const getFooter = async () => {
   return result.docs[0]?.layout || null
 }
 
-export const getPages = async (slug: string) => {
-  const tenant = await getTenant()
+export const getPages = async (slug: string, tenantSlug: string | null = null) => {
+  const tenant = await getTenant(tenantSlug || undefined)
 
   if (!tenant) {
     console.log('Tenant not found')

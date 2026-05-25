@@ -17,7 +17,7 @@ export default function CustomNav() {
     { href: '/collections/pages', label: 'Pages', icon: '📄' },
     { href: '/collections/media', label: 'Media', icon: '🖼️' },
     { href: '/collections/users', label: 'Users', icon: '👥' },
-    { href: '/collections/tenants', label: 'Tenants', icon: '🏢' },
+    ...(user?.role === 'super-admin' ? [{ href: '/collections/tenants', label: 'Tenants', icon: '🏢' }] : []),
   ]
 
   useEffect(() => {
@@ -60,8 +60,9 @@ export default function CustomNav() {
             gap: '0.5rem',
           }}
         >
-          <span></span>
-          <span>INSONIX CMS</span>
+          <Link href={adminRoute}>
+            <span>INSONIX CMS</span>
+          </Link>
         </div>
 
         {/* Desktop Navigation Links */}

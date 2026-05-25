@@ -6,20 +6,22 @@ import ThemeRegistry from '@/providers/ThemeRegistry'
 import { notFound } from 'next/navigation'
 import '../../globals.css'
 
-export default async function DynamicPage({ params }: { params: { slug?: string[] } }) {
+export default async function DynamicPage({ params }: { params: { tenant?: string; slug?: string[] } }) {
   const p = await params
 
   const slugArr = p?.slug || []
   const pageSlug = slugArr.join('/')
+  const tenantSlug = p?.tenant ? (p?.tenant ?? null) : null
 
   // tenant auto-detected from domain
-  const tenantDetails = await getTenant()
+
+  const tenantDetails = await getTenant(tenantSlug)
 
   if (!tenantDetails) {
     return notFound()
   }
 
-  const data = await getPages(pageSlug)
+  const data = await getPages(pageSlug, tenantSlug)
 
   const page = data?.docs?.[0]
 
@@ -27,16 +29,20 @@ export default async function DynamicPage({ params }: { params: { slug?: string[
     return notFound()
   }
 
-  const header = await getHeader()
-  const footer = await getFooter()
+  const header = await getHeader(tenantSlug)
+  const footer = await getFooter(tenantSlug)
 
   return (
-    <ThemeRegistry themeKey={tenantDetails?.theme || 'green'}>
-      <HeaderRenderer header={header} />
+    <html lang="en">
+      <body>
+        <ThemeRegistry themeKey={tenantDetails?.theme || 'green'}>
+          <HeaderRenderer header={header} />
 
-      <BlockRenderer blocks={page?.layout || page?.content} tenant={tenantDetails?.slug} />
+          <BlockRenderer blocks={page?.layout || page?.content} tenant={tenantDetails?.slug} />
 
-      <FooterRenderer footer={footer} />
-    </ThemeRegistry>
+          <FooterRenderer footer={footer} />
+        </ThemeRegistry>
+      </body>
+    </html>
   )
 }
