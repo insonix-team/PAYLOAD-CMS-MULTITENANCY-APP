@@ -201,6 +201,9 @@ export interface Media {
 export interface Page {
   id: string;
   title: string;
+  /**
+   * Slug must be unique within the selected tenant
+   */
   slug: string;
   templateType: 'home' | 'about' | 'contact' | 'services';
   homeTemplate?: (string | null) | HomeTemplate;

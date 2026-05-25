@@ -42,7 +42,57 @@ export const Pages: any = {
       name: 'slug',
       type: 'text',
       required: true,
-      unique: false,
+      index: true,
+      admin: {
+        description: 'Slug must be unique within the selected tenant',
+      },
+      validate: async (value: string, args: any) => {
+        try {
+          const { req, data, id } = args
+
+          if (!value) {
+            return 'Slug is required'
+          }
+
+          const tenantId = typeof data?.tenant === 'object' ? data?.tenant?.value || data?.tenant?.id : data?.tenant
+
+          if (!tenantId) {
+            return 'Tenant is required'
+          }
+
+          const existing = await req.payload.find({
+            collection: 'pages',
+            draft: false,
+            overrideAccess: true,
+            where: {
+              and: [
+                {
+                  slug: {
+                    equals: value,
+                  },
+                },
+                {
+                  tenant: {
+                    equals: tenantId,
+                  },
+                },
+              ],
+            },
+            limit: 1,
+          })
+
+          const existingDoc = existing?.docs?.[0]
+
+          if (existingDoc && existingDoc.id !== id) {
+            return `Slug "${value}" already exists for this tenant`
+          }
+
+          return true
+        } catch (err) {
+          console.error('SLUG VALIDATION ERROR:', err)
+          return 'Validation failed'
+        }
+      },
     },
     {
       name: 'templateType',
