@@ -17,7 +17,7 @@ export default function CustomNav() {
     { href: '/collections/pages', label: 'Pages', icon: '📄' },
     { href: '/collections/media', label: 'Media', icon: '🖼️' },
     { href: '/collections/users', label: 'Users', icon: '👥' },
-    ...(user?.role === 'super-admin' ? [{ href: '/collections/tenants', label: 'Tenants', icon: '🏢' }] : []),
+    ...(user?.role === 'superadmin' ? [{ href: '/collections/tenants', label: 'Tenants', icon: '🏢' }] : []),
   ]
 
   useEffect(() => {
