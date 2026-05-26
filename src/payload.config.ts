@@ -1,9 +1,9 @@
+// @ts-ignore
+import sharp from 'sharp'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { BoldFeature, ItalicFeature, lexicalEditor, LinkFeature, UnderlineFeature } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
-// @ts-ignore
-import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 import Footers from './collections/Footers'
 import Headers from './collections/Headers'
