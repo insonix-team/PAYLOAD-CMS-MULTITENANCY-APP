@@ -10,6 +10,58 @@ const Headers: CollectionConfig = {
     useAsTitle: 'name',
   },
 
+  access: {
+    read: ({ req: { user } }) => {
+      if (user?.role === 'superadmin') {
+        return true
+      }
+
+      return {
+        tenant: {
+          equals: user?.tenant,
+        },
+      }
+    },
+
+    create: ({ req: { user } }) => !!user,
+
+    update: ({ req: { user } }) => {
+      if (user?.role === 'superadmin') {
+        return true
+      }
+
+      return {
+        tenant: {
+          equals: user?.tenant,
+        },
+      }
+    },
+
+    delete: ({ req: { user } }) => {
+      if (user?.role === 'superadmin') {
+        return true
+      }
+
+      return {
+        tenant: {
+          equals: user?.tenant,
+        },
+      }
+    },
+  },
+
+  hooks: {
+    beforeValidate: [
+      ({ req, data }: any) => {
+        if (req.user?.role !== 'superadmin' && req.user?.tenant) {
+          data.tenant = typeof req.user.tenant === 'object' ? req.user.tenant.id : req.user.tenant
+        }
+
+        return data
+      },
+    ],
+  },
+
   fields: [
     {
       name: 'name',
@@ -22,8 +74,13 @@ const Headers: CollectionConfig = {
       type: 'relationship',
       relationTo: 'tenants' as CollectionSlug,
       required: true,
+
       admin: {
         position: 'sidebar',
+
+        condition: (_, __, { user }) => {
+          return user?.role === 'superadmin'
+        },
       },
     },
 

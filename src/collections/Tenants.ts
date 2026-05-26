@@ -2,13 +2,25 @@ import { CollectionConfig } from 'payload'
 
 const Tenants: CollectionConfig = {
   slug: 'tenants',
-  admin: { useAsTitle: 'name' },
+
+  admin: {
+    useAsTitle: 'name',
+
+    hidden: ({ user }) => {
+      return user?.role !== 'superadmin'
+    },
+  },
+
   access: {
-    read: ({ req: { user } }) => true,
+    read: ({ req: { user } }) => user?.role === 'superadmin',
+
     create: ({ req: { user } }) => user?.role === 'superadmin',
+
     update: ({ req: { user } }) => user?.role === 'superadmin',
+
     delete: ({ req: { user } }) => user?.role === 'superadmin',
   },
+
   fields: [
     {
       name: 'name',
@@ -24,18 +36,14 @@ const Tenants: CollectionConfig = {
     {
       name: 'smtpUser',
       type: 'text',
-      required: false,
     },
     {
       name: 'smtpPassword',
       type: 'text',
-      required: false,
     },
     {
       name: 'domain',
       type: 'text',
-      required: false,
-      // unique: true,
     },
     {
       name: 'theme',

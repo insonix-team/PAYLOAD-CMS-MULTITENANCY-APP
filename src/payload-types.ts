@@ -437,7 +437,7 @@ export interface AboutTemplate {
 export interface Header {
   id: string;
   name: string;
-  tenant: string | Tenant;
+  tenant?: (string | null) | Tenant;
   layout: (
     | {
         logo?: (string | null) | Media;
@@ -479,7 +479,7 @@ export interface Header {
 export interface Footer {
   id: string;
   name: string;
-  tenant: string | Tenant;
+  tenant?: (string | null) | Tenant;
   layout: (
     | {
         copyrightText?: string | null;
