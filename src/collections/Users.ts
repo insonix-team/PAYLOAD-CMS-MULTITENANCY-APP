@@ -82,12 +82,14 @@ const Users: CollectionConfig = {
 
   fields: [
     {
+      name: 'name',
+      type: 'text',
+      required: true,
+    },
+    {
       name: 'role',
-
       type: 'select',
-
       defaultValue: 'tenant',
-
       options: [
         {
           label: 'Super Admin',
@@ -101,7 +103,6 @@ const Users: CollectionConfig = {
 
       admin: {
         condition: (_, __, { user }) => {
-          // Only superadmin can see role field
           return user?.role === 'superadmin'
         },
       },

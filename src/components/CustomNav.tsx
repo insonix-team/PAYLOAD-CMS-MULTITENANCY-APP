@@ -1,8 +1,8 @@
 'use client'
+import { useAuth } from '@payloadcms/ui'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useAuth } from '@payloadcms/ui'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 export default function CustomNav() {
   const pathname = usePathname()
@@ -11,13 +11,12 @@ export default function CustomNav() {
 
   const isActive = (path: string) => pathname === `${adminRoute}${path}`
 
-  // Define your navigation structure
   const navItems = [
-    { href: `/custom-dashboard`, label: 'Analytics', icon: '📊' },
-    { href: '/collections/pages', label: 'Pages', icon: '📄' },
-    { href: '/collections/media', label: 'Media', icon: '🖼️' },
-    { href: '/collections/users', label: 'Users', icon: '👥' },
-    ...(user?.role === 'superadmin' ? [{ href: '/collections/tenants', label: 'Tenants', icon: '🏢' }] : []),
+    { href: `/custom-dashboard`, label: 'Analytics' },
+    { href: '/collections/pages', label: 'Pages' },
+    { href: '/collections/media', label: 'Media' },
+    { href: '/collections/users', label: 'Users' },
+    ...(user?.role === 'superadmin' ? [{ href: '/collections/tenants', label: 'Tenants' }] : []),
   ]
 
   useEffect(() => {
@@ -34,7 +33,6 @@ export default function CustomNav() {
 
   return (
     <>
-      {/* Horizontal Header */}
       <header
         style={{
           position: 'sticky',
@@ -50,7 +48,6 @@ export default function CustomNav() {
           width: '100%',
         }}
       >
-        {/* Logo / Brand Area */}
         <div
           style={{
             fontWeight: 'bold',
@@ -65,7 +62,6 @@ export default function CustomNav() {
           </Link>
         </div>
 
-        {/* Desktop Navigation Links */}
         <nav
           style={{
             display: 'flex',
@@ -103,13 +99,11 @@ export default function CustomNav() {
                 }
               }}
             >
-              {/* <span style={{ fontSize: '1.1rem' }}>{item.icon}</span> */}
               <span>{item.label}</span>
             </Link>
           ))}
         </nav>
 
-        {/* Right Side - User & Actions */}
         <div
           style={{
             display: 'flex',
@@ -117,7 +111,6 @@ export default function CustomNav() {
             gap: '1rem',
           }}
         >
-          {/* Quick Stats / User Info */}
           <Link
             href={`${adminRoute}/account`}
             style={{
@@ -141,10 +134,10 @@ export default function CustomNav() {
             }}
           >
             <span>👤</span>
+            <span>{user?.name || 'User'}</span>
             <span>{user?.role || 'User'}</span>
           </Link>
 
-          {/* Logout Button */}
           <Link
             href={`${adminRoute}/logout`}
             style={{

@@ -5,7 +5,6 @@ import { useAuth } from '@payloadcms/ui'
 export function AdminNav() {
   const { user } = useAuth()
 
-  console.log('AdminNav user:', user)
   return (
     <div
       style={{
