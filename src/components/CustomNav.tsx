@@ -13,11 +13,11 @@ export default function CustomNav() {
 
   // Define your navigation structure
   const navItems = [
-    { href: `/custom-dashboard`, label: 'Dashboard', icon: '📊' },
+    { href: `/custom-dashboard`, label: 'Analytics', icon: '📊' },
     { href: '/collections/pages', label: 'Pages', icon: '📄' },
     { href: '/collections/media', label: 'Media', icon: '🖼️' },
     { href: '/collections/users', label: 'Users', icon: '👥' },
-    { href: '/collections/tenants', label: 'Tenants', icon: '🏢' },
+    ...(user?.role === 'superadmin' ? [{ href: '/collections/tenants', label: 'Tenants', icon: '🏢' }] : []),
   ]
 
   useEffect(() => {
@@ -60,8 +60,9 @@ export default function CustomNav() {
             gap: '0.5rem',
           }}
         >
-          <span></span>
-          <span>INSONIX CMS</span>
+          <Link href={adminRoute}>
+            <span>INSONIX CMS</span>
+          </Link>
         </div>
 
         {/* Desktop Navigation Links */}
@@ -102,7 +103,7 @@ export default function CustomNav() {
                 }
               }}
             >
-              <span style={{ fontSize: '1.1rem' }}>{item.icon}</span>
+              {/* <span style={{ fontSize: '1.1rem' }}>{item.icon}</span> */}
               <span>{item.label}</span>
             </Link>
           ))}

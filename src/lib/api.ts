@@ -1,8 +1,28 @@
+import { getCurrentDomain } from './tenant'
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_SITE_URL || `http://localhost:${process.env.PORT || 3000}`
 const isServer = typeof window === 'undefined'
+const isLocal = process.env.NODE_ENV === 'development'
 
-export const getTenant = async (slug: string) => {
-  const encoded = encodeURIComponent(slug || '')
+export const getTenant = async (tenantSlug: string | null = null) => {
+  const query = isLocal
+    ? {
+        field: 'slug',
+        value: tenantSlug,
+      }
+    : {
+        field: 'domain',
+        value: await getCurrentDomain(),
+      }
+
+  const where = {
+    [query.field]: {
+      equals: query.value,
+    },
+  }
+
+
+  let base_url = BASE_URL
 
   if (isServer) {
     const { getPayload } = await import('payload')
@@ -10,13 +30,16 @@ export const getTenant = async (slug: string) => {
     const payload = await getPayload({ config: (configModule as any).default })
     const result = await payload.find({
       collection: 'tenants',
-      where: { slug: { equals: slug } },
+      where,
       depth: 0,
     })
+    base_url = `https://${result?.docs?.[0]?.domain}`
     return result?.docs?.[0]
   }
 
-  const res = await fetch(`${BASE_URL}/api/tenants?where[slug][equals]=${encoded}`, {
+  const encodedValue = encodeURIComponent(query.value || '')
+
+  const res = await fetch(`${base_url}/api/tenants?where[${query.field}][equals]=${encodedValue}`, {
     cache: 'no-store',
   })
   const data = await res.json()
@@ -24,8 +47,8 @@ export const getTenant = async (slug: string) => {
   return data?.docs?.[0]
 }
 
-export const getHeader = async (tenantSlug: string) => {
-  const tenant = await getTenant(tenantSlug)
+export const getHeader = async (tenantSlug: string | null = null) => {
+  const tenant = await getTenant(tenantSlug || undefined)
 
   if (!tenant) {
     return null
@@ -53,8 +76,8 @@ export const getHeader = async (tenantSlug: string) => {
   return result?.docs[0]?.layout || null
 }
 
-export const getFooter = async (tenantSlug: string) => {
-  const tenant = await getTenant(tenantSlug)
+export const getFooter = async (tenantSlug: string | null = null) => {
+  const tenant = await getTenant(tenantSlug || undefined)
 
   if (!tenant) {
     return null
@@ -83,8 +106,8 @@ export const getFooter = async (tenantSlug: string) => {
   return result.docs[0]?.layout || null
 }
 
-export const getPages = async (tenantSlug: string, slug: string) => {
-  const tenant = await getTenant(tenantSlug)
+export const getPages = async (slug: string, tenantSlug: string | null = null) => {
+  const tenant = await getTenant(tenantSlug || undefined)
 
   if (!tenant) {
     console.log('Tenant not found')
@@ -104,7 +127,11 @@ export const getPages = async (tenantSlug: string, slug: string) => {
   }
 
   const encodedSlug = encodeURIComponent(slug || '')
-  const res = await fetch(`${BASE_URL}/api/pages?where[tenant][equals]=${tenant.id}&where[slug][equals]=${encodedSlug}`, { cache: 'no-store' })
+  let base_url = BASE_URL
+  if (isServer) {
+    base_url = `https://${tenant?.domain}`
+  }
+  const res = await fetch(`${base_url}/api/pages?where[tenant][equals]=${tenant.id}&where[slug][equals]=${encodedSlug}`, { cache: 'no-store' })
 
   return res.json()
 }

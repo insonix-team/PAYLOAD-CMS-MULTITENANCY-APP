@@ -4,26 +4,23 @@ import HeaderRenderer from '@/components/headers/HeaderRenderer'
 import { getFooter, getHeader, getPages, getTenant } from '@/lib/api'
 import ThemeRegistry from '@/providers/ThemeRegistry'
 import { notFound } from 'next/navigation'
-import '../../globals.css'
+import '../globals.css'
 
-export default async function DynamicPage({ params }: { params: { tenant?: string; slug?: string[] } }) {
+export default async function DynamicPage({ params }: { params: { slug?: string[] } }) {
   const p = await params
-  const tenant = p?.tenant
-  if (!tenant || tenant.includes('.')) return null
 
   const slugArr = p?.slug || []
-  const pageSlug = slugArr.join('/')
-  const tenantSlug = p?.tenant ? (p?.tenant ?? null) : null
+
+  const pageSlug = slugArr?.join('/') || 'home'
 
   // tenant auto-detected from domain
-
-  const tenantDetails = await getTenant(tenantSlug)
+  const tenantDetails = await getTenant()
 
   if (!tenantDetails) {
     return notFound()
   }
 
-  const data = await getPages(pageSlug, tenantSlug)
+  const data = await getPages(pageSlug)
 
   const page = data?.docs?.[0]
 
@@ -31,12 +28,9 @@ export default async function DynamicPage({ params }: { params: { tenant?: strin
     return notFound()
   }
 
-  const header = await getHeader(tenantSlug)
-  const footer = await getFooter(tenantSlug)
+  const header = await getHeader()
+  const footer = await getFooter()
 
-  const tenantDetails = await getTenant(tenant)
-  const header = await getHeader(tenantDetails?.slug || '')
-  const footer = await getFooter(tenantDetails?.slug || '')
   return (
     <html lang="en">
       <body>
