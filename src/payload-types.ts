@@ -301,7 +301,7 @@ export interface Page {
         | CardsWithIcons
       )[]
     | null;
-  tenant: string | Tenant;
+  tenant?: (string | null) | Tenant;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;

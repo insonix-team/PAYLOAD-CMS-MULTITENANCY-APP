@@ -142,13 +142,22 @@ export const Pages: any = {
       required: true,
       admin: {
         position: 'sidebar',
+        condition: (_data: any, _siblingData: any, { user }: any) => {
+          return user?.role === 'super-admin'
+        },
+      },
+      defaultValue: ({ user }: any) => {
+        if (user?.role !== 'super-admin') {
+          return typeof user?.tenant === 'object' ? user.tenant.id : user?.tenant
+        }
+
+        return undefined
       },
     },
   ],
   hooks: {
     beforeChange: [
       async ({ req, data, operation, originalDoc }: any) => {
-        // Determine which template is being used
         const getActiveTemplate = (data: any) => {
           if (data.templateType === 'home' && data.homeTemplate) {
             return { collection: 'home-templates', id: data.homeTemplate, field: 'homeTemplate' }
@@ -173,33 +182,55 @@ export const Pages: any = {
           return null
         }
 
+        const normalizeRelationships = (obj: any): any => {
+          if (Array.isArray(obj)) {
+            return obj.map(normalizeRelationships)
+          }
+
+          if (obj && typeof obj === 'object') {
+            const newObj: any = {}
+
+            for (const key in obj) {
+              const value = obj[key]
+
+              if (RELATIONSHIP_FIELDS.includes(key) && value && typeof value === 'object' && 'id' in value) {
+                newObj[key] = value.id
+              } else {
+                newObj[key] = normalizeRelationships(value)
+              }
+            }
+
+            return newObj
+          }
+
+          return obj
+        }
+
+        const RELATIONSHIP_FIELDS = ['media', 'image', 'icon', 'file']
+
         const activeTemplate = getActiveTemplate(data)
         const oldTemplate = getActiveTemplate(originalDoc)
-        const isTemplateChanged = activeTemplate?.id !== oldTemplate?.id
 
-        if (isTemplateChanged && activeTemplate) {
+        const activeTemplateId = typeof activeTemplate?.id === 'object' ? activeTemplate?.id?.id : activeTemplate?.id
+
+        const oldTemplateId = typeof oldTemplate?.id === 'object' ? oldTemplate?.id?.id : oldTemplate?.id
+
+        const isTemplateChanged = operation === 'create' || activeTemplateId !== oldTemplateId
+
+        if (activeTemplate && isTemplateChanged) {
           const template: any = await req.payload.findByID({
             collection: activeTemplate.collection as any,
-            id: activeTemplate.id,
+            id: activeTemplateId,
+            depth: 2,
           })
 
-          if (template?.blocks) {
-            data.content = template.blocks.map((block: any) => {
-              const cleanedBlock = { ...block }
-
-              if (operation === 'create') {
-                if ('image' in cleanedBlock) cleanedBlock.image = null
-                if ('file' in cleanedBlock) cleanedBlock.file = null
-              } else if (operation === 'update' && isTemplateChanged) {
-                const existingBlock = originalDoc?.content?.find((b: any) => b.id === block.id || b.blockType === block.blockType)
-                if ('image' in cleanedBlock) {
-                  cleanedBlock.image = existingBlock?.image || null
-                }
-              }
-
-              return cleanedBlock
-            })
-          }
+          data.content = Array.isArray(template?.blocks)
+            ? template.blocks.map((block: any) =>
+                normalizeRelationships({
+                  ...block,
+                }),
+              )
+            : []
         }
 
         if (!data.slug && data.title) {
