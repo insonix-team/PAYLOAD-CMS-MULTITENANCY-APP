@@ -2,9 +2,9 @@ import { BlockRenderer } from '@/components/BlockRenderer'
 import FooterRenderer from '@/components/footer/FooterRenderer'
 import HeaderRenderer from '@/components/headers/HeaderRenderer'
 import { getFooter, getHeader, getPages, getTenant } from '@/lib/api'
-import ThemeRegistry from '@/providers/ThemeRegistry'
 import { notFound } from 'next/navigation'
 import '../globals.css'
+import { ThemeRegistry } from '@/providers/ThemeRegistry'
 
 export default async function DynamicPage({ params }: { params: { slug?: string[] } }) {
   const ppageParams = await params
@@ -18,7 +18,7 @@ export default async function DynamicPage({ params }: { params: { slug?: string[
   return (
     <html lang="en">
       <body>
-        <ThemeRegistry themeKey={tenant?.theme || 'green'}>
+        <ThemeRegistry>
           <HeaderRenderer header={header} />
           <BlockRenderer blocks={page?.layout || page?.content} tenant={tenant?.slug} />
           <FooterRenderer footer={footer} />
