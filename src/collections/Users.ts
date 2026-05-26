@@ -1,56 +1,17 @@
+import { isSuperAdmin, tenantAccess } from '@/lib/utils'
 import { CollectionConfig, CollectionSlug } from 'payload'
 
 const Users: CollectionConfig = {
   slug: 'users',
-
   auth: true,
-
   access: {
     create: ({ req }) => {
-      // Allow first user creation without auth
-      if (!req.user) {
-        return true
-      }
-
+      if (!req.user) return true
       return !!req.user
     },
-
-    read: ({ req }: { req: any }) => {
-      // Super admin can read all users
-      if (req.user?.role === 'superadmin') {
-        return true
-      }
-
-      // Tenant users can only read users from their tenant
-      const tenant = req.user?.tenant
-
-      return {
-        tenant: {
-          equals: typeof tenant === 'string' ? tenant : tenant?.id,
-        },
-      }
-    },
-
-    update: ({ req }: { req: any }) => {
-      // Super admin can update all users
-      if (req.user?.role === 'superadmin') {
-        return true
-      }
-
-      // Tenant users can only update users from their tenant
-      const tenant = req.user?.tenant
-
-      return {
-        tenant: {
-          equals: typeof tenant === 'string' ? tenant : tenant?.id,
-        },
-      }
-    },
-
-    delete: ({ req }: { req: any }) => {
-      // Only superadmin can delete users
-      return req.user?.role === 'superadmin'
-    },
+    read: tenantAccess,
+    update: tenantAccess,
+    delete: isSuperAdmin,
   },
 
   hooks: {

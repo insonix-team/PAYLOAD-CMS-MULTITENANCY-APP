@@ -1,24 +1,17 @@
+import { isSuperAdmin } from '@/lib/utils'
 import { CollectionConfig } from 'payload'
 
 const Tenants: CollectionConfig = {
   slug: 'tenants',
-
   admin: {
     useAsTitle: 'name',
-
-    hidden: ({ user }) => {
-      return user?.role !== 'superadmin'
-    },
+    hidden: !isSuperAdmin,
   },
-
   access: {
-    read: ({ req: { user } }) => user?.role === 'superadmin',
-
-    create: ({ req: { user } }) => user?.role === 'superadmin',
-
-    update: ({ req: { user } }) => user?.role === 'superadmin',
-
-    delete: ({ req: { user } }) => user?.role === 'superadmin',
+    read: isSuperAdmin,
+    create: isSuperAdmin,
+    update: isSuperAdmin,
+    delete: isSuperAdmin,
   },
 
   fields: [
