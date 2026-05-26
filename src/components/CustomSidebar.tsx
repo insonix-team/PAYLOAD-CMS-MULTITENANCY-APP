@@ -7,7 +7,7 @@ export default function CustomSidebar() {
   const pathname = usePathname()
   const adminRoute = '/admin'
   const isActive = (path: string) => pathname === `${adminRoute}${path}`
-  const [isTemplatesOpen, setIsTemplatesOpen] = useState(false)
+  const [isTemplatesOpen, setIsTemplatesOpen] = useState(true)
 
   // Define navigation structure
   const navItems = [
@@ -78,7 +78,7 @@ export default function CustomSidebar() {
               }
             }}
           >
-            <span style={{ fontSize: '1.2rem' }}>{item.icon}</span>
+            {/* <span style={{ fontSize: '1.2rem' }}>{item.icon}</span> */}
             <span>{item.label}</span>
           </Link>
         ))}
@@ -115,7 +115,7 @@ export default function CustomSidebar() {
               }
             }}
           >
-            <span style={{ fontSize: '1.2rem' }}>🖼️</span>
+            {/* <span style={{ fontSize: '1.2rem' }}>🖼️</span> */}
             <span style={{ flex: 1 }}>Templates</span>
             <span>{isTemplatesOpen ? '▼' : '▶'}</span>
           </div>
@@ -149,7 +149,7 @@ export default function CustomSidebar() {
                     }
                   }}
                 >
-                  <span style={{ fontSize: '1.2rem' }}>{item.icon}</span>
+                  {/* <span style={{ fontSize: '1.2rem' }}>{item.icon}</span> */}
                   <span>{item.label}</span>
                 </Link>
               ))}

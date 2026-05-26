@@ -17,7 +17,7 @@ export default function CustomNav() {
     { href: '/collections/pages', label: 'Pages', icon: '📄' },
     { href: '/collections/media', label: 'Media', icon: '🖼️' },
     { href: '/collections/users', label: 'Users', icon: '👥' },
-    ...(user?.role === 'super-admin' ? [{ href: '/collections/tenants', label: 'Tenants', icon: '🏢' }] : []),
+    ...(user?.role === 'superadmin' ? [{ href: '/collections/tenants', label: 'Tenants', icon: '🏢' }] : []),
   ]
 
   useEffect(() => {
@@ -103,7 +103,7 @@ export default function CustomNav() {
                 }
               }}
             >
-              <span style={{ fontSize: '1.1rem' }}>{item.icon}</span>
+              {/* <span style={{ fontSize: '1.1rem' }}>{item.icon}</span> */}
               <span>{item.label}</span>
             </Link>
           ))}
