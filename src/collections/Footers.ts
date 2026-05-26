@@ -1,53 +1,17 @@
-import { CollectionConfig, CollectionSlug } from 'payload'
 import { FooterColumns } from '@/blocks/footers/FooterColumns'
 import { FooterNewsletter } from '@/blocks/footers/FooterNewsletter'
 import { FooterSimple } from '@/blocks/footers/FooterSimple'
+import { tenantAccess, tenantCreateAccess } from '@/lib/utils'
+import { CollectionConfig, CollectionSlug } from 'payload'
 
 const Footers: CollectionConfig = {
   slug: 'footers',
-
-  admin: {
-    useAsTitle: 'name',
-  },
-
+  admin: { useAsTitle: 'name' },
   access: {
-    read: ({ req: { user } }) => {
-      if (user?.role === 'superadmin') {
-        return true
-      }
-
-      return {
-        tenant: {
-          equals: user?.tenant,
-        },
-      }
-    },
-
-    create: ({ req: { user } }) => !!user,
-
-    update: ({ req: { user } }) => {
-      if (user?.role === 'superadmin') {
-        return true
-      }
-
-      return {
-        tenant: {
-          equals: user?.tenant,
-        },
-      }
-    },
-
-    delete: ({ req: { user } }) => {
-      if (user?.role === 'superadmin') {
-        return true
-      }
-
-      return {
-        tenant: {
-          equals: user?.tenant,
-        },
-      }
-    },
+    read: tenantAccess,
+    create: tenantCreateAccess,
+    update: tenantAccess,
+    delete: tenantAccess,
   },
 
   hooks: {
@@ -56,19 +20,13 @@ const Footers: CollectionConfig = {
         if (req.user?.role !== 'superadmin' && req.user?.tenant) {
           data.tenant = typeof req.user.tenant === 'object' ? req.user.tenant.id : req.user.tenant
         }
-
         return data
       },
     ],
   },
 
   fields: [
-    {
-      name: 'name',
-      type: 'text',
-      required: true,
-    },
-
+    { name: 'name', type: 'text', required: true },
     {
       name: 'tenant',
       type: 'relationship',

@@ -1,4 +1,6 @@
+import { CardsWithIcons } from '@/blocks/CardsIconBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
+import { MediaBlockContent } from '@/blocks/ContentImageConfig'
 import { CtaBlock } from '@/blocks/CtaBlock'
 import { FeaturesBlock } from '@/blocks/FeaturesBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
@@ -126,7 +128,7 @@ export const Pages: any = {
     {
       name: 'content',
       type: 'blocks',
-      blocks: [HeroBlock, FeaturesBlock, ContentBlock, CtaBlock],
+      blocks: [HeroBlock, FeaturesBlock, ContentBlock, CtaBlock, MediaBlockContent, CardsWithIcons],
       admin: {
         condition: (data: any, siblingData: any) => {
           return !!(siblingData?.homeTemplate || siblingData?.aboutTemplate || siblingData?.contactTemplate || siblingData?.servicesTemplate)

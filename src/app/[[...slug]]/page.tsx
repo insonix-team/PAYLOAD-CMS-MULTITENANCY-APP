@@ -7,38 +7,20 @@ import { notFound } from 'next/navigation'
 import '../globals.css'
 
 export default async function DynamicPage({ params }: { params: { slug?: string[] } }) {
-  const p = await params
-
-  const slugArr = p?.slug || []
-
+  const ppageParams = await params
+  const slugArr = ppageParams?.slug || []
   const pageSlug = slugArr?.join('/') || 'home'
+  const [tenant, pageData, header, footer] = await Promise.all([getTenant(), getPages(pageSlug), getHeader(), getFooter()])
+  const page = pageData?.docs?.[0]
 
-  // tenant auto-detected from domain
-  const tenantDetails = await getTenant()
-
-  if (!tenantDetails) {
-    return notFound()
-  }
-
-  const data = await getPages(pageSlug)
-
-  const page = data?.docs?.[0]
-
-  if (!page) {
-    return notFound()
-  }
-
-  const header = await getHeader()
-  const footer = await getFooter()
+  if (!tenant || !page) return notFound()
 
   return (
     <html lang="en">
       <body>
-        <ThemeRegistry themeKey={tenantDetails?.theme || 'green'}>
+        <ThemeRegistry themeKey={tenant?.theme || 'green'}>
           <HeaderRenderer header={header} />
-
-          <BlockRenderer blocks={page?.layout || page?.content} tenant={tenantDetails?.slug} />
-
+          <BlockRenderer blocks={page?.layout || page?.content} tenant={tenant?.slug} />
           <FooterRenderer footer={footer} />
         </ThemeRegistry>
       </body>

@@ -270,6 +270,35 @@ export interface Page {
             blockName?: string | null;
             blockType: 'cta';
           }
+        | {
+            media: string | Media;
+            imageName?: string | null;
+            imageShortDescription?: string | null;
+            availabilityText?: string | null;
+            relatedText?: string | null;
+            position: 'left' | 'right';
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            backgroundColor?: ('white' | 'bg-card') | null;
+            padding?: ('sm' | 'md' | 'lg') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mediaBlockcontent';
+          }
+        | CardsWithIcons
       )[]
     | null;
   tenant: string | Tenant;
@@ -349,10 +378,99 @@ export interface HomeTemplate {
             blockName?: string | null;
             blockType: 'cta';
           }
+        | {
+            media: string | Media;
+            imageName?: string | null;
+            imageShortDescription?: string | null;
+            availabilityText?: string | null;
+            relatedText?: string | null;
+            position: 'left' | 'right';
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            backgroundColor?: ('white' | 'bg-card') | null;
+            padding?: ('sm' | 'md' | 'lg') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mediaBlockcontent';
+          }
+        | {
+            title: string;
+            items: {
+              question: string;
+              answer: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faqBlock';
+          }
+        | CardsWithIcons
       )[]
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CardsWithIcons".
+ */
+export interface CardsWithIcons {
+  blockHeading: string;
+  columns?: number | null;
+  cards: {
+    icon?: (string | null) | Media;
+    title: string;
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    gradientFrom?: ('primary' | 'secondary' | 'gray' | 'white') | null;
+    gradientTo?: ('primary' | 'secondary' | 'gray' | 'white') | null;
+    gradientDirection?: ('to-r' | 'to-l' | 'to-b' | 'to-t' | 'radial') | null;
+    solidBg?: ('white' | 'primary' | 'secondary' | 'gray') | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cardsWithIcons';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -762,11 +880,49 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        mediaBlockcontent?:
+          | T
+          | {
+              media?: T;
+              imageName?: T;
+              imageShortDescription?: T;
+              availabilityText?: T;
+              relatedText?: T;
+              position?: T;
+              content?: T;
+              backgroundColor?: T;
+              padding?: T;
+              id?: T;
+              blockName?: T;
+            };
+        cardsWithIcons?: T | CardsWithIconsSelect<T>;
       };
   tenant?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CardsWithIcons_select".
+ */
+export interface CardsWithIconsSelect<T extends boolean = true> {
+  blockHeading?: T;
+  columns?: T;
+  cards?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        gradientFrom?: T;
+        gradientTo?: T;
+        gradientDirection?: T;
+        solidBg?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -827,6 +983,36 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        mediaBlockcontent?:
+          | T
+          | {
+              media?: T;
+              imageName?: T;
+              imageShortDescription?: T;
+              availabilityText?: T;
+              relatedText?: T;
+              position?: T;
+              content?: T;
+              backgroundColor?: T;
+              padding?: T;
+              id?: T;
+              blockName?: T;
+            };
+        faqBlock?:
+          | T
+          | {
+              title?: T;
+              items?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        cardsWithIcons?: T | CardsWithIconsSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
