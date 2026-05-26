@@ -14,6 +14,7 @@ import Tenants from './collections/Tenants'
 import Users from './collections/Users'
 import { AboutTemplate } from './templates/AboutTemplate'
 import { HomeTemplate } from './templates/HomeTemplate'
+import { PAYLOAD_PLUGINS } from './payload.plugins'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -36,7 +37,6 @@ export default buildConfig({
   },
 
   collections: [Users, Media, Tenants, Pages, HomeTemplate, AboutTemplate, Headers, Footers],
-
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [...defaultFeatures, BoldFeature(), ItalicFeature(), UnderlineFeature(), LinkFeature()],
   }),
@@ -48,23 +48,5 @@ export default buildConfig({
     url: process.env.DATABASE_URI || '',
   }),
   sharp,
-  plugins: [
-    s3Storage({
-      collections: {
-        media: {
-          prefix: 'media',
-        },
-      },
-      bucket: 'payload-media',
-      config: {
-        endpoint: process.env.MINIO_ENDPOINT,
-        credentials: {
-          accessKeyId: process.env.MINIO_ACCESSKEY || '',
-          secretAccessKey: process.env.MINIO_SECRETEKEY || '',
-        },
-        region: 'us-east-1',
-        forcePathStyle: true,
-      },
-    }),
-  ],
+  plugins: [...PAYLOAD_PLUGINS],
 })
