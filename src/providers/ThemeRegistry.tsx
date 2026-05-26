@@ -1,20 +1,15 @@
 'use client'
 
-import { ThemeProvider, CssBaseline } from '@mui/material'
-import { themes } from '@/theme'
+// import { ThemeProvider, CssBaseline } from '@mui/material'
+// import { themes } from '@/theme'
+import { ThemeProvider } from './Theme'
 
-export default function ThemeRegistry({
-  children,
-  themeKey,
-}: {
+export const ThemeRegistry: React.FC<{
   children: React.ReactNode
-  themeKey: string
-}) {
-  const theme = themes[themeKey as keyof typeof themes] || themes.blue
-
+}> = ({ children }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <ThemeProvider>
+      {/* <CssBaseline /> */}
       {children}
     </ThemeProvider>
   )
