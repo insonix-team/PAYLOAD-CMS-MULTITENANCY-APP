@@ -5,19 +5,11 @@ const isServer = typeof window === 'undefined'
 const isLocal = process.env.NODE_ENV === 'development'
 
 export const getTenant = async (tenantSlug: string | null = null) => {
-  const query = isLocal
-    ? {
-        field: 'slug',
-        value: tenantSlug,
-      }
-    : {
-        field: 'domain',
-        value: await getCurrentDomain(),
-      }
+  
 
   const where = {
-    [query.field]: {
-      equals: query.value,
+    slug: {
+      equals: tenantSlug,
     },
   }
 
@@ -37,9 +29,9 @@ export const getTenant = async (tenantSlug: string | null = null) => {
     return result?.docs?.[0]
   }
 
-  const encodedValue = encodeURIComponent(query.value || '')
+  const encodedValue = encodeURIComponent(tenantSlug || '')
 
-  const res = await fetch(`${base_url}/api/tenants?where[${query.field}][equals]=${encodedValue}`, {
+  const res = await fetch(`${base_url}/api/tenants?where[slug][equals]=${encodedValue}`, {
     cache: 'no-store',
   })
   const data = await res.json()

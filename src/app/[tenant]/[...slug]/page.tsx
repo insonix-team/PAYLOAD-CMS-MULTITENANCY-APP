@@ -34,9 +34,6 @@ export default async function DynamicPage({ params }: { params: { tenant?: strin
   const header = await getHeader(tenantSlug)
   const footer = await getFooter(tenantSlug)
 
-  const tenantDetails = await getTenant(tenant)
-  const header = await getHeader(tenantDetails?.slug || '')
-  const footer = await getFooter(tenantDetails?.slug || '')
   return (
     <html lang="en">
       <body>

@@ -8,7 +8,7 @@ export default function FooterRenderer({ footer }: any) {
 
   const block = footer[0]
 
-  switch (block.blockType) {
+  switch (block?.blockType) {
     case 'footerSimple':
       return <FooterSimple {...block} />
 
