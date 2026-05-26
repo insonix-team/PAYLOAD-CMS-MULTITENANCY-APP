@@ -1,5 +1,6 @@
 import FooterColumns from './FooterColumns'
 import FooterSimple from './FooterSimple'
+import { FooterNewsLetterUI } from './FooterNewsLetter'
 
 export default function FooterRenderer({ footer }: any) {
   if (!footer) {
@@ -14,6 +15,9 @@ export default function FooterRenderer({ footer }: any) {
 
     case 'footerColumns':
       return <FooterColumns {...block} />
+
+    case 'footerNewsletter':
+      return <FooterNewsLetterUI {...block} />
 
     default:
       return null

@@ -2,6 +2,7 @@ import { CollectionConfig, CollectionSlug } from 'payload'
 
 import { FooterSimple } from '@/blocks/footers/FooterSimple'
 import { FooterColumns } from '@/blocks/footers/FooterColumns'
+import { FooterNewsletter } from '@/blocks/footers/FooterNewsletter'
 
 const Footers: CollectionConfig = {
   slug: 'footers',
@@ -30,7 +31,7 @@ const Footers: CollectionConfig = {
     {
       name: 'layout',
       type: 'blocks',
-      blocks: [FooterSimple, FooterColumns],
+      blocks: [FooterSimple, FooterColumns, FooterNewsletter],
       required: true,
     },
   ],

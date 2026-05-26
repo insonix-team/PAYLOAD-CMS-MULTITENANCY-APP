@@ -512,6 +512,33 @@ export interface Footer {
         blockName?: string | null;
         blockType: 'footerColumns';
       }
+    | {
+        enableI18n?: boolean | null;
+        backgroundImage?: (string | null) | Media;
+        description?: string | null;
+        ctaButton?: {
+          text?: string | null;
+          link?: (string | null) | Page;
+        };
+        socialLinks?:
+          | {
+              platform?: ('facebook' | 'instagram' | 'twitter' | 'linkedin' | 'youtube') | null;
+              url: string;
+              id?: string | null;
+            }[]
+          | null;
+        hours?:
+          | {
+              day?: string | null;
+              time?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        mapEmbed?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'footerNewsletter';
+      }
   )[];
   updatedAt: string;
   createdAt: string;
@@ -950,6 +977,36 @@ export interface FootersSelect<T extends boolean = true> {
                         };
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        footerNewsletter?:
+          | T
+          | {
+              enableI18n?: T;
+              backgroundImage?: T;
+              description?: T;
+              ctaButton?:
+                | T
+                | {
+                    text?: T;
+                    link?: T;
+                  };
+              socialLinks?:
+                | T
+                | {
+                    platform?: T;
+                    url?: T;
+                    id?: T;
+                  };
+              hours?:
+                | T
+                | {
+                    day?: T;
+                    time?: T;
+                    id?: T;
+                  };
+              mapEmbed?: T;
               id?: T;
               blockName?: T;
             };
