@@ -29,7 +29,7 @@ export function HeaderCTA({ navItems, ctas, logo }: { navItems: any[]; ctas: any
   console.log(navItems)
   return (
     <header className={['fixed w-full z-[999] top-0 bg-white/80 backdrop-blur-xl transition-all duration-300 border-b border-black/5', small ? 'shadow-md' : 'shadow-sm'].join(' ')}>
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
+      <div className="mx-auto  flex items-center justify-between h-20">
         {/* LOGO */}
         <Link href="/" className="flex items-center">
           {logo?.url ? <img src={logo?.url} alt={logo?.alt} className="h-14 w-auto object-contain" /> : <span className="text-2xl font-bold text-[#01325a]">DentalCare</span>}

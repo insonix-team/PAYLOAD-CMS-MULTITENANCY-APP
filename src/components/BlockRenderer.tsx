@@ -10,6 +10,7 @@ import { FAQComponentUI } from './FaqComponent'
 import { CardsWithIconsBlockUI } from './CardIconComponent'
 import { FeaturesBlock } from './FeaturesBlock'
 import { HeroBlock } from './HeroBlock'
+import VerticleHoverCardsUI from './VerticleHoverCardsUI'
 
 type Props = {
   blocks: any[]
@@ -35,6 +36,8 @@ export const BlockRenderer = ({ blocks, tenant }: Props) => {
           case 'cardsWithIcons':
             return <CardsWithIconsBlockUI key={index} data={block} tenant={tenant} />
 
+          case 'verticleHoverCardsBlock':
+            return <VerticleHoverCardsUI key={index} data={block} tenant={tenant} />
           case 'list':
             return <ListBlockUI key={index} data={block} />
 

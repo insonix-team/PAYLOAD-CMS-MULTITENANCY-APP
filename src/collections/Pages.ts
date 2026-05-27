@@ -2,8 +2,10 @@ import { CardsWithIcons } from '@/blocks/CardsIconBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
 import { MediaBlockContent } from '@/blocks/ContentImageConfig'
 import { CtaBlock } from '@/blocks/CtaBlock'
+import { FAQBlock } from '@/blocks/FaqConfig'
 import { FeaturesBlock } from '@/blocks/FeaturesBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
+import { VerticleHoverCardsBlock } from '@/blocks/VerticleHoverCardsBlock'
 import { TEMPLATE_TYPE_OPTIONS, TEMPLATE_TYPES } from '@/constants/AppOptions'
 import { CollectionSlug } from 'payload'
 
@@ -178,7 +180,7 @@ export const Pages: any = {
     {
       name: 'content',
       type: 'blocks',
-      blocks: [HeroBlock, FeaturesBlock, ContentBlock, CtaBlock, MediaBlockContent, CardsWithIcons],
+      blocks: [HeroBlock, FeaturesBlock, ContentBlock, CtaBlock, MediaBlockContent, CardsWithIcons, VerticleHoverCardsBlock, FAQBlock],
       admin: {
         condition: (data: any, siblingData: any) => {
           return !!(siblingData?.homeTemplate || siblingData?.aboutTemplate || siblingData?.contactTemplate || siblingData?.servicesTemplate)

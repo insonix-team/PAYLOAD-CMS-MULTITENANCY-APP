@@ -34,7 +34,7 @@ export const CardsWithIconsBlockUI = ({ data, tenant }: { data?: CardsWithIcons;
         <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 ${desktopCols}`}>
           {block.cards?.map((card, i) => {
             const iconObj = typeof card.icon === 'object' ? card.icon : null
-            const iconUrl = iconObj?.url ? `${process.env.NEXT_PUBLIC_SERVER_URL}${iconObj.url}` : null
+            const iconUrl = iconObj?.url ? `${iconObj.url}` : null
 
             const direction = directionMap[card.gradientDirection ?? 'to-r']
             const from = colorMap[card.gradientFrom ?? 'primary']
