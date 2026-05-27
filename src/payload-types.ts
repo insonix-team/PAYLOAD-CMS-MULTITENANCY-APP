@@ -299,6 +299,54 @@ export interface Page {
             blockType: 'mediaBlockcontent';
           }
         | CardsWithIcons
+        | {
+            blockHeading: string;
+            headingColor?: ('black' | 'white') | null;
+            cards: {
+              title: string;
+              slug: string;
+              image: string | Media;
+              description: string;
+              cta: {
+                text: string;
+                link: string;
+              };
+              id?: string | null;
+            }[];
+            sectionColor?: ('primary' | 'secondary' | 'bg-soft' | 'bg-dark') | null;
+            sectionBackground?: (string | null) | Media;
+            columns: '2' | '3' | '4';
+            delay?: number | null;
+            loading?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'verticleHoverCardsBlock';
+          }
+        | {
+            title: string;
+            items: {
+              question: string;
+              answer: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faqBlock';
+          }
       )[]
     | null;
   tenant?: (string | null) | Tenant;
@@ -432,6 +480,29 @@ export interface HomeTemplate {
             blockType: 'faqBlock';
           }
         | CardsWithIcons
+        | {
+            blockHeading: string;
+            headingColor?: ('black' | 'white') | null;
+            cards: {
+              title: string;
+              slug: string;
+              image: string | Media;
+              description: string;
+              cta: {
+                text: string;
+                link: string;
+              };
+              id?: string | null;
+            }[];
+            sectionColor?: ('primary' | 'secondary' | 'bg-soft' | 'bg-dark') | null;
+            sectionBackground?: (string | null) | Media;
+            columns: '2' | '3' | '4';
+            delay?: number | null;
+            loading?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'verticleHoverCardsBlock';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -930,6 +1001,48 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
         cardsWithIcons?: T | CardsWithIconsSelect<T>;
+        verticleHoverCardsBlock?:
+          | T
+          | {
+              blockHeading?: T;
+              headingColor?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    slug?: T;
+                    image?: T;
+                    description?: T;
+                    cta?:
+                      | T
+                      | {
+                          text?: T;
+                          link?: T;
+                        };
+                    id?: T;
+                  };
+              sectionColor?: T;
+              sectionBackground?: T;
+              columns?: T;
+              delay?: T;
+              loading?: T;
+              id?: T;
+              blockName?: T;
+            };
+        faqBlock?:
+          | T
+          | {
+              title?: T;
+              items?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   tenant?: T;
   updatedAt?: T;
@@ -1047,6 +1160,34 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
               blockName?: T;
             };
         cardsWithIcons?: T | CardsWithIconsSelect<T>;
+        verticleHoverCardsBlock?:
+          | T
+          | {
+              blockHeading?: T;
+              headingColor?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    slug?: T;
+                    image?: T;
+                    description?: T;
+                    cta?:
+                      | T
+                      | {
+                          text?: T;
+                          link?: T;
+                        };
+                    id?: T;
+                  };
+              sectionColor?: T;
+              sectionBackground?: T;
+              columns?: T;
+              delay?: T;
+              loading?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
