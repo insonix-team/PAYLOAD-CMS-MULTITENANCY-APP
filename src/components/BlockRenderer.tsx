@@ -10,6 +10,7 @@ import { HeroBlock } from './HeroBlock'
 import { FeaturesBlock } from './FeaturesBlock'
 import { ContentImageComponentUI } from './ContentImageComponent'
 import { FAQComponentUI } from './FaqComponent'
+import { CardsWithIconsBlockUI } from './CardIconComponent'
 
 type Props = {
   blocks: any[]
@@ -31,6 +32,9 @@ export const BlockRenderer = ({ blocks, tenant }: Props) => {
 
           case 'mediaBlockcontent':
             return <ContentImageComponentUI key={index} data={block} tenant={tenant} />
+
+          case 'cardsWithIcons':
+            return <CardsWithIconsBlockUI key={index} data={block} tenant={tenant} />
 
           case 'list':
             return <ListBlockUI key={index} data={block} />

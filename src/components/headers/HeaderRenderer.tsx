@@ -1,5 +1,7 @@
+import { HeaderCTA } from '@/blocks/headers/HeaderCTA'
 import HeaderCentered from './HeaderCentered'
 import HeaderSimple from './HeaderSimple'
+import { HeaderClient } from './HeaderCTA'
 
 export default function HeaderRenderer({ header }: any) {
   if (!header) {
@@ -7,6 +9,7 @@ export default function HeaderRenderer({ header }: any) {
   }
 
   const block = header[0]
+  console.log(block)
 
   switch (block.blockType) {
     case 'headerSimple':
@@ -14,6 +17,9 @@ export default function HeaderRenderer({ header }: any) {
 
     case 'headerCentered':
       return <HeaderCentered {...block} />
+
+    case 'headerCTA':
+      return <HeaderClient {...block} />
 
     default:
       return null

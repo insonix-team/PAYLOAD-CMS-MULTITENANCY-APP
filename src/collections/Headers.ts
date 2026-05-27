@@ -2,6 +2,7 @@ import { CollectionConfig, CollectionSlug } from 'payload'
 
 import { HeaderSimple } from '@/blocks/headers/HeaderSimple'
 import { HeaderCentered } from '@/blocks/headers/HeaderCentered'
+import { HeaderCTA } from '@/blocks/headers/HeaderCTA'
 
 const Headers: CollectionConfig = {
   slug: 'headers',
@@ -87,7 +88,7 @@ const Headers: CollectionConfig = {
     {
       name: 'layout',
       type: 'blocks',
-      blocks: [HeaderSimple, HeaderCentered],
+      blocks: [HeaderSimple, HeaderCentered, HeaderCTA],
       required: true,
     },
   ],
