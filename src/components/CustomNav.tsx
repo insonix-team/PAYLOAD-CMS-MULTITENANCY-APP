@@ -1,4 +1,5 @@
 'use client'
+import { ROLES } from '@/constants/AppOptions'
 import { useAuth } from '@payloadcms/ui'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -11,13 +12,7 @@ export default function CustomNav() {
 
   const isActive = (path: string) => pathname === `${adminRoute}${path}`
 
-  const navItems = [
-    { href: `/custom-dashboard`, label: 'Analytics' },
-    { href: '/collections/pages', label: 'Pages' },
-    { href: '/collections/media', label: 'Media' },
-    { href: '/collections/users', label: 'Users' },
-    ...(user?.role === 'superadmin' ? [{ href: '/collections/tenants', label: 'Tenants' }] : []),
-  ]
+  const navItems = [{ href: `/custom-dashboard`, label: 'Analytics' }, { href: '/collections/pages', label: 'Pages' }, { href: '/collections/media', label: 'Media' }, ...(user?.role === ROLES.SUPERADMIN || user?.role === ROLES.TENANT ? [{ href: '/collections/users', label: 'Users' }] : []), ...(user?.role === ROLES.SUPERADMIN ? [{ href: '/collections/tenants', label: 'Tenants' }] : [])]
 
   useEffect(() => {
     const style = document.createElement('style')

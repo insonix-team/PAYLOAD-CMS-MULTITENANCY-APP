@@ -3,6 +3,7 @@ import { CollectionConfig, CollectionSlug } from 'payload'
 import { HeaderSimple } from '@/blocks/headers/HeaderSimple'
 import { HeaderCentered } from '@/blocks/headers/HeaderCentered'
 import { HeaderCTA } from '@/blocks/headers/HeaderCTA'
+import { ROLES } from '@/constants/AppOptions'
 
 const Headers: CollectionConfig = {
   slug: 'headers',
@@ -13,7 +14,7 @@ const Headers: CollectionConfig = {
 
   access: {
     read: ({ req: { user } }) => {
-      if (user?.role === 'superadmin') {
+      if (user?.role === ROLES.SUPERADMIN) {
         return true
       }
 
@@ -27,7 +28,7 @@ const Headers: CollectionConfig = {
     create: ({ req: { user } }) => !!user,
 
     update: ({ req: { user } }) => {
-      if (user?.role === 'superadmin') {
+      if (user?.role === ROLES.SUPERADMIN) {
         return true
       }
 
@@ -39,7 +40,7 @@ const Headers: CollectionConfig = {
     },
 
     delete: ({ req: { user } }) => {
-      if (user?.role === 'superadmin') {
+      if (user?.role === ROLES.SUPERADMIN) {
         return true
       }
 
@@ -54,7 +55,7 @@ const Headers: CollectionConfig = {
   hooks: {
     beforeValidate: [
       ({ req, data }: any) => {
-        if (req.user?.role !== 'superadmin' && req.user?.tenant) {
+        if (req.user?.role !== ROLES.SUPERADMIN && req.user?.tenant) {
           data.tenant = typeof req.user.tenant === 'object' ? req.user.tenant.id : req.user.tenant
         }
 
@@ -80,7 +81,7 @@ const Headers: CollectionConfig = {
         position: 'sidebar',
 
         condition: (_, __, { user }) => {
-          return user?.role === 'superadmin'
+          return user?.role === ROLES.SUPERADMIN
         },
       },
     },

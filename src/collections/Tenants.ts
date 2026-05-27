@@ -1,3 +1,4 @@
+import { ROLES } from '@/constants/AppOptions'
 import { CollectionConfig } from 'payload'
 
 const Tenants: CollectionConfig = {
@@ -7,18 +8,18 @@ const Tenants: CollectionConfig = {
     useAsTitle: 'name',
 
     hidden: ({ user }) => {
-      return user?.role !== 'superadmin'
+      return user?.role !== ROLES.SUPERADMIN
     },
   },
 
   access: {
-    read: ({ req: { user } }) => user?.role === 'superadmin',
+    read: ({ req: { user } }) => user?.role === ROLES.SUPERADMIN,
 
-    create: ({ req: { user } }) => user?.role === 'superadmin',
+    create: ({ req: { user } }) => user?.role === ROLES.SUPERADMIN,
 
-    update: ({ req: { user } }) => user?.role === 'superadmin',
+    update: ({ req: { user } }) => user?.role === ROLES.SUPERADMIN,
 
-    delete: ({ req: { user } }) => user?.role === 'superadmin',
+    delete: ({ req: { user } }) => user?.role === ROLES.SUPERADMIN,
   },
 
   fields: [

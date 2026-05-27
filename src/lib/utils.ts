@@ -1,4 +1,5 @@
 import { ROLES } from '@/constants/AppOptions'
+import { Access } from 'payload'
 
 export const isSuperAdmin = (user: any) => {
   return user?.role === ROLES.SUPERADMIN
