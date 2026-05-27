@@ -136,7 +136,7 @@ export interface UserAuthOperations {
 export interface User {
   id: string;
   name: string;
-  role?: ('superadmin' | 'tenant') | null;
+  role?: ('superadmin' | 'user') | null;
   tenant?: (string | null) | Tenant;
   updatedAt: string;
   createdAt: string;

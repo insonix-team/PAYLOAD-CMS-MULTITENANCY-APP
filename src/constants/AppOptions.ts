@@ -11,3 +11,8 @@ export const TEMPLATE_TYPE_OPTIONS = [
   { label: 'Contact', value: TEMPLATE_TYPES.CONTACT },
   { label: 'Services', value: TEMPLATE_TYPES.SERVICES },
 ]
+
+export const ROLES = {
+  TENANT: 'tenant',
+  SUPERADMIN: 'superadmin',
+}
