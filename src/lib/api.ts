@@ -2,21 +2,36 @@ import { getCurrentDomain } from './tenant'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_SITE_URL || `http://localhost:${process.env.PORT || 3000}`
 const isServer = typeof window === 'undefined'
-const isLocal = process.env.NODE_ENV === 'development'
 
 export const getTenant = async (tenantSlug: string | null = null) => {
+  const query = tenantSlug
+    ? {
+        field: 'slug',
+        value: tenantSlug,
+      }
+    : {
+        field: 'domain',
+        value: await getCurrentDomain(),
+      }
+
   const where = {
-    slug: {
-      equals: tenantSlug,
+    [query.field]: {
+      equals: query.value,
     },
   }
+
+  // Server-side
 
   let base_url = BASE_URL
 
   if (isServer) {
     const { getPayload } = await import('payload')
     const configModule = await import('@payload-config')
-    const payload = await getPayload({ config: (configModule as any).default })
+
+    const payload = await getPayload({
+      config: (configModule as any).default,
+    })
+
     const result = await payload.find({
       collection: 'tenants',
       where,
@@ -26,13 +41,13 @@ export const getTenant = async (tenantSlug: string | null = null) => {
     return result?.docs?.[0]
   }
 
-  const encodedValue = encodeURIComponent(tenantSlug || '')
+  const encodedValue = encodeURIComponent(query.value || '')
 
-  const res = await fetch(`${base_url}/api/tenants?where[slug][equals]=${encodedValue}`, {
+  const res = await fetch(`${base_url}/api/tenants?where[${query.field}][equals]=${encodedValue}`, {
     cache: 'no-store',
   })
-  const data = await res.json()
 
+  const data = await res.json()
   return data?.docs?.[0]
 }
 
