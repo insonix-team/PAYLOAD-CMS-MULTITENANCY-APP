@@ -1,9 +1,16 @@
+import { ROLES } from '@/constants/AppOptions'
 import { isSuperAdmin, tenantAccess } from '@/lib/utils'
 import { CollectionConfig, CollectionSlug } from 'payload'
 
 const Users: CollectionConfig = {
   slug: 'users',
   auth: true,
+  admin: {
+    useAsTitle: 'name',
+    hidden: ({ user }) => {
+      return ![ROLES.SUPERADMIN, ROLES.TENANT].includes(user?.role)
+    },
+  },
   access: {
     create: ({ req }) => {
       if (!req.user) return true
@@ -11,7 +18,7 @@ const Users: CollectionConfig = {
     },
     read: tenantAccess,
     update: tenantAccess,
-    delete: isSuperAdmin,
+    delete: tenantAccess,
   },
 
   hooks: {
@@ -31,7 +38,7 @@ const Users: CollectionConfig = {
         if (users.totalDocs === 0) {
           return {
             ...data,
-            role: 'superadmin',
+            role: ROLES.SUPERADMIN,
             tenant: undefined,
           }
         }
@@ -54,17 +61,21 @@ const Users: CollectionConfig = {
       options: [
         {
           label: 'Super Admin',
-          value: 'superadmin',
+          value: ROLES.SUPERADMIN,
         },
         {
           label: 'Tenant User',
-          value: 'tenant',
+          value: ROLES.TENANT,
+        },
+        {
+          label: 'Designer',
+          value: ROLES.DESIGNER,
         },
       ],
 
       admin: {
         condition: (_, __, { user }) => {
-          return user?.role === 'superadmin'
+          return user?.role === ROLES.SUPERADMIN
         },
       },
 
@@ -78,12 +89,11 @@ const Users: CollectionConfig = {
             })
 
             if (users.totalDocs === 0) {
-              return 'superadmin'
+              return ROLES.SUPERADMIN
             }
 
-            // Non-superadmin users always create tenant users
-            if (req.user?.role !== 'superadmin') {
-              return 'tenant'
+            if (req.user?.role === ROLES.TENANT) {
+              return ROLES.DESIGNER
             }
 
             return value
@@ -94,17 +104,12 @@ const Users: CollectionConfig = {
 
     {
       name: 'tenant',
-
       type: 'relationship',
-
       relationTo: 'tenants' as CollectionSlug,
-
       required: false,
-
       admin: {
         condition: (_, __, { user }) => {
-          // Only superadmin can see tenant field
-          return user?.role === 'superadmin'
+          return user?.role === ROLES.SUPERADMIN
         },
       },
 
@@ -117,13 +122,12 @@ const Users: CollectionConfig = {
               limit: 1,
             })
 
-            // First superadmin doesn't need tenant
             if (users.totalDocs === 0) {
               return undefined
             }
 
             // Auto assign tenant for tenant users
-            if (req.user?.role !== 'superadmin') {
+            if (req.user?.role !== ROLES.SUPERADMIN) {
               const tenant = req.user?.tenant
 
               return typeof tenant === 'string' ? tenant : tenant?.id

@@ -4,7 +4,7 @@ import { MediaBlockContent } from '@/blocks/ContentImageConfig'
 import { CtaBlock } from '@/blocks/CtaBlock'
 import { FeaturesBlock } from '@/blocks/FeaturesBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
-import { TEMPLATE_TYPE_OPTIONS, TEMPLATE_TYPES } from '@/constants/AppOptions'
+import { ROLES, TEMPLATE_TYPE_OPTIONS, TEMPLATE_TYPES } from '@/constants/AppOptions'
 import { CollectionSlug } from 'payload'
 
 export const Pages: any = {
@@ -19,7 +19,7 @@ export const Pages: any = {
         return false
       }
 
-      if (user.role === 'superadmin') {
+      if (user.role === ROLES.SUPERADMIN) {
         return true
       }
 
@@ -35,7 +35,7 @@ export const Pages: any = {
         return false
       }
 
-      if (user.role === 'superadmin') {
+      if (user.role === ROLES.SUPERADMIN) {
         return true
       }
 
@@ -51,7 +51,7 @@ export const Pages: any = {
         return false
       }
 
-      if (user.role === 'superadmin') {
+      if (user.role === ROLES.SUPERADMIN) {
         return true
       }
 
@@ -193,11 +193,11 @@ export const Pages: any = {
       admin: {
         position: 'sidebar',
         condition: (_data: any, _siblingData: any, { user }: any) => {
-          return user?.role === 'superadmin'
+          return user?.role === ROLES.SUPERADMIN
         },
       },
       defaultValue: ({ user }: any) => {
-        if (user?.role !== 'superadmin') {
+        if (user?.role !== ROLES.SUPERADMIN) {
           return typeof user?.tenant === 'object' ? user.tenant.id : user?.tenant
         }
 

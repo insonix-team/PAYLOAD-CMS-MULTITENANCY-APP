@@ -15,4 +15,5 @@ export const TEMPLATE_TYPE_OPTIONS = [
 export const ROLES = {
   TENANT: 'tenant',
   SUPERADMIN: 'superadmin',
+  DESIGNER: 'designer',
 }
