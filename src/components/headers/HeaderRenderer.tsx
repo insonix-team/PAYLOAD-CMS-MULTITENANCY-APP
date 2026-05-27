@@ -11,7 +11,7 @@ export default function HeaderRenderer({ header }: any) {
   const block = header[0]
   console.log(block)
 
-  switch (block.blockType) {
+  switch (block?.blockType) {
     case 'headerSimple':
       return <HeaderSimple {...block} />
 

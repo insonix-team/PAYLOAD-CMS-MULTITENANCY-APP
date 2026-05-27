@@ -1,16 +1,15 @@
 import { CardsBlockUI } from './blocks/CardsBlockUI'
-import { ListBlockUI } from './blocks/ListBlockUI'
-import { FAQBlockUI } from './blocks/FAQBlockUI'
-import { TestimonialsBlockUI } from './blocks/TestimonialsBlockUI'
-import { CTABlockUI } from './blocks/CTABlockUI'
-import { TextBlockUI } from './blocks/TextBlockUI'
-import { ImageBlockUI } from './blocks/ImageBlockUI'
 import { ContentWithImageBlock } from './blocks/ContentWithImageBlocksUi'
-import { HeroBlock } from './HeroBlock'
-import { FeaturesBlock } from './FeaturesBlock'
+import { CTABlockUI } from './blocks/CTABlockUI'
+import { ImageBlockUI } from './blocks/ImageBlockUI'
+import { ListBlockUI } from './blocks/ListBlockUI'
+import { TestimonialsBlockUI } from './blocks/TestimonialsBlockUI'
+import { TextBlockUI } from './blocks/TextBlockUI'
 import { ContentImageComponentUI } from './ContentImageComponent'
 import { FAQComponentUI } from './FaqComponent'
 import { CardsWithIconsBlockUI } from './CardIconComponent'
+import { FeaturesBlock } from './FeaturesBlock'
+import { HeroBlock } from './HeroBlock'
 
 type Props = {
   blocks: any[]
@@ -22,8 +21,8 @@ export const BlockRenderer = ({ blocks, tenant }: Props) => {
 
   return (
     <>
-      {blocks.map((block, index) => {
-        switch (block.blockType) {
+      {blocks?.map((block, index) => {
+        switch (block?.blockType) {
           case 'contentWithImage':
             return <ContentWithImageBlock key={index} data={block} tenant={tenant} />
 
