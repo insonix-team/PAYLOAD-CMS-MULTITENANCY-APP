@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
@@ -27,15 +26,12 @@ type Props = {
 
 export const ContentImageComponentUI = ({ data }: Props) => {
   const { media, position = 'left', content, availabilityText, relatedText, imageShortDescription, imageName, backgroundColor = 'bg-white', padding = 'md' } = data
+  console.log('ContentImageComponent data:', data)
 
   const isLeft = position === 'left'
-
   const bgClass = backgroundColor === 'bg-card' ? 'bg-card' : 'bg-white'
-
   const paddingClass = padding === 'lg' ? 'p-12' : padding === 'md' ? 'p-8' : 'p-4'
-
   const mediaUrl = typeof media === 'object' && media?.url ? media.url : null
-
   const mediaAlt = typeof media === 'object' && media?.alt ? media.alt : imageName || 'Media image'
 
   return (
@@ -74,12 +70,9 @@ export const ContentImageComponentUI = ({ data }: Props) => {
                 }}
               >
                 <Image src={mediaUrl} alt={mediaAlt} width={200} height={200} className="h-full w-full object-cover" />
-
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-
                 <div className="absolute bottom-0 p-3">
                   {imageShortDescription && <p className="hidden text-[8px] font-semibold uppercase leading-4 tracking-[0.18em] text-secondary-50 md:block">{imageShortDescription}</p>}
-
                   <p className="text-[10px] text-white/80">Same-Day Emergencies.</p>
                 </div>
               </div>
