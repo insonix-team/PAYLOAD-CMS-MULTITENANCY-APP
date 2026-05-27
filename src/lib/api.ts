@@ -5,14 +5,11 @@ const isServer = typeof window === 'undefined'
 const isLocal = process.env.NODE_ENV === 'development'
 
 export const getTenant = async (tenantSlug: string | null = null) => {
-  
-
   const where = {
     slug: {
       equals: tenantSlug,
     },
   }
-
 
   let base_url = BASE_URL
 
@@ -62,7 +59,7 @@ export const getHeader = async (tenantSlug: string | null = null) => {
     },
 
     limit: 1,
-    depth: 2,
+    depth: 10,
   })
 
   return result?.docs[0]?.layout || null
@@ -92,7 +89,7 @@ export const getFooter = async (tenantSlug: string | null = null) => {
     },
 
     limit: 1,
-    depth: 2,
+    depth: 10,
   })
 
   return result.docs[0]?.layout || null

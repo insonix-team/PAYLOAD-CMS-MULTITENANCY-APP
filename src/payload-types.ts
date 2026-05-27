@@ -587,6 +587,40 @@ export interface Header {
         blockName?: string | null;
         blockType: 'headerCentered';
       }
+    | {
+        logo?: (string | null) | Media;
+        navItems?:
+          | {
+              label: string;
+              icon?: (string | null) | Media;
+              page?: (string | null) | Page;
+              customUrl?: string | null;
+              children?:
+                | {
+                    label: string;
+                    icon?: (string | null) | Media;
+                    page?: (string | null) | Page;
+                    customUrl?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
+              id?: string | null;
+            }[]
+          | null;
+        headerStyle: 'default' | 'modern' | 'centered';
+        ctas?:
+          | {
+              label: string;
+              link?: (string | null) | Page;
+              customUrl?: string | null;
+              style?: ('primary' | 'secondary' | 'outline') | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'headerCTA';
+      }
   )[];
   updatedAt: string;
   createdAt: string;
@@ -1116,6 +1150,41 @@ export interface HeadersSelect<T extends boolean = true> {
                 | {
                     label?: T;
                     url?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        headerCTA?:
+          | T
+          | {
+              logo?: T;
+              navItems?:
+                | T
+                | {
+                    label?: T;
+                    icon?: T;
+                    page?: T;
+                    customUrl?: T;
+                    children?:
+                      | T
+                      | {
+                          label?: T;
+                          icon?: T;
+                          page?: T;
+                          customUrl?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              headerStyle?: T;
+              ctas?:
+                | T
+                | {
+                    label?: T;
+                    link?: T;
+                    customUrl?: T;
+                    style?: T;
                     id?: T;
                   };
               id?: T;

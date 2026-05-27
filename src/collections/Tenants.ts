@@ -51,7 +51,7 @@ const Tenants: CollectionConfig = {
       defaultValue: 'blue',
       admin: {
         components: {
-          Field: 'src/components/admin/ThemeSelector',
+          Field: '@/components/admin/ThemeSelector',
         },
         description: 'Select UI theme for this tenant',
       },

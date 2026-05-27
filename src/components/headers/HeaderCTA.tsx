@@ -1,15 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import type { Header, Page } from '@/payload-types'
+import type { Page } from '@/payload-types'
 import { ChevronDown } from 'lucide-react'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import MobileDrawer from './MobileDrawer'
 
-export function HeaderClient({ data }: { data: { navItems: any; ctas: any; logo: any } }) {
-  const nav = data?.navItems || []
-  const ctas = data?.ctas || []
-  const logo = data?.logo
+export function HeaderCTA({ navItems, ctas, logo }: { navItems: any[]; ctas: any[]; logo: any }) {
+  const nav = navItems || []
 
   const [open, setOpen] = useState(false)
   const [small, setSmall] = useState(false)
