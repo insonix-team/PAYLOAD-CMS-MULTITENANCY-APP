@@ -15,7 +15,7 @@ export const ContentWithImageBlock = ({ data, tenant }: Props) => {
 
   return (
     <section
-      className={`py-16 px-6 ${isDark ? 'bg-black text-white' : 'bg-white text-black'}`}
+      className={`py-16 px-6 m-10 ${isDark ? 'bg-black text-white' : 'bg-white text-black'}`}
       style={
         isBackgroundImage && image?.url
           ? {

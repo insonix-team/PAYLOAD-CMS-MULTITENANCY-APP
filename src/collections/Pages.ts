@@ -193,11 +193,11 @@ export const Pages: any = {
       admin: {
         position: 'sidebar',
         condition: (_data: any, _siblingData: any, { user }: any) => {
-          return user?.role === 'super-admin'
+          return user?.role === 'superadmin'
         },
       },
       defaultValue: ({ user }: any) => {
-        if (user?.role !== 'super-admin') {
+        if (user?.role !== 'superadmin') {
           return typeof user?.tenant === 'object' ? user.tenant.id : user?.tenant
         }
 
