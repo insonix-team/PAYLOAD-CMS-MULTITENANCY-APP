@@ -59,7 +59,7 @@ export const getHeader = async (tenantSlug: string | null = null) => {
     },
 
     limit: 1,
-    depth: 10,
+    depth: 2,
   })
 
   return result?.docs[0]?.layout || null
@@ -89,7 +89,7 @@ export const getFooter = async (tenantSlug: string | null = null) => {
     },
 
     limit: 1,
-    depth: 10,
+    depth: 2,
   })
 
   return result.docs[0]?.layout || null
