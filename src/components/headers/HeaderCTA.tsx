@@ -26,7 +26,7 @@ export function HeaderCTA({ navItems, ctas, logo }: { navItems: any[]; ctas: any
     if (typeof link === 'string') return `/${link}`
     return '/'
   }
-
+  console.log(navItems)
   return (
     <header className={['fixed w-full z-[999] top-0 bg-white/80 backdrop-blur-xl transition-all duration-300 border-b border-black/5', small ? 'shadow-md' : 'shadow-sm'].join(' ')}>
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
@@ -51,15 +51,13 @@ export function HeaderCTA({ navItems, ctas, logo }: { navItems: any[]; ctas: any
 
                 {/* DROPDOWN */}
                 {hasDropdown && activeDropdown === item.label && (
-                  <div className="absolute left-0 top-full mt-0 w-60 bg-white shadow-xl rounded-sm border p-2 z-[2000]">
+                  <div className="absolute left-0 top-full mt-0 w-60 bg-white shadow-xl rounded-sm border-0 p-2 z-[2000]">
                     {item.children.map((child: any, cIdx: number) => {
                       const childKey = child?.id ?? `${child.label}-${cIdx}`
 
-                      const iconUrl = child.icon?.url ? `${process.env.NEXT_PUBLIC_SERVER_URL}${child.icon.url}` : null
-
                       return (
                         <Link key={childKey} href={resolveUrl(child.href)} className="flex items-center gap-3 px-3 py-2 rounded hover:bg-gray-100 transition">
-                          {iconUrl && <img src={iconUrl} alt={child.label} className="w-8 h-8 object-contain" />}
+                          {child.icon.url && <img src={child.icon.url} alt={child.label} className="w-8 h-8 object-contain" />}
                           <span>{child.label}</span>
                         </Link>
                       )
