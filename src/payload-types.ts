@@ -59,1257 +59,1257 @@ export type SupportedTimezones =
   | 'Pacific/Guam'
   | 'Pacific/Noumea'
   | 'Pacific/Auckland'
-  | 'Pacific/Fiji'
+  | 'Pacific/Fiji';
 
 export interface Config {
   auth: {
-    users: UserAuthOperations
-  }
-  blocks: {}
+    users: UserAuthOperations;
+  };
+  blocks: {};
   collections: {
-    users: User
-    media: Media
-    tenants: Tenant
-    pages: Page
-    'home-templates': HomeTemplate
-    'about-templates': AboutTemplate
-    headers: Header
-    footers: Footer
-    'payload-kv': PayloadKv
-    'payload-locked-documents': PayloadLockedDocument
-    'payload-preferences': PayloadPreference
-    'payload-migrations': PayloadMigration
-  }
-  collectionsJoins: {}
+    users: User;
+    media: Media;
+    tenants: Tenant;
+    pages: Page;
+    'home-templates': HomeTemplate;
+    'about-templates': AboutTemplate;
+    headers: Header;
+    footers: Footer;
+    'payload-kv': PayloadKv;
+    'payload-locked-documents': PayloadLockedDocument;
+    'payload-preferences': PayloadPreference;
+    'payload-migrations': PayloadMigration;
+  };
+  collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>
-    media: MediaSelect<false> | MediaSelect<true>
-    tenants: TenantsSelect<false> | TenantsSelect<true>
-    pages: PagesSelect<false> | PagesSelect<true>
-    'home-templates': HomeTemplatesSelect<false> | HomeTemplatesSelect<true>
-    'about-templates': AboutTemplatesSelect<false> | AboutTemplatesSelect<true>
-    headers: HeadersSelect<false> | HeadersSelect<true>
-    footers: FootersSelect<false> | FootersSelect<true>
-    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>
-    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>
-    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>
-    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>
-  }
+    users: UsersSelect<false> | UsersSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    tenants: TenantsSelect<false> | TenantsSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
+    'home-templates': HomeTemplatesSelect<false> | HomeTemplatesSelect<true>;
+    'about-templates': AboutTemplatesSelect<false> | AboutTemplatesSelect<true>;
+    headers: HeadersSelect<false> | HeadersSelect<true>;
+    footers: FootersSelect<false> | FootersSelect<true>;
+    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
+    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
+    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
+    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
+  };
   db: {
-    defaultIDType: string
-  }
-  fallbackLocale: null
-  globals: {}
-  globalsSelect: {}
-  locale: null
+    defaultIDType: string;
+  };
+  fallbackLocale: null;
+  globals: {};
+  globalsSelect: {};
+  locale: null;
   widgets: {
-    collections: CollectionsWidget
-  }
-  user: User
+    collections: CollectionsWidget;
+  };
+  user: User;
   jobs: {
-    tasks: unknown
-    workflows: unknown
-  }
+    tasks: unknown;
+    workflows: unknown;
+  };
 }
 export interface UserAuthOperations {
   forgotPassword: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   login: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   registerFirstUser: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   unlock: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
-  id: string
-  name: string
-  role?: ('superadmin' | 'tenant' | 'designer') | null
-  tenant?: (string | null) | Tenant
-  updatedAt: string
-  createdAt: string
-  email: string
-  resetPasswordToken?: string | null
-  resetPasswordExpiration?: string | null
-  salt?: string | null
-  hash?: string | null
-  loginAttempts?: number | null
-  lockUntil?: string | null
+  id: string;
+  name: string;
+  role?: ('superadmin' | 'tenant' | 'designer') | null;
+  tenant?: (string | null) | Tenant;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
   sessions?:
     | {
-        id: string
-        createdAt?: string | null
-        expiresAt: string
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
       }[]
-    | null
-  password?: string | null
-  collection: 'users'
+    | null;
+  password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "tenants".
  */
 export interface Tenant {
-  id: string
-  name: string
-  slug: string
-  smtpUser?: string | null
-  smtpPassword?: string | null
-  domain?: string | null
+  id: string;
+  name: string;
+  slug: string;
+  smtpUser?: string | null;
+  smtpPassword?: string | null;
+  domain?: string | null;
   /**
    * Select UI theme for this tenant
    */
-  theme?: string | null
-  updatedAt: string
-  createdAt: string
+  theme?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
-  id: string
-  alt: string
-  prefix?: string | null
-  updatedAt: string
-  createdAt: string
-  url?: string | null
-  thumbnailURL?: string | null
-  filename?: string | null
-  mimeType?: string | null
-  filesize?: number | null
-  width?: number | null
-  height?: number | null
-  focalX?: number | null
-  focalY?: number | null
+  id: string;
+  alt: string;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
 export interface Page {
-  id: string
-  title: string
+  id: string;
+  title: string;
   /**
    * Slug must be unique within the selected tenant
    */
-  slug: string
-  templateType: 'home' | 'about' | 'contact' | 'services'
-  homeTemplate?: (string | null) | HomeTemplate
-  aboutTemplate?: (string | null) | AboutTemplate
+  slug: string;
+  templateType: 'home' | 'about' | 'contact' | 'services';
+  homeTemplate?: (string | null) | HomeTemplate;
+  aboutTemplate?: (string | null) | AboutTemplate;
   content?:
     | (
         | {
-            title: string
-            subtitle?: string | null
-            image?: (string | null) | Media
-            ctaText?: string | null
-            ctaLink?: string | null
-            alignment?: ('left' | 'center' | 'right') | null
-            id?: string | null
-            blockName?: string | null
-            blockType: 'hero'
+            title: string;
+            subtitle?: string | null;
+            image?: (string | null) | Media;
+            ctaText?: string | null;
+            ctaLink?: string | null;
+            alignment?: ('left' | 'center' | 'right') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
           }
         | {
-            title?: string | null
+            title?: string | null;
             features?:
               | {
-                  icon?: string | null
-                  title: string
-                  description: string
-                  id?: string | null
+                  icon?: string | null;
+                  title: string;
+                  description: string;
+                  id?: string | null;
                 }[]
-              | null
-            columns?: ('2' | '3' | '4') | null
-            id?: string | null
-            blockName?: string | null
-            blockType: 'features'
+              | null;
+            columns?: ('2' | '3' | '4') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'features';
           }
         | {
-            title?: string | null
+            title?: string | null;
             content: {
               root: {
-                type: string
+                type: string;
                 children: {
-                  type: any
-                  version: number
-                  [k: string]: unknown
-                }[]
-                direction: ('ltr' | 'rtl') | null
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-                indent: number
-                version: number
-              }
-              [k: string]: unknown
-            }
-            image?: (string | null) | Media
-            imagePosition?: ('left' | 'right') | null
-            id?: string | null
-            blockName?: string | null
-            blockType: 'content'
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            image?: (string | null) | Media;
+            imagePosition?: ('left' | 'right') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'content';
           }
         | {
-            title: string
-            description?: string | null
-            buttonText: string
-            buttonLink: string
-            backgroundColor?: ('primary' | 'secondary' | 'dark') | null
-            id?: string | null
-            blockName?: string | null
-            blockType: 'cta'
+            title: string;
+            description?: string | null;
+            buttonText: string;
+            buttonLink: string;
+            backgroundColor?: ('primary' | 'secondary' | 'dark') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cta';
           }
         | {
-            media: string | Media
-            imageName?: string | null
-            imageShortDescription?: string | null
-            availabilityText?: string | null
-            relatedText?: string | null
-            position: 'left' | 'right'
+            media: string | Media;
+            imageName?: string | null;
+            imageShortDescription?: string | null;
+            availabilityText?: string | null;
+            relatedText?: string | null;
+            position: 'left' | 'right';
             content?: {
               root: {
-                type: string
+                type: string;
                 children: {
-                  type: any
-                  version: number
-                  [k: string]: unknown
-                }[]
-                direction: ('ltr' | 'rtl') | null
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-                indent: number
-                version: number
-              }
-              [k: string]: unknown
-            } | null
-            backgroundColor?: ('white' | 'bg-card') | null
-            padding?: ('sm' | 'md' | 'lg') | null
-            id?: string | null
-            blockName?: string | null
-            blockType: 'mediaBlockcontent'
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            backgroundColor?: ('white' | 'bg-card') | null;
+            padding?: ('sm' | 'md' | 'lg') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mediaBlockcontent';
           }
         | CardsWithIcons
       )[]
-    | null
-  tenant?: (string | null) | Tenant
-  updatedAt: string
-  createdAt: string
-  _status?: ('draft' | 'published') | null
+    | null;
+  tenant?: (string | null) | Tenant;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-templates".
  */
 export interface HomeTemplate {
-  id: string
-  name: string
-  description?: string | null
+  id: string;
+  name: string;
+  description?: string | null;
   /**
    * Predefined blocks structure for this template
    */
   blocks?:
     | (
         | {
-            title: string
-            subtitle?: string | null
-            image?: (string | null) | Media
-            ctaText?: string | null
-            ctaLink?: string | null
-            alignment?: ('left' | 'center' | 'right') | null
-            id?: string | null
-            blockName?: string | null
-            blockType: 'hero'
+            title: string;
+            subtitle?: string | null;
+            image?: (string | null) | Media;
+            ctaText?: string | null;
+            ctaLink?: string | null;
+            alignment?: ('left' | 'center' | 'right') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
           }
         | {
-            title?: string | null
+            title?: string | null;
             features?:
               | {
-                  icon?: string | null
-                  title: string
-                  description: string
-                  id?: string | null
+                  icon?: string | null;
+                  title: string;
+                  description: string;
+                  id?: string | null;
                 }[]
-              | null
-            columns?: ('2' | '3' | '4') | null
-            id?: string | null
-            blockName?: string | null
-            blockType: 'features'
+              | null;
+            columns?: ('2' | '3' | '4') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'features';
           }
         | {
-            title?: string | null
+            title?: string | null;
             content: {
               root: {
-                type: string
+                type: string;
                 children: {
-                  type: any
-                  version: number
-                  [k: string]: unknown
-                }[]
-                direction: ('ltr' | 'rtl') | null
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-                indent: number
-                version: number
-              }
-              [k: string]: unknown
-            }
-            image?: (string | null) | Media
-            imagePosition?: ('left' | 'right') | null
-            id?: string | null
-            blockName?: string | null
-            blockType: 'content'
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            image?: (string | null) | Media;
+            imagePosition?: ('left' | 'right') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'content';
           }
         | {
-            title: string
-            description?: string | null
-            buttonText: string
-            buttonLink: string
-            backgroundColor?: ('primary' | 'secondary' | 'dark') | null
-            id?: string | null
-            blockName?: string | null
-            blockType: 'cta'
+            title: string;
+            description?: string | null;
+            buttonText: string;
+            buttonLink: string;
+            backgroundColor?: ('primary' | 'secondary' | 'dark') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cta';
           }
         | {
-            media: string | Media
-            imageName?: string | null
-            imageShortDescription?: string | null
-            availabilityText?: string | null
-            relatedText?: string | null
-            position: 'left' | 'right'
+            media: string | Media;
+            imageName?: string | null;
+            imageShortDescription?: string | null;
+            availabilityText?: string | null;
+            relatedText?: string | null;
+            position: 'left' | 'right';
             content?: {
               root: {
-                type: string
+                type: string;
                 children: {
-                  type: any
-                  version: number
-                  [k: string]: unknown
-                }[]
-                direction: ('ltr' | 'rtl') | null
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-                indent: number
-                version: number
-              }
-              [k: string]: unknown
-            } | null
-            backgroundColor?: ('white' | 'bg-card') | null
-            padding?: ('sm' | 'md' | 'lg') | null
-            id?: string | null
-            blockName?: string | null
-            blockType: 'mediaBlockcontent'
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            backgroundColor?: ('white' | 'bg-card') | null;
+            padding?: ('sm' | 'md' | 'lg') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mediaBlockcontent';
           }
         | {
-            title: string
+            title: string;
             items: {
-              question: string
+              question: string;
               answer: {
                 root: {
-                  type: string
+                  type: string;
                   children: {
-                    type: any
-                    version: number
-                    [k: string]: unknown
-                  }[]
-                  direction: ('ltr' | 'rtl') | null
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-                  indent: number
-                  version: number
-                }
-                [k: string]: unknown
-              }
-              id?: string | null
-            }[]
-            id?: string | null
-            blockName?: string | null
-            blockType: 'faqBlock'
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faqBlock';
           }
         | CardsWithIcons
       )[]
-    | null
-  updatedAt: string
-  createdAt: string
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CardsWithIcons".
  */
 export interface CardsWithIcons {
-  blockHeading: string
-  columns?: number | null
+  blockHeading: string;
+  columns?: number | null;
   cards: {
-    icon?: (string | null) | Media
-    title: string
+    icon?: (string | null) | Media;
+    title: string;
     description?: {
       root: {
-        type: string
+        type: string;
         children: {
-          type: any
-          version: number
-          [k: string]: unknown
-        }[]
-        direction: ('ltr' | 'rtl') | null
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-        indent: number
-        version: number
-      }
-      [k: string]: unknown
-    } | null
-    gradientFrom?: ('primary' | 'secondary' | 'gray' | 'white') | null
-    gradientTo?: ('primary' | 'secondary' | 'gray' | 'white') | null
-    gradientDirection?: ('to-r' | 'to-l' | 'to-b' | 'to-t' | 'radial') | null
-    solidBg?: ('white' | 'primary' | 'secondary' | 'gray') | null
-    id?: string | null
-  }[]
-  id?: string | null
-  blockName?: string | null
-  blockType: 'cardsWithIcons'
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    gradientFrom?: ('primary' | 'secondary' | 'gray' | 'white') | null;
+    gradientTo?: ('primary' | 'secondary' | 'gray' | 'white') | null;
+    gradientDirection?: ('to-r' | 'to-l' | 'to-b' | 'to-t' | 'radial') | null;
+    solidBg?: ('white' | 'primary' | 'secondary' | 'gray') | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cardsWithIcons';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "about-templates".
  */
 export interface AboutTemplate {
-  id: string
-  name: string
-  description?: string | null
+  id: string;
+  name: string;
+  description?: string | null;
   /**
    * Predefined blocks structure for this template
    */
   blocks?:
     | (
         | {
-            title: string
-            subtitle?: string | null
-            image?: (string | null) | Media
-            ctaText?: string | null
-            ctaLink?: string | null
-            alignment?: ('left' | 'center' | 'right') | null
-            id?: string | null
-            blockName?: string | null
-            blockType: 'hero'
+            title: string;
+            subtitle?: string | null;
+            image?: (string | null) | Media;
+            ctaText?: string | null;
+            ctaLink?: string | null;
+            alignment?: ('left' | 'center' | 'right') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
           }
         | {
-            title?: string | null
+            title?: string | null;
             features?:
               | {
-                  icon?: string | null
-                  title: string
-                  description: string
-                  id?: string | null
+                  icon?: string | null;
+                  title: string;
+                  description: string;
+                  id?: string | null;
                 }[]
-              | null
-            columns?: ('2' | '3' | '4') | null
-            id?: string | null
-            blockName?: string | null
-            blockType: 'features'
+              | null;
+            columns?: ('2' | '3' | '4') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'features';
           }
         | {
-            title?: string | null
+            title?: string | null;
             content: {
               root: {
-                type: string
+                type: string;
                 children: {
-                  type: any
-                  version: number
-                  [k: string]: unknown
-                }[]
-                direction: ('ltr' | 'rtl') | null
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-                indent: number
-                version: number
-              }
-              [k: string]: unknown
-            }
-            image?: (string | null) | Media
-            imagePosition?: ('left' | 'right') | null
-            id?: string | null
-            blockName?: string | null
-            blockType: 'content'
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            image?: (string | null) | Media;
+            imagePosition?: ('left' | 'right') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'content';
           }
         | {
-            title: string
-            description?: string | null
-            buttonText: string
-            buttonLink: string
-            backgroundColor?: ('primary' | 'secondary' | 'dark') | null
-            id?: string | null
-            blockName?: string | null
-            blockType: 'cta'
+            title: string;
+            description?: string | null;
+            buttonText: string;
+            buttonLink: string;
+            backgroundColor?: ('primary' | 'secondary' | 'dark') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cta';
           }
       )[]
-    | null
-  updatedAt: string
-  createdAt: string
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "headers".
  */
 export interface Header {
-  id: string
-  name: string
-  tenant?: (string | null) | Tenant
+  id: string;
+  name: string;
+  tenant?: (string | null) | Tenant;
   layout: (
     | {
-        logo?: (string | null) | Media
+        logo?: (string | null) | Media;
         menuItems?:
           | {
-              label: string
-              url: string
-              id?: string | null
+              label: string;
+              url: string;
+              id?: string | null;
             }[]
-          | null
-        showButton?: boolean | null
-        buttonLabel?: string | null
-        id?: string | null
-        blockName?: string | null
-        blockType: 'headerSimple'
+          | null;
+        showButton?: boolean | null;
+        buttonLabel?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'headerSimple';
       }
     | {
-        logo?: (string | null) | Media
-        announcementText?: string | null
+        logo?: (string | null) | Media;
+        announcementText?: string | null;
         menuItems?:
           | {
-              label?: string | null
-              url?: string | null
-              id?: string | null
+              label?: string | null;
+              url?: string | null;
+              id?: string | null;
             }[]
-          | null
-        id?: string | null
-        blockName?: string | null
-        blockType: 'headerCentered'
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'headerCentered';
       }
     | {
-        logo?: (string | null) | Media
+        logo?: (string | null) | Media;
         navItems?:
           | {
-              label: string
-              icon?: (string | null) | Media
-              page?: (string | null) | Page
-              customUrl?: string | null
+              label: string;
+              icon?: (string | null) | Media;
+              page?: (string | null) | Page;
+              customUrl?: string | null;
               children?:
                 | {
-                    label: string
-                    icon?: (string | null) | Media
-                    page?: (string | null) | Page
-                    customUrl?: string | null
-                    id?: string | null
+                    label: string;
+                    icon?: (string | null) | Media;
+                    page?: (string | null) | Page;
+                    customUrl?: string | null;
+                    id?: string | null;
                   }[]
-                | null
-              id?: string | null
+                | null;
+              id?: string | null;
             }[]
-          | null
-        headerStyle: 'default' | 'modern' | 'centered'
+          | null;
+        headerStyle: 'default' | 'modern' | 'centered';
         ctas?:
           | {
-              label: string
-              link?: (string | null) | Page
-              customUrl?: string | null
-              style?: ('primary' | 'secondary' | 'outline') | null
-              id?: string | null
+              label: string;
+              link?: (string | null) | Page;
+              customUrl?: string | null;
+              style?: ('primary' | 'secondary' | 'outline') | null;
+              id?: string | null;
             }[]
-          | null
-        id?: string | null
-        blockName?: string | null
-        blockType: 'headerCTA'
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'headerCTA';
       }
-  )[]
-  updatedAt: string
-  createdAt: string
+  )[];
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footers".
  */
 export interface Footer {
-  id: string
-  name: string
-  tenant?: (string | null) | Tenant
+  id: string;
+  name: string;
+  tenant?: (string | null) | Tenant;
   layout: (
     | {
-        copyrightText?: string | null
+        copyrightText?: string | null;
         socialLinks?:
           | {
-              platform?: string | null
-              url?: string | null
-              id?: string | null
+              platform?: string | null;
+              url?: string | null;
+              id?: string | null;
             }[]
-          | null
-        id?: string | null
-        blockName?: string | null
-        blockType: 'footerSimple'
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'footerSimple';
       }
     | {
         columns?:
           | {
-              title?: string | null
+              title?: string | null;
               links?:
                 | {
-                    label?: string | null
-                    url?: string | null
-                    id?: string | null
+                    label?: string | null;
+                    url?: string | null;
+                    id?: string | null;
                   }[]
-                | null
-              id?: string | null
+                | null;
+              id?: string | null;
             }[]
-          | null
-        id?: string | null
-        blockName?: string | null
-        blockType: 'footerColumns'
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'footerColumns';
       }
     | {
-        enableI18n?: boolean | null
-        backgroundImage?: (string | null) | Media
-        description?: string | null
+        enableI18n?: boolean | null;
+        backgroundImage?: (string | null) | Media;
+        description?: string | null;
         ctaButton?: {
-          text?: string | null
-          link?: (string | null) | Page
-        }
+          text?: string | null;
+          link?: (string | null) | Page;
+        };
         socialLinks?:
           | {
-              platform?: ('facebook' | 'instagram' | 'twitter' | 'linkedin' | 'youtube') | null
-              url: string
-              id?: string | null
+              platform?: ('facebook' | 'instagram' | 'twitter' | 'linkedin' | 'youtube') | null;
+              url: string;
+              id?: string | null;
             }[]
-          | null
+          | null;
         hours?:
           | {
-              day?: string | null
-              time?: string | null
-              id?: string | null
+              day?: string | null;
+              time?: string | null;
+              id?: string | null;
             }[]
-          | null
-        mapEmbed?: string | null
-        id?: string | null
-        blockName?: string | null
-        blockType: 'footerNewsletter'
+          | null;
+        mapEmbed?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'footerNewsletter';
       }
-  )[]
-  updatedAt: string
-  createdAt: string
+  )[];
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: string
-  key: string
+  id: string;
+  key: string;
   data:
     | {
-        [k: string]: unknown
+        [k: string]: unknown;
       }
     | unknown[]
     | string
     | number
     | boolean
-    | null
+    | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string
+  id: string;
   document?:
     | ({
-        relationTo: 'users'
-        value: string | User
+        relationTo: 'users';
+        value: string | User;
       } | null)
     | ({
-        relationTo: 'media'
-        value: string | Media
+        relationTo: 'media';
+        value: string | Media;
       } | null)
     | ({
-        relationTo: 'tenants'
-        value: string | Tenant
+        relationTo: 'tenants';
+        value: string | Tenant;
       } | null)
     | ({
-        relationTo: 'pages'
-        value: string | Page
+        relationTo: 'pages';
+        value: string | Page;
       } | null)
     | ({
-        relationTo: 'home-templates'
-        value: string | HomeTemplate
+        relationTo: 'home-templates';
+        value: string | HomeTemplate;
       } | null)
     | ({
-        relationTo: 'about-templates'
-        value: string | AboutTemplate
+        relationTo: 'about-templates';
+        value: string | AboutTemplate;
       } | null)
     | ({
-        relationTo: 'headers'
-        value: string | Header
+        relationTo: 'headers';
+        value: string | Header;
       } | null)
     | ({
-        relationTo: 'footers'
-        value: string | Footer
-      } | null)
-  globalSlug?: string | null
+        relationTo: 'footers';
+        value: string | Footer;
+      } | null);
+  globalSlug?: string | null;
   user: {
-    relationTo: 'users'
-    value: string | User
-  }
-  updatedAt: string
-  createdAt: string
+    relationTo: 'users';
+    value: string | User;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string
+  id: string;
   user: {
-    relationTo: 'users'
-    value: string | User
-  }
-  key?: string | null
+    relationTo: 'users';
+    value: string | User;
+  };
+  key?: string | null;
   value?:
     | {
-        [k: string]: unknown
+        [k: string]: unknown;
       }
     | unknown[]
     | string
     | number
     | boolean
-    | null
-  updatedAt: string
-  createdAt: string
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string
-  name?: string | null
-  batch?: number | null
-  updatedAt: string
-  createdAt: string
+  id: string;
+  name?: string | null;
+  batch?: number | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  name?: T
-  role?: T
-  tenant?: T
-  updatedAt?: T
-  createdAt?: T
-  email?: T
-  resetPasswordToken?: T
-  resetPasswordExpiration?: T
-  salt?: T
-  hash?: T
-  loginAttempts?: T
-  lockUntil?: T
+  name?: T;
+  role?: T;
+  tenant?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
   sessions?:
     | T
     | {
-        id?: T
-        createdAt?: T
-        expiresAt?: T
-      }
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
-  alt?: T
-  prefix?: T
-  updatedAt?: T
-  createdAt?: T
-  url?: T
-  thumbnailURL?: T
-  filename?: T
-  mimeType?: T
-  filesize?: T
-  width?: T
-  height?: T
-  focalX?: T
-  focalY?: T
+  alt?: T;
+  prefix?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "tenants_select".
  */
 export interface TenantsSelect<T extends boolean = true> {
-  name?: T
-  slug?: T
-  smtpUser?: T
-  smtpPassword?: T
-  domain?: T
-  theme?: T
-  updatedAt?: T
-  createdAt?: T
+  name?: T;
+  slug?: T;
+  smtpUser?: T;
+  smtpPassword?: T;
+  domain?: T;
+  theme?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
-  title?: T
-  slug?: T
-  templateType?: T
-  homeTemplate?: T
-  aboutTemplate?: T
+  title?: T;
+  slug?: T;
+  templateType?: T;
+  homeTemplate?: T;
+  aboutTemplate?: T;
   content?:
     | T
     | {
         hero?:
           | T
           | {
-              title?: T
-              subtitle?: T
-              image?: T
-              ctaText?: T
-              ctaLink?: T
-              alignment?: T
-              id?: T
-              blockName?: T
-            }
+              title?: T;
+              subtitle?: T;
+              image?: T;
+              ctaText?: T;
+              ctaLink?: T;
+              alignment?: T;
+              id?: T;
+              blockName?: T;
+            };
         features?:
           | T
           | {
-              title?: T
+              title?: T;
               features?:
                 | T
                 | {
-                    icon?: T
-                    title?: T
-                    description?: T
-                    id?: T
-                  }
-              columns?: T
-              id?: T
-              blockName?: T
-            }
+                    icon?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              columns?: T;
+              id?: T;
+              blockName?: T;
+            };
         content?:
           | T
           | {
-              title?: T
-              content?: T
-              image?: T
-              imagePosition?: T
-              id?: T
-              blockName?: T
-            }
+              title?: T;
+              content?: T;
+              image?: T;
+              imagePosition?: T;
+              id?: T;
+              blockName?: T;
+            };
         cta?:
           | T
           | {
-              title?: T
-              description?: T
-              buttonText?: T
-              buttonLink?: T
-              backgroundColor?: T
-              id?: T
-              blockName?: T
-            }
+              title?: T;
+              description?: T;
+              buttonText?: T;
+              buttonLink?: T;
+              backgroundColor?: T;
+              id?: T;
+              blockName?: T;
+            };
         mediaBlockcontent?:
           | T
           | {
-              media?: T
-              imageName?: T
-              imageShortDescription?: T
-              availabilityText?: T
-              relatedText?: T
-              position?: T
-              content?: T
-              backgroundColor?: T
-              padding?: T
-              id?: T
-              blockName?: T
-            }
-        cardsWithIcons?: T | CardsWithIconsSelect<T>
-      }
-  tenant?: T
-  updatedAt?: T
-  createdAt?: T
-  _status?: T
+              media?: T;
+              imageName?: T;
+              imageShortDescription?: T;
+              availabilityText?: T;
+              relatedText?: T;
+              position?: T;
+              content?: T;
+              backgroundColor?: T;
+              padding?: T;
+              id?: T;
+              blockName?: T;
+            };
+        cardsWithIcons?: T | CardsWithIconsSelect<T>;
+      };
+  tenant?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CardsWithIcons_select".
  */
 export interface CardsWithIconsSelect<T extends boolean = true> {
-  blockHeading?: T
-  columns?: T
+  blockHeading?: T;
+  columns?: T;
   cards?:
     | T
     | {
-        icon?: T
-        title?: T
-        description?: T
-        gradientFrom?: T
-        gradientTo?: T
-        gradientDirection?: T
-        solidBg?: T
-        id?: T
-      }
-  id?: T
-  blockName?: T
+        icon?: T;
+        title?: T;
+        description?: T;
+        gradientFrom?: T;
+        gradientTo?: T;
+        gradientDirection?: T;
+        solidBg?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-templates_select".
  */
 export interface HomeTemplatesSelect<T extends boolean = true> {
-  name?: T
-  description?: T
+  name?: T;
+  description?: T;
   blocks?:
     | T
     | {
         hero?:
           | T
           | {
-              title?: T
-              subtitle?: T
-              image?: T
-              ctaText?: T
-              ctaLink?: T
-              alignment?: T
-              id?: T
-              blockName?: T
-            }
+              title?: T;
+              subtitle?: T;
+              image?: T;
+              ctaText?: T;
+              ctaLink?: T;
+              alignment?: T;
+              id?: T;
+              blockName?: T;
+            };
         features?:
           | T
           | {
-              title?: T
+              title?: T;
               features?:
                 | T
                 | {
-                    icon?: T
-                    title?: T
-                    description?: T
-                    id?: T
-                  }
-              columns?: T
-              id?: T
-              blockName?: T
-            }
+                    icon?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              columns?: T;
+              id?: T;
+              blockName?: T;
+            };
         content?:
           | T
           | {
-              title?: T
-              content?: T
-              image?: T
-              imagePosition?: T
-              id?: T
-              blockName?: T
-            }
+              title?: T;
+              content?: T;
+              image?: T;
+              imagePosition?: T;
+              id?: T;
+              blockName?: T;
+            };
         cta?:
           | T
           | {
-              title?: T
-              description?: T
-              buttonText?: T
-              buttonLink?: T
-              backgroundColor?: T
-              id?: T
-              blockName?: T
-            }
+              title?: T;
+              description?: T;
+              buttonText?: T;
+              buttonLink?: T;
+              backgroundColor?: T;
+              id?: T;
+              blockName?: T;
+            };
         mediaBlockcontent?:
           | T
           | {
-              media?: T
-              imageName?: T
-              imageShortDescription?: T
-              availabilityText?: T
-              relatedText?: T
-              position?: T
-              content?: T
-              backgroundColor?: T
-              padding?: T
-              id?: T
-              blockName?: T
-            }
+              media?: T;
+              imageName?: T;
+              imageShortDescription?: T;
+              availabilityText?: T;
+              relatedText?: T;
+              position?: T;
+              content?: T;
+              backgroundColor?: T;
+              padding?: T;
+              id?: T;
+              blockName?: T;
+            };
         faqBlock?:
           | T
           | {
-              title?: T
+              title?: T;
               items?:
                 | T
                 | {
-                    question?: T
-                    answer?: T
-                    id?: T
-                  }
-              id?: T
-              blockName?: T
-            }
-        cardsWithIcons?: T | CardsWithIconsSelect<T>
-      }
-  updatedAt?: T
-  createdAt?: T
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        cardsWithIcons?: T | CardsWithIconsSelect<T>;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "about-templates_select".
  */
 export interface AboutTemplatesSelect<T extends boolean = true> {
-  name?: T
-  description?: T
+  name?: T;
+  description?: T;
   blocks?:
     | T
     | {
         hero?:
           | T
           | {
-              title?: T
-              subtitle?: T
-              image?: T
-              ctaText?: T
-              ctaLink?: T
-              alignment?: T
-              id?: T
-              blockName?: T
-            }
+              title?: T;
+              subtitle?: T;
+              image?: T;
+              ctaText?: T;
+              ctaLink?: T;
+              alignment?: T;
+              id?: T;
+              blockName?: T;
+            };
         features?:
           | T
           | {
-              title?: T
+              title?: T;
               features?:
                 | T
                 | {
-                    icon?: T
-                    title?: T
-                    description?: T
-                    id?: T
-                  }
-              columns?: T
-              id?: T
-              blockName?: T
-            }
+                    icon?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              columns?: T;
+              id?: T;
+              blockName?: T;
+            };
         content?:
           | T
           | {
-              title?: T
-              content?: T
-              image?: T
-              imagePosition?: T
-              id?: T
-              blockName?: T
-            }
+              title?: T;
+              content?: T;
+              image?: T;
+              imagePosition?: T;
+              id?: T;
+              blockName?: T;
+            };
         cta?:
           | T
           | {
-              title?: T
-              description?: T
-              buttonText?: T
-              buttonLink?: T
-              backgroundColor?: T
-              id?: T
-              blockName?: T
-            }
-      }
-  updatedAt?: T
-  createdAt?: T
+              title?: T;
+              description?: T;
+              buttonText?: T;
+              buttonLink?: T;
+              backgroundColor?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "headers_select".
  */
 export interface HeadersSelect<T extends boolean = true> {
-  name?: T
-  tenant?: T
+  name?: T;
+  tenant?: T;
   layout?:
     | T
     | {
         headerSimple?:
           | T
           | {
-              logo?: T
+              logo?: T;
               menuItems?:
                 | T
                 | {
-                    label?: T
-                    url?: T
-                    id?: T
-                  }
-              showButton?: T
-              buttonLabel?: T
-              id?: T
-              blockName?: T
-            }
+                    label?: T;
+                    url?: T;
+                    id?: T;
+                  };
+              showButton?: T;
+              buttonLabel?: T;
+              id?: T;
+              blockName?: T;
+            };
         headerCentered?:
           | T
           | {
-              logo?: T
-              announcementText?: T
+              logo?: T;
+              announcementText?: T;
               menuItems?:
                 | T
                 | {
-                    label?: T
-                    url?: T
-                    id?: T
-                  }
-              id?: T
-              blockName?: T
-            }
+                    label?: T;
+                    url?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         headerCTA?:
           | T
           | {
-              logo?: T
+              logo?: T;
               navItems?:
                 | T
                 | {
-                    label?: T
-                    icon?: T
-                    page?: T
-                    customUrl?: T
+                    label?: T;
+                    icon?: T;
+                    page?: T;
+                    customUrl?: T;
                     children?:
                       | T
                       | {
-                          label?: T
-                          icon?: T
-                          page?: T
-                          customUrl?: T
-                          id?: T
-                        }
-                    id?: T
-                  }
-              headerStyle?: T
+                          label?: T;
+                          icon?: T;
+                          page?: T;
+                          customUrl?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              headerStyle?: T;
               ctas?:
                 | T
                 | {
-                    label?: T
-                    link?: T
-                    customUrl?: T
-                    style?: T
-                    id?: T
-                  }
-              id?: T
-              blockName?: T
-            }
-      }
-  updatedAt?: T
-  createdAt?: T
+                    label?: T;
+                    link?: T;
+                    customUrl?: T;
+                    style?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footers_select".
  */
 export interface FootersSelect<T extends boolean = true> {
-  name?: T
-  tenant?: T
+  name?: T;
+  tenant?: T;
   layout?:
     | T
     | {
         footerSimple?:
           | T
           | {
-              copyrightText?: T
+              copyrightText?: T;
               socialLinks?:
                 | T
                 | {
-                    platform?: T
-                    url?: T
-                    id?: T
-                  }
-              id?: T
-              blockName?: T
-            }
+                    platform?: T;
+                    url?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         footerColumns?:
           | T
           | {
               columns?:
                 | T
                 | {
-                    title?: T
+                    title?: T;
                     links?:
                       | T
                       | {
-                          label?: T
-                          url?: T
-                          id?: T
-                        }
-                    id?: T
-                  }
-              id?: T
-              blockName?: T
-            }
+                          label?: T;
+                          url?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         footerNewsletter?:
           | T
           | {
-              enableI18n?: T
-              backgroundImage?: T
-              description?: T
+              enableI18n?: T;
+              backgroundImage?: T;
+              description?: T;
               ctaButton?:
                 | T
                 | {
-                    text?: T
-                    link?: T
-                  }
+                    text?: T;
+                    link?: T;
+                  };
               socialLinks?:
                 | T
                 | {
-                    platform?: T
-                    url?: T
-                    id?: T
-                  }
+                    platform?: T;
+                    url?: T;
+                    id?: T;
+                  };
               hours?:
                 | T
                 | {
-                    day?: T
-                    time?: T
-                    id?: T
-                  }
-              mapEmbed?: T
-              id?: T
-              blockName?: T
-            }
-      }
-  updatedAt?: T
-  createdAt?: T
+                    day?: T;
+                    time?: T;
+                    id?: T;
+                  };
+              mapEmbed?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
-  key?: T
-  data?: T
+  key?: T;
+  data?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
-  document?: T
-  globalSlug?: T
-  user?: T
-  updatedAt?: T
-  createdAt?: T
+  document?: T;
+  globalSlug?: T;
+  user?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences_select".
  */
 export interface PayloadPreferencesSelect<T extends boolean = true> {
-  user?: T
-  key?: T
-  value?: T
-  updatedAt?: T
-  createdAt?: T
+  user?: T;
+  key?: T;
+  value?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations_select".
  */
 export interface PayloadMigrationsSelect<T extends boolean = true> {
-  name?: T
-  batch?: T
-  updatedAt?: T
-  createdAt?: T
+  name?: T;
+  batch?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1317,17 +1317,18 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface CollectionsWidget {
   data?: {
-    [k: string]: unknown
-  }
-  width: 'full'
+    [k: string]: unknown;
+  };
+  width: 'full';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {
-  [k: string]: unknown
+  [k: string]: unknown;
 }
+
 
 declare module 'payload' {
   export interface GeneratedTypes extends Config {}
