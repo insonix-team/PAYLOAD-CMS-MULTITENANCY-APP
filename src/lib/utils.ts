@@ -1,5 +1,7 @@
+import { ROLES } from '@/constants/AppOptions'
+
 export const isSuperAdmin = (user: any) => {
-  return user?.role === 'superadmin'
+  return user?.role === ROLES.SUPERADMIN
 }
 
 export const getTenantId = (user: any) => {

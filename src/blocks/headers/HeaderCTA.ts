@@ -2,6 +2,7 @@ import type { Block } from 'payload'
 
 export const HeaderCTA: Block = {
   slug: 'headerCTA',
+
   labels: {
     singular: 'Header CTA Menu',
     plural: 'Header CTA Menu',
@@ -14,7 +15,6 @@ export const HeaderCTA: Block = {
       relationTo: 'media',
     },
 
-    // ⭐ NAVIGATION
     {
       name: 'navItems',
       type: 'array',
@@ -26,7 +26,6 @@ export const HeaderCTA: Block = {
           required: true,
         },
 
-        // 🌟 Optional Icon for main item
         {
           name: 'icon',
           type: 'upload',
@@ -34,7 +33,6 @@ export const HeaderCTA: Block = {
           label: 'Icon (optional)',
         },
 
-        // 🌐 Link Options
         {
           type: 'row',
           fields: [
@@ -52,13 +50,15 @@ export const HeaderCTA: Block = {
           ],
         },
 
-        // 🌟 DROPDOWN CHILDREN
         {
           name: 'children',
           type: 'array',
           label: 'Dropdown Items',
           admin: {
-            condition: (_, siblingData) => true, // always show
+            condition: (_, siblingData) => {
+              console.log('Sibling Data:', siblingData)
+              return true
+            },
           },
           fields: [
             {
