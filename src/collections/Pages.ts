@@ -13,6 +13,56 @@ export const Pages: any = {
     drafts: true,
   },
 
+  access: {
+    read: ({ req: { user } }: { req: { user?: any } }) => {
+      if (!user) {
+        return false
+      }
+
+      if (user.role === 'superadmin') {
+        return true
+      }
+
+      return {
+        tenant: {
+          equals: typeof user.tenant === 'object' ? user.tenant.id : user.tenant,
+        },
+      }
+    },
+
+    update: ({ req: { user } }: { req: { user?: any } }) => {
+      if (!user) {
+        return false
+      }
+
+      if (user.role === 'superadmin') {
+        return true
+      }
+
+      return {
+        tenant: {
+          equals: typeof user.tenant === 'object' ? user.tenant.id : user.tenant,
+        },
+      }
+    },
+
+    delete: ({ req: { user } }: { req: { user?: any } }) => {
+      if (!user) {
+        return false
+      }
+
+      if (user.role === 'superadmin') {
+        return true
+      }
+
+      return {
+        tenant: {
+          equals: typeof user.tenant === 'object' ? user.tenant.id : user.tenant,
+        },
+      }
+    },
+  },
+
   admin: {
     livePreview: {
       url: async ({ data, req }: { data: any; req: any }) => {
