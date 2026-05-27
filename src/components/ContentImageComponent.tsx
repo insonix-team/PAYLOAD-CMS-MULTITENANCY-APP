@@ -26,7 +26,6 @@ type Props = {
 
 export const ContentImageComponentUI = ({ data }: Props) => {
   const { media, position = 'left', content, availabilityText, relatedText, imageShortDescription, imageName, backgroundColor = 'bg-white', padding = 'md' } = data
-  console.log('ContentImageComponent data:', data)
 
   const isLeft = position === 'left'
   const bgClass = backgroundColor === 'bg-card' ? 'bg-card' : 'bg-white'

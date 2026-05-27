@@ -56,7 +56,6 @@ export const HeaderCTA: Block = {
           label: 'Dropdown Items',
           admin: {
             condition: (_, siblingData) => {
-              console.log('Sibling Data:', siblingData)
               return true
             },
           },

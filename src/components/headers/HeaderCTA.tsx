@@ -26,7 +26,6 @@ export function HeaderCTA({ navItems, ctas, logo }: { navItems: any[]; ctas: any
     if (typeof link === 'string') return `/${link}`
     return '/'
   }
-  console.log(navItems)
   return (
     <header className={['fixed w-full z-[999] top-0 bg-white/80 backdrop-blur-xl transition-all duration-300 border-b border-black/5', small ? 'shadow-md' : 'shadow-sm'].join(' ')}>
       <div className="mx-auto  flex items-center justify-between h-20">

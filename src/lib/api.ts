@@ -114,7 +114,6 @@ export const getPages = async (slug: string, tenantSlug: string | null = null) =
   const tenant = await getTenant(tenantSlug || undefined)
 
   if (!tenant) {
-    console.log('Tenant not found')
     return { docs: [] }
   }
 
