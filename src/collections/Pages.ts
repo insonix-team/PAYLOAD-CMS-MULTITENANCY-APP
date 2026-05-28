@@ -8,6 +8,7 @@ import { HeroBlock } from '@/blocks/HeroBlock'
 import { VerticleHoverCardsBlock } from '@/blocks/VerticleHoverCardsBlock'
 import { ROLES, TEMPLATE_TYPE_OPTIONS, TEMPLATE_TYPES } from '@/constants/AppOptions'
 import { CollectionSlug } from 'payload'
+import { HeroLeftLayoutBlock } from '../blocks/HeroLeftLayoutBlock'
 
 export const Pages: any = {
   slug: 'pages',
@@ -180,7 +181,7 @@ export const Pages: any = {
     {
       name: 'content',
       type: 'blocks',
-      blocks: [HeroBlock, FeaturesBlock, ContentBlock, CtaBlock, MediaBlockContent, CardsWithIcons, VerticleHoverCardsBlock, FAQBlock],
+      blocks: [HeroBlock, FeaturesBlock, ContentBlock, CtaBlock, MediaBlockContent, CardsWithIcons, VerticleHoverCardsBlock, FAQBlock, HeroLeftLayoutBlock],
       admin: {
         condition: (data: any, siblingData: any) => {
           return !!(siblingData?.homeTemplate || siblingData?.aboutTemplate || siblingData?.contactTemplate || siblingData?.servicesTemplate)

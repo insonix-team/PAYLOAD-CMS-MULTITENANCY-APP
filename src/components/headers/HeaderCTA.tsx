@@ -1,7 +1,7 @@
 'use client'
 
 import type { Page } from '@/payload-types'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, Phone } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import MobileDrawer from './MobileDrawer'
@@ -27,7 +27,7 @@ export function HeaderCTA({ navItems, ctas, logo }: { navItems: any[]; ctas: any
     return '/'
   }
   return (
-    <header className={['fixed w-full z-[999] top-0 bg-white/80 backdrop-blur-xl transition-all duration-300 border-b border-black/5', small ? 'shadow-md' : 'shadow-sm'].join(' ')}>
+    <header className={['fixed w-full z-[999] top-0 bg-white backdrop-blur-xl transition-all duration-300 ', small ? 'shadow-md' : 'shadow-sm'].join(' ')}>
       <div className="mx-auto  flex items-center justify-between h-20">
         {/* LOGO */}
         <Link href="/" className="flex items-center">
@@ -69,7 +69,7 @@ export function HeaderCTA({ navItems, ctas, logo }: { navItems: any[]; ctas: any
         </nav>
 
         {/* CTA BUTTONS */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden xl:block flex justify-end w-full xl:w-auto p-0  gap-3">
           {ctas?.map((cta: any, i: number) => {
             const href = cta.customUrl || resolveUrl(cta.link)
             const ctaKey = cta?.id ?? `${cta.label}-${i}`
@@ -81,11 +81,14 @@ export function HeaderCTA({ navItems, ctas, logo }: { navItems: any[]; ctas: any
             }
 
             return (
-              <Link key={ctaKey} href={href} className={`px-4 py-2 rounded-md font-medium transition whitespace-nowrap ${variants[cta.style || 'primary']}`}>
+              <Link key={ctaKey} href={href} className={`bg-primary uppercase text-white! border-0 hover:bg-primary-600 shadow-2xl cursor-pointer px-8 md:px-8! py-2 transition  block rounded-0 font-medium  whitespace-nowrap ${variants[cta.style || 'primary']}`}>
                 {cta.label}
               </Link>
             )
           })}
+          <Link href={'#'} className={`uppercase  border-0 hover:bg-primary-600 shadow-2xl cursor-pointer px-8 md:px-8! py-2  flex justify-center gap-1 text-white! font-medium transition bg-secondary whitespace-nowrap }`}>
+            <Phone /> +1 604-261-8164
+          </Link>
         </div>
 
         {/* MOBILE BUTTON */}

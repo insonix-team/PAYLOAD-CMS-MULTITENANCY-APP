@@ -1,6 +1,6 @@
 'use client'
 
-import { X, ChevronDown } from 'lucide-react'
+import { X, ChevronDown, Phone } from 'lucide-react'
 import Link from 'next/link'
 import type { Header, Page } from '@/payload-types'
 import { useState } from 'react'
@@ -90,11 +90,14 @@ export default function MobileDrawer({ open, setOpen, nav, logo, ctas }: { open:
             }
 
             return (
-              <Link key={cta?.id ?? `${cta.label}-${i}`} href={href} onClick={() => setOpen(false)} className={`block text-center w-full py-3 rounded-md font-semibold mt-2 ${style[cta.style]}`}>
+              <Link key={cta?.id ?? `${cta.label}-${i}`} href={href} onClick={() => setOpen(false)} className={`uppercase  border-0 hover:bg-primary-600 shadow-2xl cursor-pointer px-8 md:px-8! py-2 block text-center w-full  font-semibold mt-2 ${style[cta.style]}`}>
                 {cta.label}
               </Link>
             )
           })}
+          <Link href={'#'} className={`uppercase  border-0 hover:bg-primary-600 shadow-2xl cursor-pointer px-8 md:px-8! py-2  flex justify-center gap-1 text-white! font-medium transition bg-secondary whitespace-nowrap }`}>
+            <Phone /> +1 604-261-8164
+          </Link>
         </div>
       </div>
     </>

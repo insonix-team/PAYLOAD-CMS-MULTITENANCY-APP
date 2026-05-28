@@ -7,6 +7,7 @@ import { CtaBlock } from '@/blocks/CtaBlock'
 import { FAQBlock } from '@/blocks/FaqConfig'
 import { FeaturesBlock } from '@/blocks/FeaturesBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
+import { HeroLeftLayoutBlock } from '@/blocks/HeroLeftLayoutBlock'
 import { VerticleHoverCardsBlock } from '@/blocks/VerticleHoverCardsBlock'
 import type { CollectionConfig } from 'payload'
 
@@ -29,7 +30,7 @@ export const HomeTemplate: CollectionConfig = {
     {
       name: 'blocks',
       type: 'blocks',
-      blocks: [HeroBlock, FeaturesBlock, ContentBlock, CtaBlock, MediaBlockContent, FAQBlock, CardsWithIcons, VerticleHoverCardsBlock],
+      blocks: [HeroBlock, FeaturesBlock, ContentBlock, CtaBlock, MediaBlockContent, FAQBlock, CardsWithIcons, VerticleHoverCardsBlock, HeroLeftLayoutBlock],
       admin: {
         description: 'Predefined blocks structure for this template',
       },
