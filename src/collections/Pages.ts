@@ -207,6 +207,16 @@ export const Pages: any = {
         return undefined
       },
     },
+    {
+      name: 'templateUpdated',
+      type: 'ui',
+      admin: {
+        components: {
+          Field: '@/components/TemplateRefreshButton#TemplateRefreshButton',
+        },
+        position: 'sidebar',
+      },
+    },
   ],
   hooks: {
     beforeChange: [
