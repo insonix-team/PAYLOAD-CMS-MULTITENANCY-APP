@@ -28,7 +28,7 @@ export const ContentImageComponentUI = ({ data }: Props) => {
   const { media, position = 'left', content, availabilityText, relatedText, imageShortDescription, imageName, backgroundColor = 'bg-white', padding = 'md' } = data
 
   const isLeft = position === 'left'
-  const bgClass = backgroundColor === 'bg-card' ? 'bg-card' : 'bg-white'
+  const bgClass = backgroundColor === 'bg-card' ? 'bg-card dark:bg-card' : 'bg-white'
   const paddingClass = padding === 'lg' ? 'p-12' : padding === 'md' ? 'p-8' : 'p-4'
   const mediaUrl = typeof media === 'object' && media?.url ? media.url : null
   const mediaAlt = typeof media === 'object' && media?.alt ? media.alt : imageName || 'Media image'

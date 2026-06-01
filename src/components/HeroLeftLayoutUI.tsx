@@ -49,7 +49,7 @@ export const HeroLeftLayoutUI = ({ data }: Props) => {
         {hasButtons && (
           <div className="mt-6 flex gap-4 justify-start flex-wrap">
             {buttons.map((btn, i) => (
-              <a key={i} href={btn.url} className={`bg-primary uppercase text-white! border-0 hover:bg-primary-600 shadow-2xl cursor-pointer px-8 md:px-8! py-2 transition ${btn.style === 'secondary' ? 'bg-secondary text-primary' : 'bg-primary text-secondary'}`}>
+              <a key={i} href={btn.url} className={`bg-primary dark:bg-primary uppercase text-white! border-0 hover:bg-primary-600 shadow-2xl cursor-pointer px-8 md:px-8! py-2 transition ${btn.style === 'secondary' ? 'bg-secondary dark:bg-secondary text-primary' : 'bg-primary dark:bg-primary text-secondary'}`}>
                 {btn.label}
               </a>
             ))}

@@ -15,11 +15,13 @@ const config = {
             h1: {
               fontWeight: '700',
               fontSize: '2.5rem',
+              fontFamily: 'var(--font-inter)',
             },
 
             h2: {
               fontWeight: '600',
               fontSize: '2rem',
+              fontFamily: 'var(--font-inter)',
             },
           },
         },
