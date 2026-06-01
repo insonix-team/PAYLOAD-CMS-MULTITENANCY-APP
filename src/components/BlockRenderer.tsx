@@ -13,6 +13,8 @@ import { HeroBlock } from './HeroBlock'
 import VerticleHoverCardsUI from './VerticleHoverCardsUI'
 import { HeroLeftLayoutUI } from './HeroLeftLayoutUI'
 import MapInfoBlockUI from './MapInfoBlockUI'
+import { CarouselBlockUI } from './CarouselBlockUI'
+import { TeamCarousalUI } from './TeamCarousalUI'
 
 type Props = {
   blocks: any[]
@@ -43,6 +45,11 @@ export const BlockRenderer = ({ blocks, tenant }: Props) => {
 
           case 'mapInfoBlock':
             return <MapInfoBlockUI key={index} data={block} tenant={tenant} />
+
+          case 'carouselBlock':
+            return <CarouselBlockUI key={index} data={block} tenant={tenant} />
+          case 'teamCarousalBlock':
+            return <TeamCarousalUI key={index} data={block} tenant={tenant} />
 
           case 'heroLeftLayoutBlock':
             return <HeroLeftLayoutUI key={index} data={block} tenant={tenant} />

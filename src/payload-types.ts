@@ -349,6 +349,75 @@ export interface Page {
           }
         | HeroLeftLayoutBlock
         | MapInfoBlockType
+        | {
+            slides: {
+              image: string | Media;
+              content?: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
+              id?: string | null;
+            }[];
+            slidesPerMobile?: number | null;
+            slidesPerTablet?: number | null;
+            slidesPerDesktop?: number | null;
+            autoplay?: boolean | null;
+            delay?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'carouselBlock';
+          }
+        | {
+            slides: {
+              image: string | Media;
+              name: string;
+              designation?: string | null;
+              content?: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
+              ctaButtons?:
+                | {
+                    label: string;
+                    url: string;
+                    newTab?: boolean | null;
+                    style?: ('primary' | 'secondary') | null;
+                    id?: string | null;
+                  }[]
+                | null;
+              id?: string | null;
+            }[];
+            slidesPerMobile?: number | null;
+            slidesPerTablet?: number | null;
+            slidesPerDesktop?: number | null;
+            autoplay?: boolean | null;
+            delay?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'teamCarousalBlock';
+          }
       )[]
     | null;
   tenant?: (string | null) | Tenant;
@@ -507,6 +576,75 @@ export interface HomeTemplate {
           }
         | HeroLeftLayoutBlock
         | MapInfoBlockType
+        | {
+            slides: {
+              image: string | Media;
+              content?: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
+              id?: string | null;
+            }[];
+            slidesPerMobile?: number | null;
+            slidesPerTablet?: number | null;
+            slidesPerDesktop?: number | null;
+            autoplay?: boolean | null;
+            delay?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'carouselBlock';
+          }
+        | {
+            slides: {
+              image: string | Media;
+              name: string;
+              designation?: string | null;
+              content?: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
+              ctaButtons?:
+                | {
+                    label: string;
+                    url: string;
+                    newTab?: boolean | null;
+                    style?: ('primary' | 'secondary') | null;
+                    id?: string | null;
+                  }[]
+                | null;
+              id?: string | null;
+            }[];
+            slidesPerMobile?: number | null;
+            slidesPerTablet?: number | null;
+            slidesPerDesktop?: number | null;
+            autoplay?: boolean | null;
+            delay?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'teamCarousalBlock';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -1108,6 +1246,53 @@ export interface PagesSelect<T extends boolean = true> {
             };
         heroLeftLayoutBlock?: T | HeroLeftLayoutBlockSelect<T>;
         mapInfoBlock?: T | MapInfoBlockTypeSelect<T>;
+        carouselBlock?:
+          | T
+          | {
+              slides?:
+                | T
+                | {
+                    image?: T;
+                    content?: T;
+                    id?: T;
+                  };
+              slidesPerMobile?: T;
+              slidesPerTablet?: T;
+              slidesPerDesktop?: T;
+              autoplay?: T;
+              delay?: T;
+              id?: T;
+              blockName?: T;
+            };
+        teamCarousalBlock?:
+          | T
+          | {
+              slides?:
+                | T
+                | {
+                    image?: T;
+                    name?: T;
+                    designation?: T;
+                    content?: T;
+                    ctaButtons?:
+                      | T
+                      | {
+                          label?: T;
+                          url?: T;
+                          newTab?: T;
+                          style?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              slidesPerMobile?: T;
+              slidesPerTablet?: T;
+              slidesPerDesktop?: T;
+              autoplay?: T;
+              delay?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   tenant?: T;
   updatedAt?: T;
@@ -1305,6 +1490,53 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
             };
         heroLeftLayoutBlock?: T | HeroLeftLayoutBlockSelect<T>;
         mapInfoBlock?: T | MapInfoBlockTypeSelect<T>;
+        carouselBlock?:
+          | T
+          | {
+              slides?:
+                | T
+                | {
+                    image?: T;
+                    content?: T;
+                    id?: T;
+                  };
+              slidesPerMobile?: T;
+              slidesPerTablet?: T;
+              slidesPerDesktop?: T;
+              autoplay?: T;
+              delay?: T;
+              id?: T;
+              blockName?: T;
+            };
+        teamCarousalBlock?:
+          | T
+          | {
+              slides?:
+                | T
+                | {
+                    image?: T;
+                    name?: T;
+                    designation?: T;
+                    content?: T;
+                    ctaButtons?:
+                      | T
+                      | {
+                          label?: T;
+                          url?: T;
+                          newTab?: T;
+                          style?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              slidesPerMobile?: T;
+              slidesPerTablet?: T;
+              slidesPerDesktop?: T;
+              autoplay?: T;
+              delay?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;

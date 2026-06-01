@@ -10,6 +10,8 @@ import { ROLES, TEMPLATE_TYPE_OPTIONS, TEMPLATE_TYPES } from '@/constants/AppOpt
 import { CollectionSlug } from 'payload'
 import { HeroLeftLayoutBlock } from '../blocks/HeroLeftLayoutBlock'
 import { MapInfoBlock } from '@/blocks/MapInfoBlock'
+import { CarouselBlock } from '@/blocks/CarouselBlock'
+import { TeamCarousalBlock } from '@/blocks/TeamCarousalBlock'
 
 export const Pages: any = {
   slug: 'pages',
@@ -182,7 +184,7 @@ export const Pages: any = {
     {
       name: 'content',
       type: 'blocks',
-      blocks: [HeroBlock, FeaturesBlock, ContentBlock, CtaBlock, MediaBlockContent, CardsWithIcons, VerticleHoverCardsBlock, FAQBlock, HeroLeftLayoutBlock, MapInfoBlock],
+      blocks: [HeroBlock, FeaturesBlock, ContentBlock, CtaBlock, MediaBlockContent, CardsWithIcons, VerticleHoverCardsBlock, FAQBlock, HeroLeftLayoutBlock, MapInfoBlock, CarouselBlock, TeamCarousalBlock],
       admin: {
         condition: (data: any, siblingData: any) => {
           return !!(siblingData?.homeTemplate || siblingData?.aboutTemplate || siblingData?.contactTemplate || siblingData?.servicesTemplate)

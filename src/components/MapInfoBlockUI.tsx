@@ -35,7 +35,6 @@ export default function MapInfoBlockUI({ data }: Props) {
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '-12%'])
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1])
 
-  console.log(data)
   return (
     <main ref={sectionRef} className="relative md:py-24 py-0 overflow-hidden">
       {/* 🌎 MAP */}
