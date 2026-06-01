@@ -1,4 +1,3 @@
-import { default as default_73b3f4bf99d35ac77ee6c02e21c51a83 } from '@/components/admin/ThemeSelector'
 import { TemplateTypeSelect as TemplateTypeSelect_298ac9fd5b034c1ce0f602dfc19d1fc3 } from '@/components/TemplateTypeSelect'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -33,7 +32,6 @@ import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } f
 
 /** @type import('payload').ImportMap */
 export const importMap = {
-  "@/components/admin/ThemeSelector#default": default_73b3f4bf99d35ac77ee6c02e21c51a83,
   "@/components/TemplateTypeSelect#TemplateTypeSelect": TemplateTypeSelect_298ac9fd5b034c1ce0f602dfc19d1fc3,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,

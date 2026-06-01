@@ -1,4 +1,4 @@
-import { ROLES } from '@/constants/AppOptions'
+import { COLOR_OPTIONS, FONT_FAMILY_OPTIONS, ROLES } from '@/constants/AppOptions'
 import { CollectionConfig } from 'payload'
 
 const Tenants: CollectionConfig = {
@@ -6,7 +6,6 @@ const Tenants: CollectionConfig = {
 
   admin: {
     useAsTitle: 'name',
-
     hidden: ({ user }) => {
       return user?.role !== ROLES.SUPERADMIN
     },
@@ -46,17 +45,40 @@ const Tenants: CollectionConfig = {
       name: 'domain',
       type: 'text',
     },
+
     {
-      name: 'theme',
-      type: 'text',
+      name: 'primaryColor',
+      label: 'Primary Color',
+      type: 'select',
       defaultValue: 'blue',
-      admin: {
-        components: {
-          Field: '@/components/admin/ThemeSelector',
-        },
-        description: 'Select UI theme for this tenant',
-      },
+      options: COLOR_OPTIONS,
     },
+    {
+      name: 'secondaryColor',
+      label: 'Secondary Color',
+      type: 'select',
+      defaultValue: 'gray',
+      options: COLOR_OPTIONS,
+    },
+    {
+      name: 'fontFamily',
+      label: 'Font Family',
+      type: 'select',
+      defaultValue: 'Inter',
+      options: FONT_FAMILY_OPTIONS,
+    },
+
+    // {
+    //   name: 'theme',
+    //   type: 'text',
+    //   defaultValue: 'blue',
+    //   admin: {
+    //     components: {
+    //       Field: '@/components/admin/ThemeSelector',
+    //     },
+    //     description: 'Select UI theme for this tenant',
+    //   },
+    // },
   ],
 }
 

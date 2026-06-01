@@ -168,10 +168,62 @@ export interface Tenant {
   smtpUser?: string | null;
   smtpPassword?: string | null;
   domain?: string | null;
-  /**
-   * Select UI theme for this tenant
-   */
-  theme?: string | null;
+  primaryColor?:
+    | (
+        | 'blue'
+        | 'light-blue'
+        | 'powder-blue'
+        | 'sky-blue'
+        | 'gray'
+        | 'slate'
+        | 'black'
+        | 'green'
+        | 'emerald'
+        | 'teal'
+        | 'purple'
+        | 'indigo'
+        | 'pink'
+        | 'rose'
+        | 'red'
+        | 'orange'
+        | 'amber'
+      )
+    | null;
+  secondaryColor?:
+    | (
+        | 'blue'
+        | 'light-blue'
+        | 'powder-blue'
+        | 'sky-blue'
+        | 'gray'
+        | 'slate'
+        | 'black'
+        | 'green'
+        | 'emerald'
+        | 'teal'
+        | 'purple'
+        | 'indigo'
+        | 'pink'
+        | 'rose'
+        | 'red'
+        | 'orange'
+        | 'amber'
+      )
+    | null;
+  fontFamily?:
+    | (
+        | 'Inter'
+        | 'Poppins'
+        | 'Roboto'
+        | 'Montserrat'
+        | 'Outfit'
+        | 'DM Sans'
+        | 'Open Sans'
+        | 'Lato'
+        | 'Nunito'
+        | 'Playfair Display'
+      )
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1120,7 +1172,9 @@ export interface TenantsSelect<T extends boolean = true> {
   smtpUser?: T;
   smtpPassword?: T;
   domain?: T;
-  theme?: T;
+  primaryColor?: T;
+  secondaryColor?: T;
+  fontFamily?: T;
   updatedAt?: T;
   createdAt?: T;
 }
