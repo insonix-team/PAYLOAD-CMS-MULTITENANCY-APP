@@ -348,6 +348,7 @@ export interface Page {
             blockType: 'faqBlock';
           }
         | HeroLeftLayoutBlock
+        | MapInfoBlockType
       )[]
     | null;
   tenant?: (string | null) | Tenant;
@@ -505,6 +506,7 @@ export interface HomeTemplate {
             blockType: 'verticleHoverCardsBlock';
           }
         | HeroLeftLayoutBlock
+        | MapInfoBlockType
       )[]
     | null;
   updatedAt: string;
@@ -567,6 +569,42 @@ export interface HeroLeftLayoutBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'heroLeftLayoutBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MapInfoBlockType".
+ */
+export interface MapInfoBlockType {
+  title?: string | null;
+  /**
+   * Full clinic address
+   */
+  address: string;
+  /**
+   * Google Maps direct link (used for the Location button)
+   */
+  googleMapLink: string;
+  /**
+   * Google Maps Embed iframe URL
+   */
+  mapEmbedUrl: string;
+  phone: string;
+  email: string;
+  parking?: boolean | null;
+  accessibility?: boolean | null;
+  officeHoursSection: {
+    officetitle: string;
+    officeHours?:
+      | {
+          day: string;
+          time: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mapInfoBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1069,6 +1107,7 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
         heroLeftLayoutBlock?: T | HeroLeftLayoutBlockSelect<T>;
+        mapInfoBlock?: T | MapInfoBlockTypeSelect<T>;
       };
   tenant?: T;
   updatedAt?: T;
@@ -1115,6 +1154,34 @@ export interface HeroLeftLayoutBlockSelect<T extends boolean = true> {
         url?: T;
         style?: T;
         id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MapInfoBlockType_select".
+ */
+export interface MapInfoBlockTypeSelect<T extends boolean = true> {
+  title?: T;
+  address?: T;
+  googleMapLink?: T;
+  mapEmbedUrl?: T;
+  phone?: T;
+  email?: T;
+  parking?: T;
+  accessibility?: T;
+  officeHoursSection?:
+    | T
+    | {
+        officetitle?: T;
+        officeHours?:
+          | T
+          | {
+              day?: T;
+              time?: T;
+              id?: T;
+            };
       };
   id?: T;
   blockName?: T;
@@ -1237,6 +1304,7 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
               blockName?: T;
             };
         heroLeftLayoutBlock?: T | HeroLeftLayoutBlockSelect<T>;
+        mapInfoBlock?: T | MapInfoBlockTypeSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
