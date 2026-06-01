@@ -1,14 +1,13 @@
-
 import type { Block } from 'payload'
 
 export const FAQBlock: Block = {
   slug: 'faqBlock',
+  imageURL: '/block-thumbnails/faq.png',
   labels: {
     singular: 'FAQ Section',
     plural: 'FAQ Sections',
   },
   fields: [
-   
     {
       name: 'title',
       type: 'text',

@@ -2,18 +2,15 @@ import { Block } from 'payload'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { HeadingFeature, LinkFeature, UploadFeature } from '@payloadcms/richtext-lexical'
 
-
 export const MediaBlockContent: Block = {
   slug: 'mediaBlockcontent',
-
+  imageURL: '/block-thumbnails/content-with-image.png',
   labels: {
     singular: 'Media Block Content',
     plural: 'Media Blocks Content',
   },
 
   fields: [
-  
-
     {
       name: 'media',
       type: 'upload',
@@ -64,12 +61,7 @@ export const MediaBlockContent: Block = {
       name: 'content',
       type: 'richText',
       editor: lexicalEditor({
-        features: ({ rootFeatures }) => [
-          ...rootFeatures,
-          HeadingFeature(),
-          LinkFeature(),
-          UploadFeature(),
-        ],
+        features: ({ rootFeatures }) => [...rootFeatures, HeadingFeature(), LinkFeature(), UploadFeature()],
       }),
     },
 
