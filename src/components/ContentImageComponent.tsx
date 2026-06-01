@@ -34,7 +34,7 @@ export const ContentImageComponentUI = ({ data }: Props) => {
   const mediaAlt = typeof media === 'object' && media?.alt ? media.alt : imageName || 'Media image'
 
   return (
-    <section className={` prose w-full py-12 ${bgClass} ${paddingClass}`}>
+    <section className={`  w-full py-12 ${bgClass} ${paddingClass}`}>
       <div className={`container mx-auto flex flex-col items-center gap-10 md:flex-row ${!isLeft ? 'md:flex-row-reverse' : ''}`}>
         {/* IMAGE BLOCK */}
         <div className="relative w-full md:w-1/2">

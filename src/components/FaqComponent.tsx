@@ -25,7 +25,7 @@ export const FAQComponentUI = ({ data }: any) => {
                   </button>
 
                   {isOpen && (
-                    <div className="bg-card p-4">
+                    <div className="bg-card p-4 prose max-w-none">
                       <RichText data={faq.answer} />
                     </div>
                   )}

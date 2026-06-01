@@ -57,7 +57,7 @@ export const CardsWithIconsBlockUI = ({ data, tenant }: { data?: CardsWithIcons;
                 <h3 className="text-xl font-semibold mb-3">{card.title}</h3>
 
                 <RichText
-                  className="prose prose-sm max-w-none"
+                  className="prose max-w-none"
                   data={
                     card.description ?? {
                       root: {

@@ -23,7 +23,7 @@ const serverFunction: ServerFunctionClient = async function (args) {
 export default function Layout({ children }: Args) {
   return (
     <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
-      {children}
+      <div className=" prose max-w-none">{children}</div>
     </RootLayout>
   )
 }

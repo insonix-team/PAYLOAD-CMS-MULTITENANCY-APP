@@ -127,7 +127,7 @@ export const TeamCarousalUI = ({ data }: Props) => {
                   </motion.div>
                   {/* CONTENT */}
 
-                  <div className="space-y-6">
+                  <div className="space-y-6 prose max-w-none">
                     {slide.content && <RichText data={slide.content as any} />}
                     <div className="pt-6 border-t flex gap-4 items-center justify-between">
                       <div className="w-full">
