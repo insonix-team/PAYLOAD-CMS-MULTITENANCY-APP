@@ -347,6 +347,7 @@ export interface Page {
             blockName?: string | null;
             blockType: 'faqBlock';
           }
+        | HeroLeftLayoutBlock
       )[]
     | null;
   tenant?: (string | null) | Tenant;
@@ -503,6 +504,7 @@ export interface HomeTemplate {
             blockName?: string | null;
             blockType: 'verticleHoverCardsBlock';
           }
+        | HeroLeftLayoutBlock
       )[]
     | null;
   updatedAt: string;
@@ -542,6 +544,29 @@ export interface CardsWithIcons {
   id?: string | null;
   blockName?: string | null;
   blockType: 'cardsWithIcons';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroLeftLayoutBlock".
+ */
+export interface HeroLeftLayoutBlock {
+  backgroundImage: string | Media;
+  overlayOpacity?: number | null;
+  tag?: string | null;
+  title: string;
+  subtitle?: string | null;
+  description?: string | null;
+  buttons?:
+    | {
+        label: string;
+        url: string;
+        style?: ('primary' | 'secondary') | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'heroLeftLayoutBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1043,6 +1068,7 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        heroLeftLayoutBlock?: T | HeroLeftLayoutBlockSelect<T>;
       };
   tenant?: T;
   updatedAt?: T;
@@ -1066,6 +1092,28 @@ export interface CardsWithIconsSelect<T extends boolean = true> {
         gradientTo?: T;
         gradientDirection?: T;
         solidBg?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroLeftLayoutBlock_select".
+ */
+export interface HeroLeftLayoutBlockSelect<T extends boolean = true> {
+  backgroundImage?: T;
+  overlayOpacity?: T;
+  tag?: T;
+  title?: T;
+  subtitle?: T;
+  description?: T;
+  buttons?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        style?: T;
         id?: T;
       };
   id?: T;
@@ -1188,6 +1236,7 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        heroLeftLayoutBlock?: T | HeroLeftLayoutBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
