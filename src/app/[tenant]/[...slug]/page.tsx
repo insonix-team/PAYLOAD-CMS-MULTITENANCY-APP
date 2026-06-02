@@ -27,11 +27,18 @@ export default async function DynamicPage({
   const page = pageData?.docs?.[0];
 
   if (!tenantDetails || !page) return notFound();
+  console.log('Tenant Details:', tenantDetails);
 
   return (
     <html lang="en">
       <body>
-        <ThemeRegistry>
+        <ThemeRegistry
+          tenantTheme={{
+            primaryColor: tenantDetails.primaryColor,
+            secondaryColor: tenantDetails.secondaryColor,
+            fontFamily: tenantDetails.fontFamily,
+          }}
+        >
           <HeaderRenderer header={header} />
           <BlockRenderer blocks={page?.layout || page?.content} tenant={tenantDetails?.slug} />
           <FooterRenderer footer={footer} />

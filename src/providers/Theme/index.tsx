@@ -13,12 +13,46 @@ const initialContext: ThemeContextType = {
   theme: undefined,
 };
 
+export interface TenantTheme {
+  primaryColor?: string;
+  secondaryColor?: string;
+  fontFamily?: string;
+}
+
 const ThemeContext = createContext(initialContext);
 
-export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+export const ThemeProvider = ({
+  children,
+  tenantTheme,
+}: {
+  children: React.ReactNode;
+  tenantTheme?: TenantTheme | null;
+}) => {
   const [theme, setThemeState] = useState<Theme | undefined>(
     canUseDOM ? (document.documentElement.getAttribute('data-theme') as Theme) : undefined
   );
+
+  const applyTenantTheme = (tenantTheme?: TenantTheme | null) => {
+    if (!canUseDOM) return;
+
+    if (tenantTheme?.primaryColor) {
+      document.documentElement.style.setProperty('--primary', tenantTheme.primaryColor);
+    } else {
+      document.documentElement.style.removeProperty('--primary');
+    }
+
+    if (tenantTheme?.secondaryColor) {
+      document.documentElement.style.setProperty('--secondary', tenantTheme.secondaryColor);
+    } else {
+      document.documentElement.style.removeProperty('--secondary');
+    }
+
+    if (tenantTheme?.fontFamily) {
+      document.documentElement.style.setProperty('--font-family', tenantTheme.fontFamily);
+    } else {
+      document.documentElement.style.removeProperty('--font-family');
+    }
+  };
 
   const setTheme = useCallback((themeToSet: Theme | null) => {
     if (themeToSet === null) {
@@ -49,7 +83,8 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
     document.documentElement.setAttribute('data-theme', themeToSet);
     setThemeState(themeToSet);
-  }, []);
+    applyTenantTheme(tenantTheme);
+  }, [tenantTheme]);
 
   return <ThemeContext value={{ setTheme, theme }}>{children}</ThemeContext>;
 };

@@ -48,5 +48,6 @@ export const FONT_FAMILY_OPTIONS = [
   { label: 'Open Sans', value: 'Open Sans' },
   { label: 'Lato', value: 'Lato' },
   { label: 'Nunito', value: 'Nunito' },
+  { label: 'Cursive', value: 'Cursive' },
   { label: 'Playfair Display', value: 'Playfair Display' },
 ];

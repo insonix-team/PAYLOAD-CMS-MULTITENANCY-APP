@@ -6,9 +6,14 @@ import { ThemeProvider } from './Theme';
 
 export const ThemeRegistry: React.FC<{
   children: React.ReactNode;
-}> = ({ children }) => {
+  tenantTheme?: {
+    primaryColor?: string;
+    secondaryColor?: string;
+    fontFamily?: string;
+  } | null;
+}> = ({ children, tenantTheme }) => {
   return (
-    <ThemeProvider>
+    <ThemeProvider tenantTheme={tenantTheme}>
       {/* <CssBaseline /> */}
       {children}
     </ThemeProvider>

@@ -34,7 +34,13 @@ export default async function DynamicPage({ params }: { params: { slug?: string[
   return (
     <html lang="en">
       <body>
-        <ThemeRegistry>
+        <ThemeRegistry
+          tenantTheme={{
+            primaryColor: tenantDetails.primaryColor,
+            secondaryColor: tenantDetails.secondaryColor,
+            fontFamily: tenantDetails.fontFamily,
+          }}
+        >
           <HeaderRenderer header={header} />
 
           <BlockRenderer blocks={page?.layout || page?.content} tenant={tenantDetails?.slug} />

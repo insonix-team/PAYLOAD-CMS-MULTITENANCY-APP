@@ -223,6 +223,7 @@ export interface Tenant {
         | 'Open Sans'
         | 'Lato'
         | 'Nunito'
+        | 'Cursive'
         | 'Playfair Display'
       )
     | null;

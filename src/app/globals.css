@@ -12,6 +12,10 @@
     font-weight: unset;
     font-size: unset;
   }
+
+  body {
+    font-family: var(--font-family, Inter, system-ui, sans-serif);
+  }
 }
 
 :root {
@@ -25,6 +29,7 @@
   --primary-foreground: oklch(98.5% 0 0deg);
   --secondary: #8e6b69;
   --secondary-foreground: oklch(20.5% 0 0deg);
+  --font-family: Inter, system-ui, sans-serif;
   --muted: oklch(97% 0 0deg);
   --muted-foreground: oklch(55.6% 0 0deg);
   --accent: oklch(97% 0 0deg);
