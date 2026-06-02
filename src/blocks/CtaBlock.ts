@@ -2,6 +2,7 @@ import { Block } from 'payload'
 
 export const CtaBlock: Block = {
   slug: 'cta',
+  imageURL: '/block-thumbnails/cta.webp',
   fields: [
     {
       name: 'title',

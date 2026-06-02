@@ -2,7 +2,7 @@ import type { Block } from 'payload'
 
 export const FAQBlock: Block = {
   slug: 'faqBlock',
-  imageURL: '/block-thumbnails/faq.png',
+  imageURL: '/block-thumbnails/faq.webp',
   labels: {
     singular: 'FAQ Section',
     plural: 'FAQ Sections',

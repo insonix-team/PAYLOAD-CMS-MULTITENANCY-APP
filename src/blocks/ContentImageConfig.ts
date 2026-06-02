@@ -3,7 +3,7 @@ import { Block } from 'payload'
 
 export const MediaBlockContent: Block = {
   slug: 'mediaBlockcontent',
-  imageURL: '/block-thumbnails/content-with-image.png',
+  imageURL: '/block-thumbnails/mediablock.webp',
   labels: {
     singular: 'Media Block Content',
     plural: 'Media Blocks Content',

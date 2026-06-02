@@ -2,6 +2,7 @@ import type { Block } from 'payload'
 
 export const VerticleHoverCardsBlock: Block = {
   slug: 'verticleHoverCardsBlock',
+  imageURL: '/block-thumbnails/vertical-box.webp',
   labels: {
     singular: 'Verticle Card Hover',
     plural: 'Verticle Cards Hovers',

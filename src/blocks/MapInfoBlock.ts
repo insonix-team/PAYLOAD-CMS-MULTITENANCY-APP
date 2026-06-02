@@ -2,6 +2,7 @@ import { Block } from 'payload'
 
 export const MapInfoBlock: Block = {
   slug: 'mapInfoBlock',
+  imageURL: '/block-thumbnails/map-info.svg',
   interfaceName: 'MapInfoBlockType',
   labels: {
     singular: 'Map + Info Block',
