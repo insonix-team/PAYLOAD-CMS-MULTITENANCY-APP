@@ -1,6 +1,6 @@
-import { ROLES } from '@/constants/AppOptions'
-import { tenantAccess } from '@/lib/utils'
-import { CollectionConfig, CollectionSlug } from 'payload'
+import { ROLES } from '@/constants/AppOptions';
+import { tenantAccess } from '@/lib/utils';
+import { CollectionConfig, CollectionSlug } from 'payload';
 
 const Users: CollectionConfig = {
   slug: 'users',
@@ -8,13 +8,13 @@ const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     hidden: ({ user }) => {
-      return ![ROLES.SUPERADMIN, ROLES.TENANT].includes(user?.role)
+      return ![ROLES.SUPERADMIN, ROLES.TENANT].includes(user?.role);
     },
   },
   access: {
     create: ({ req }) => {
-      if (!req.user) return true
-      return !!req.user
+      if (!req.user) return true;
+      return !!req.user;
     },
     read: tenantAccess,
     update: tenantAccess,
@@ -25,23 +25,23 @@ const Users: CollectionConfig = {
     beforeChange: [
       async ({ data, req, operation }) => {
         if (operation !== 'create') {
-          return data
+          return data;
         }
 
         const users = await req.payload.find({
           collection: 'users',
           limit: 1,
-        })
+        });
 
         if (users.totalDocs === 0) {
           return {
             ...data,
             role: ROLES.SUPERADMIN,
             tenant: undefined,
-          }
+          };
         }
 
-        return data
+        return data;
       },
     ],
   },
@@ -73,7 +73,7 @@ const Users: CollectionConfig = {
 
       admin: {
         condition: (_, __, { user }) => {
-          return user?.role === ROLES.SUPERADMIN
+          return user?.role === ROLES.SUPERADMIN;
         },
       },
 
@@ -83,17 +83,17 @@ const Users: CollectionConfig = {
             const users = await req.payload.find({
               collection: 'users',
               limit: 1,
-            })
+            });
 
             if (users.totalDocs === 0) {
-              return ROLES.SUPERADMIN
+              return ROLES.SUPERADMIN;
             }
 
             if (req.user?.role === ROLES.TENANT) {
-              return ROLES.DESIGNER
+              return ROLES.DESIGNER;
             }
 
-            return value
+            return value;
           },
         ],
       },
@@ -106,7 +106,7 @@ const Users: CollectionConfig = {
       required: false,
       admin: {
         condition: (_, __, { user }) => {
-          return user?.role === ROLES.SUPERADMIN
+          return user?.role === ROLES.SUPERADMIN;
         },
       },
 
@@ -116,24 +116,24 @@ const Users: CollectionConfig = {
             const users = await req.payload.find({
               collection: 'users',
               limit: 1,
-            })
+            });
 
             if (users.totalDocs === 0) {
-              return undefined
+              return undefined;
             }
 
             if (req.user?.role !== ROLES.SUPERADMIN) {
-              const tenant = req.user?.tenant
+              const tenant = req.user?.tenant;
 
-              return typeof tenant === 'string' ? tenant : tenant?.id
+              return typeof tenant === 'string' ? tenant : tenant?.id;
             }
 
-            return value
+            return value;
           },
         ],
       },
     },
   ],
-}
+};
 
-export default Users
+export default Users;

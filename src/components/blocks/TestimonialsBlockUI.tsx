@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const TestimonialsBlockUI = ({ data }: any) => {
   return (
     <section className="py-16 bg-gray-50">
@@ -14,5 +15,5 @@ export const TestimonialsBlockUI = ({ data }: any) => {
         ))}
       </div>
     </section>
-  )
-}
+  );
+};

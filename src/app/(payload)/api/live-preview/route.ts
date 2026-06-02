@@ -4,20 +4,22 @@
 */
 export async function GET(request: Request) {
   try {
-    const url = new URL(request.url)
-    const slug = url.searchParams.get('slug') || ''
-    const tenant = url.searchParams.get('tenant') || ''
+    const url = new URL(request.url);
+    const slug = url.searchParams.get('slug') || '';
+    const tenant = url.searchParams.get('tenant') || '';
 
     if (!slug || !tenant) {
-      return new Response('Missing slug or tenant', { status: 400 })
+      return new Response('Missing slug or tenant', { status: 400 });
     }
 
     // Build URL with tenant and slug
-    const destination = new URL(`/${tenant}/${slug}`, request.url)
+    const destination = new URL(`/${tenant}/${slug}`, request.url);
 
-    return Response.redirect(destination.toString(), 302)
-  } catch (err: any) {
-    console.error('Error:', err)
-    return new Response(`Error: ${err.message}`, { status: 500 })
+    return Response.redirect(destination.toString(), 302);
+  } catch (err: Error | unknown) {
+    console.error('Error:', err);
+    return new Response(`Error: ${err instanceof Error ? err.message : 'Unknown error'}`, {
+      status: 500,
+    });
   }
 }

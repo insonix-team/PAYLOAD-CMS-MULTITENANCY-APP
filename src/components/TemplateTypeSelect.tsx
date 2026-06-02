@@ -1,39 +1,41 @@
-'use client'
+'use client';
 
-import { ChangeEvent } from 'react'
-import { useField } from '@payloadcms/ui'
+import { ChangeEvent } from 'react';
+import { useField } from '@payloadcms/ui';
 
 const TEMPLATE_TYPE_OPTIONS = [
   { label: 'Home', value: 'home' },
   { label: 'About', value: 'about' },
   { label: 'Contact', value: 'contact' },
   { label: 'Services', value: 'services' },
-]
+];
 
 export const TemplateTypeSelect: React.FC = () => {
-  const { value = '', setValue } = useField<string>({ path: 'templateType' })
+  const { value = '', setValue } = useField<string>({ path: 'templateType' });
 
-  const homeTemplate = useField<string>({ path: 'homeTemplate' })
-  const aboutTemplate = useField<string>({ path: 'aboutTemplate' })
-  const contactTemplate = useField<string>({ path: 'contactTemplate' })
-  const servicesTemplate = useField<string>({ path: 'servicesTemplate' })
+  const homeTemplate = useField<string>({ path: 'homeTemplate' });
+  const aboutTemplate = useField<string>({ path: 'aboutTemplate' });
+  const contactTemplate = useField<string>({ path: 'contactTemplate' });
+  const servicesTemplate = useField<string>({ path: 'servicesTemplate' });
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const newValue = e.target.value
+    const newValue = e.target.value;
 
     // Clear all template fields using their own setValue
-    homeTemplate.setValue(null)
-    aboutTemplate.setValue(null)
-    contactTemplate.setValue(null)
-    servicesTemplate.setValue(null)
+    homeTemplate.setValue(null);
+    aboutTemplate.setValue(null);
+    contactTemplate.setValue(null);
+    servicesTemplate.setValue(null);
 
     // Update templateType
-    setValue(newValue)
-  }
+    setValue(newValue);
+  };
 
   return (
     <div>
-      <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Template Type</label>
+      <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>
+        Template Type
+      </label>
       <select
         value={value as string}
         onChange={handleChange}
@@ -56,7 +58,7 @@ export const TemplateTypeSelect: React.FC = () => {
         ))}
       </select>
     </div>
-  )
-}
+  );
+};
 
-export default TemplateTypeSelect
+export default TemplateTypeSelect;

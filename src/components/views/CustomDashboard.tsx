@@ -1,5 +1,5 @@
-'use client'
-import { Gutter } from '@payloadcms/ui'
+'use client';
+import { Gutter } from '@payloadcms/ui';
 
 export default function CustomDashboard() {
   return (
@@ -7,5 +7,5 @@ export default function CustomDashboard() {
       <h1>Custom Dashboard</h1>
       <p>This is your custom dashboard view!</p>
     </Gutter>
-  )
+  );
 }

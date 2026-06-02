@@ -1,5 +1,10 @@
-import { FixedToolbarFeature, HeadingFeature, InlineToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
-import type { Block } from 'payload'
+import {
+  FixedToolbarFeature,
+  HeadingFeature,
+  InlineToolbarFeature,
+  lexicalEditor,
+} from '@payloadcms/richtext-lexical';
+import type { Block } from 'payload';
 
 export const CardsWithIcons: Block = {
   slug: 'cardsWithIcons',
@@ -43,7 +48,12 @@ export const CardsWithIcons: Block = {
           name: 'description',
           type: 'richText',
           editor: lexicalEditor({
-            features: ({ rootFeatures }) => [...rootFeatures, HeadingFeature(), FixedToolbarFeature(), InlineToolbarFeature()],
+            features: ({ rootFeatures }) => [
+              ...rootFeatures,
+              HeadingFeature(),
+              FixedToolbarFeature(),
+              InlineToolbarFeature(),
+            ],
           }),
         },
 
@@ -102,4 +112,4 @@ export const CardsWithIcons: Block = {
       ],
     },
   ],
-}
+};

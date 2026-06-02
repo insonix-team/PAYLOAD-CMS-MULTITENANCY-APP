@@ -1,5 +1,5 @@
-import type { CardsWithIcons } from '@/payload-types'
-import { RichText } from '@payloadcms/richtext-lexical/react'
+import type { CardsWithIcons } from '@/payload-types';
+import { RichText } from '@payloadcms/richtext-lexical/react';
 
 const directionMap: Record<string, string> = {
   'to-r': 'bg-gradient-to-r',
@@ -7,24 +7,30 @@ const directionMap: Record<string, string> = {
   'to-t': 'bg-gradient-to-t',
   'to-b': 'bg-gradient-to-b',
   radial: 'bg-[radial-gradient(circle)]',
-}
+};
 
 const colorMap: Record<string, string> = {
   primary: 'from-primary-500 to-primary-700',
   secondary: 'from-secondary-500 to-secondary-700',
   gray: 'from-gray-500 to-gray-700',
   white: 'from-white to-gray-100',
-}
+};
 
-export const CardsWithIconsBlockUI = ({ data, tenant }: { data?: CardsWithIcons; tenant?: string }) => {
-  const block = data
-  if (!block) return null
+export const CardsWithIconsBlockUI = ({
+  data,
+  tenant,
+}: {
+  data?: CardsWithIcons;
+  tenant?: string;
+}) => {
+  const block = data;
+  if (!block) return null;
 
   const desktopCols = {
     2: 'lg:grid-cols-2',
     3: 'lg:grid-cols-3',
     4: 'lg:grid-cols-4',
-  }[block.columns ?? 3]
+  }[block.columns ?? 3];
 
   return (
     <section className="py-16 bg-white">
@@ -33,12 +39,12 @@ export const CardsWithIconsBlockUI = ({ data, tenant }: { data?: CardsWithIcons;
 
         <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 ${desktopCols}`}>
           {block.cards?.map((card, i) => {
-            const iconObj = typeof card.icon === 'object' ? card.icon : null
-            const iconUrl = iconObj?.url ? `${iconObj.url}` : null
+            const iconObj = typeof card.icon === 'object' ? card.icon : null;
+            const iconUrl = iconObj?.url ? `${iconObj.url}` : null;
 
-            const direction = directionMap[card.gradientDirection ?? 'to-r']
-            const from = colorMap[card.gradientFrom ?? 'primary']
-            const to = colorMap[card.gradientTo ?? 'secondary']
+            const direction = directionMap[card.gradientDirection ?? 'to-r'];
+            const from = colorMap[card.gradientFrom ?? 'primary'];
+            const to = colorMap[card.gradientTo ?? 'secondary'];
 
             return (
               <div
@@ -72,10 +78,10 @@ export const CardsWithIconsBlockUI = ({ data, tenant }: { data?: CardsWithIcons;
                   }
                 />
               </div>
-            )
+            );
           })}
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

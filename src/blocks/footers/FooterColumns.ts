@@ -1,4 +1,4 @@
-import { Block } from 'payload'
+import { Block } from 'payload';
 
 export const FooterColumns: Block = {
   slug: 'footerColumns',
@@ -35,4 +35,4 @@ export const FooterColumns: Block = {
       ],
     },
   ],
-}
+};

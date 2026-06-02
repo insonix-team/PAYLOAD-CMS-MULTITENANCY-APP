@@ -1,5 +1,12 @@
-import { FixedToolbarFeature, HeadingFeature, InlineToolbarFeature, lexicalEditor, LinkFeature, UploadFeature } from '@payloadcms/richtext-lexical'
-import type { Block } from 'payload'
+import {
+  FixedToolbarFeature,
+  HeadingFeature,
+  InlineToolbarFeature,
+  lexicalEditor,
+  LinkFeature,
+  UploadFeature,
+} from '@payloadcms/richtext-lexical';
+import type { Block } from 'payload';
 
 export const CarouselBlock: Block = {
   slug: 'carouselBlock',
@@ -24,7 +31,14 @@ export const CarouselBlock: Block = {
           name: 'content',
           type: 'richText',
           editor: lexicalEditor({
-            features: ({ rootFeatures }) => [...rootFeatures, HeadingFeature(), LinkFeature(), UploadFeature(), FixedToolbarFeature(), InlineToolbarFeature()],
+            features: ({ rootFeatures }) => [
+              ...rootFeatures,
+              HeadingFeature(),
+              LinkFeature(),
+              UploadFeature(),
+              FixedToolbarFeature(),
+              InlineToolbarFeature(),
+            ],
           }),
         },
       ],
@@ -58,4 +72,4 @@ export const CarouselBlock: Block = {
       },
     },
   ],
-}
+};

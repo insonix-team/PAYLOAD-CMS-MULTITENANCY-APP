@@ -1,4 +1,4 @@
-import { Block } from 'payload'
+import { Block } from 'payload';
 
 export const FeaturesBlock: Block = {
   slug: 'features',
@@ -38,4 +38,4 @@ export const FeaturesBlock: Block = {
       defaultValue: '3',
     },
   ],
-}
+};

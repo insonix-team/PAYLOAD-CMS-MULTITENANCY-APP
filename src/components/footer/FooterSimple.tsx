@@ -1,18 +1,18 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
+import Link from 'next/link';
 
-import { Box, Container, Stack, Typography } from '@mui/material'
+import { Box, Container, Stack, Typography } from '@mui/material';
 
 type SocialLink = {
-  platform: string
-  url: string
-}
+  platform: string;
+  url: string;
+};
 
 type Props = {
-  copyrightText?: string
-  socialLinks?: SocialLink[]
-}
+  copyrightText?: string;
+  socialLinks?: SocialLink[];
+};
 
 export default function FooterSimple({ copyrightText, socialLinks = [] }: Props) {
   return (
@@ -65,5 +65,5 @@ export default function FooterSimple({ copyrightText, socialLinks = [] }: Props)
         </Stack>
       </Container>
     </Box>
-  )
+  );
 }

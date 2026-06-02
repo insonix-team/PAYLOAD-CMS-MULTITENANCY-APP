@@ -1,4 +1,4 @@
-import { Block } from 'payload'
+import { Block } from 'payload';
 
 export const HeaderCentered: Block = {
   slug: 'headerCentered',
@@ -35,4 +35,4 @@ export const HeaderCentered: Block = {
       ],
     },
   ],
-}
+};

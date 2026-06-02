@@ -1,4 +1,4 @@
-import { Block } from 'payload'
+import { Block } from 'payload';
 
 export const HeaderSimple: Block = {
   slug: 'headerSimple',
@@ -46,4 +46,4 @@ export const HeaderSimple: Block = {
       },
     },
   ],
-}
+};

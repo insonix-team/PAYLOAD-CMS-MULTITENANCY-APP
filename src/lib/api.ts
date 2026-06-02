@@ -1,7 +1,11 @@
-import { getCurrentDomain } from './tenant'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { getCurrentDomain } from './tenant';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_SITE_URL || `http://localhost:${process.env.PORT || 3000}`
-const isServer = typeof window === 'undefined'
+const BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  `http://localhost:${process.env.PORT || 3000}`;
+const isServer = typeof window === 'undefined';
 
 export const getTenant = async (tenantSlug: string | null = null) => {
   const query = tenantSlug
@@ -12,58 +16,58 @@ export const getTenant = async (tenantSlug: string | null = null) => {
     : {
         field: 'domain',
         value: await getCurrentDomain(),
-      }
+      };
 
   const where = {
     [query.field]: {
       equals: query.value,
     },
-  }
+  };
 
   // Server-side
 
-  let base_url = BASE_URL
+  let base_url = BASE_URL;
 
   if (isServer) {
-    const { getPayload } = await import('payload')
-    const configModule = await import('@payload-config')
+    const { getPayload } = await import('payload');
+    const configModule = await import('@payload-config');
 
     const payload = await getPayload({
       config: (configModule as any).default,
-    })
+    });
 
     const result = await payload.find({
       collection: 'tenants',
       where,
       depth: 0,
-    })
-    base_url = `https://${result?.docs?.[0]?.domain}`
-    return result?.docs?.[0]
+    });
+    base_url = `https://${result?.docs?.[0]?.domain}`;
+    return result?.docs?.[0];
   }
 
-  const encodedValue = encodeURIComponent(query.value || '')
+  const encodedValue = encodeURIComponent(query.value || '');
 
   const res = await fetch(`${base_url}/api/tenants?where[${query.field}][equals]=${encodedValue}`, {
     cache: 'no-store',
-  })
+  });
 
-  const data = await res.json()
-  return data?.docs?.[0]
-}
+  const data = await res.json();
+  return data?.docs?.[0];
+};
 
 export const getHeader = async (tenantSlug: string | null = null) => {
-  const tenant = await getTenant(tenantSlug || undefined)
+  const tenant = await getTenant(tenantSlug || undefined);
 
   if (!tenant) {
-    return null
+    return null;
   }
 
-  const { getPayload } = await import('payload')
-  const configModule = await import('@payload-config')
+  const { getPayload } = await import('payload');
+  const configModule = await import('@payload-config');
 
   const payload = await getPayload({
     config: (configModule as any).default,
-  })
+  });
 
   const result = await payload.find({
     collection: 'headers',
@@ -75,24 +79,24 @@ export const getHeader = async (tenantSlug: string | null = null) => {
 
     limit: 1,
     depth: 2,
-  })
+  });
 
-  return result?.docs[0]?.layout || null
-}
+  return result?.docs[0]?.layout || null;
+};
 
 export const getFooter = async (tenantSlug: string | null = null) => {
-  const tenant = await getTenant(tenantSlug || undefined)
+  const tenant = await getTenant(tenantSlug || undefined);
 
   if (!tenant) {
-    return null
+    return null;
   }
 
-  const { getPayload } = await import('payload')
-  const configModule = await import('@payload-config')
+  const { getPayload } = await import('payload');
+  const configModule = await import('@payload-config');
 
   const payload = await getPayload({
     config: (configModule as any).default,
-  })
+  });
 
   const result = await payload.find({
     collection: 'footers',
@@ -105,36 +109,39 @@ export const getFooter = async (tenantSlug: string | null = null) => {
 
     limit: 1,
     depth: 2,
-  })
+  });
 
-  return result.docs[0]?.layout || null
-}
+  return result.docs[0]?.layout || null;
+};
 
 export const getPages = async (slug: string, tenantSlug: string | null = null) => {
-  const tenant = await getTenant(tenantSlug || undefined)
+  const tenant = await getTenant(tenantSlug || undefined);
 
   if (!tenant) {
-    return { docs: [] }
+    return { docs: [] };
   }
 
   if (isServer) {
-    const { getPayload } = await import('payload')
-    const configModule = await import('@payload-config')
-    const payload = await getPayload({ config: (configModule as any).default })
+    const { getPayload } = await import('payload');
+    const configModule = await import('@payload-config');
+    const payload = await getPayload({ config: (configModule as any).default });
     const result = await payload.find({
       collection: 'pages',
       where: { tenant: { equals: tenant.id }, slug: { equals: slug } },
       depth: 3,
-    })
-    return result
+    });
+    return result;
   }
 
-  const encodedSlug = encodeURIComponent(slug || '')
-  let base_url = BASE_URL
+  const encodedSlug = encodeURIComponent(slug || '');
+  let base_url = BASE_URL;
   if (isServer) {
-    base_url = `https://${tenant?.domain}`
+    base_url = `https://${tenant?.domain}`;
   }
-  const res = await fetch(`${base_url}/api/pages?where[tenant][equals]=${tenant.id}&where[slug][equals]=${encodedSlug}`, { cache: 'no-store' })
+  const res = await fetch(
+    `${base_url}/api/pages?where[tenant][equals]=${tenant.id}&where[slug][equals]=${encodedSlug}`,
+    { cache: 'no-store' }
+  );
 
-  return res.json()
-}
+  return res.json();
+};

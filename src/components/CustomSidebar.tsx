@@ -1,34 +1,34 @@
-'use client'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useState, useEffect } from 'react'
+'use client';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 export default function CustomSidebar() {
-  const pathname = usePathname()
-  const adminRoute = '/admin'
-  const isActive = (path: string) => pathname === `${adminRoute}${path}`
-  const [isTemplatesOpen, setIsTemplatesOpen] = useState(true)
+  const pathname = usePathname();
+  const adminRoute = '/admin';
+  const isActive = (path: string) => pathname === `${adminRoute}${path}`;
+  const [isTemplatesOpen, setIsTemplatesOpen] = useState(true);
 
   // Define navigation structure
   const navItems = [
     { href: `/collections/headers`, label: 'Header', icon: '📌' },
     { href: '/collections/footers', label: 'Footer', icon: '📌' },
-  ]
+  ];
 
   const templateItems = [
     { href: '/collections/home-templates', label: 'Home Template', icon: '🏠' },
     { href: '/collections/about-templates', label: 'About Template', icon: '📖' },
-  ]
+  ];
 
   // Check if any template is currently active
-  const isAnyTemplateActive = templateItems.some((item) => isActive(item.href))
+  const isAnyTemplateActive = templateItems.some((item) => isActive(item.href));
 
   // Keep dropdown open if a template is active
   useEffect(() => {
     if (isAnyTemplateActive) {
-      setIsTemplatesOpen(true)
+      setIsTemplatesOpen(true);
     }
-  }, [isAnyTemplateActive])
+  }, [isAnyTemplateActive]);
 
   return (
     <div
@@ -62,19 +62,21 @@ export default function CustomSidebar() {
               padding: '0.6rem 0.75rem',
               borderRadius: '6px',
               textDecoration: 'none',
-              color: isActive(item.href) ? 'var(--theme-success-500)' : 'var(--theme-elevation-800)',
+              color: isActive(item.href)
+                ? 'var(--theme-success-500)'
+                : 'var(--theme-elevation-800)',
               backgroundColor: isActive(item.href) ? 'var(--theme-success-50)' : 'transparent',
               marginBottom: '0.25rem',
               transition: 'all 0.2s',
             }}
             onMouseEnter={(e) => {
               if (!isActive(item.href)) {
-                e.currentTarget.style.backgroundColor = 'var(--theme-elevation-50)'
+                e.currentTarget.style.backgroundColor = 'var(--theme-elevation-50)';
               }
             }}
             onMouseLeave={(e) => {
               if (!isActive(item.href)) {
-                e.currentTarget.style.backgroundColor = 'transparent'
+                e.currentTarget.style.backgroundColor = 'transparent';
               }
             }}
           >
@@ -89,7 +91,7 @@ export default function CustomSidebar() {
             onClick={() => {
               // Only allow closing if no template is active
               if (!isAnyTemplateActive) {
-                setIsTemplatesOpen(!isTemplatesOpen)
+                setIsTemplatesOpen(!isTemplatesOpen);
               }
             }}
             style={{
@@ -99,19 +101,21 @@ export default function CustomSidebar() {
               padding: '0.6rem 0.75rem',
               borderRadius: '6px',
               cursor: 'pointer',
-              color: isAnyTemplateActive ? 'var(--theme-success-500)' : 'var(--theme-elevation-800)',
+              color: isAnyTemplateActive
+                ? 'var(--theme-success-500)'
+                : 'var(--theme-elevation-800)',
               backgroundColor: isAnyTemplateActive ? 'var(--theme-success-50)' : 'transparent',
               marginBottom: '0.25rem',
               transition: 'all 0.2s',
             }}
             onMouseEnter={(e) => {
               if (!isAnyTemplateActive) {
-                e.currentTarget.style.backgroundColor = 'var(--theme-elevation-50)'
+                e.currentTarget.style.backgroundColor = 'var(--theme-elevation-50)';
               }
             }}
             onMouseLeave={(e) => {
               if (!isAnyTemplateActive) {
-                e.currentTarget.style.backgroundColor = 'transparent'
+                e.currentTarget.style.backgroundColor = 'transparent';
               }
             }}
           >
@@ -133,19 +137,23 @@ export default function CustomSidebar() {
                     padding: '0.6rem 0.75rem',
                     borderRadius: '6px',
                     textDecoration: 'none',
-                    color: isActive(item.href) ? 'var(--theme-success-500)' : 'var(--theme-elevation-800)',
-                    backgroundColor: isActive(item.href) ? 'var(--theme-success-50)' : 'transparent',
+                    color: isActive(item.href)
+                      ? 'var(--theme-success-500)'
+                      : 'var(--theme-elevation-800)',
+                    backgroundColor: isActive(item.href)
+                      ? 'var(--theme-success-50)'
+                      : 'transparent',
                     marginBottom: '0.25rem',
                     transition: 'all 0.2s',
                   }}
                   onMouseEnter={(e) => {
                     if (!isActive(item.href)) {
-                      e.currentTarget.style.backgroundColor = 'var(--theme-elevation-50)'
+                      e.currentTarget.style.backgroundColor = 'var(--theme-elevation-50)';
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (!isActive(item.href)) {
-                      e.currentTarget.style.backgroundColor = 'transparent'
+                      e.currentTarget.style.backgroundColor = 'transparent';
                     }
                   }}
                 >
@@ -158,5 +166,5 @@ export default function CustomSidebar() {
         </div>
       </nav>
     </div>
-  )
+  );
 }

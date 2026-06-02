@@ -1,23 +1,24 @@
-import HeaderCentered from './HeaderCentered'
-import { HeaderCTA } from './HeaderCTA'
-import HeaderSimple from './HeaderSimple'
+import HeaderCentered from './HeaderCentered';
+import { HeaderCTA } from './HeaderCTA';
+import HeaderSimple from './HeaderSimple';
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HeaderRenderer({ header }: any) {
   if (!header) {
-    return null
+    return null;
   }
 
-  const block = header[0]
+  const block = header[0];
   switch (block?.blockType) {
     case 'headerSimple':
-      return <HeaderSimple {...block} />
+      return <HeaderSimple {...block} />;
 
     case 'headerCentered':
-      return <HeaderCentered {...block} />
+      return <HeaderCentered {...block} />;
 
     case 'headerCTA':
-      return <HeaderCTA {...block} />
+      return <HeaderCTA {...block} />;
 
     default:
-      return null
+      return null;
   }
 }

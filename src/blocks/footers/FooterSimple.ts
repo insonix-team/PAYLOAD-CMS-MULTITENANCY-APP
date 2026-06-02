@@ -1,4 +1,4 @@
-import { Block } from 'payload'
+import { Block } from 'payload';
 
 export const FooterSimple: Block = {
   slug: 'footerSimple',
@@ -29,4 +29,4 @@ export const FooterSimple: Block = {
       ],
     },
   ],
-}
+};

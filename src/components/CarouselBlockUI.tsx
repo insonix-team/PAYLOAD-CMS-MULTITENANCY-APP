@@ -1,46 +1,44 @@
-'use client'
+'use client';
 
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Pagination, Navigation } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
-import 'swiper/css'
-import 'swiper/css/pagination'
-import 'swiper/css/navigation'
-import { RichText } from '@payloadcms/richtext-lexical/react'
-import type { Media } from '@/payload-types'
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import { RichText } from '@payloadcms/richtext-lexical/react';
+import type { Media } from '@/payload-types';
 
 type Props = {
   data: {
     slides: {
-      image: string | Media
+      image: string | Media;
       content?: {
         root: {
-          type: string
+          type: string;
           children: {
-            type: any
-            version: number
-            [k: string]: unknown
-          }[]
-          indent: number
-          version: number
-        }
-        [k: string]: unknown
-      } | null
-      id?: string | null
-    }[]
-    slidesPerMobile?: number | null
-    slidesPerTablet?: number | null
-    slidesPerDesktop?: number | null
-    autoplay?: boolean | null
-    delay?: number | null
-    id?: string | null
-  }
-  tenant?: string
-}
+            type: any;
+            version: number;
+            [k: string]: unknown;
+          }[];
+          indent: number;
+          version: number;
+        };
+        [k: string]: unknown;
+      } | null;
+      id?: string | null;
+    }[];
+    slidesPerMobile?: number | null;
+    slidesPerTablet?: number | null;
+    slidesPerDesktop?: number | null;
+    autoplay?: boolean | null;
+    delay?: number | null;
+    id?: string | null;
+  };
+  tenant?: string;
+};
 export const CarouselBlockUI = ({ data }: Props) => {
-  const { slides, autoplay, delay, slidesPerMobile, slidesPerTablet, slidesPerDesktop } = data
-  console.log(slides)
-  console.log(data)
+  const { slides, autoplay, delay, slidesPerMobile, slidesPerTablet, slidesPerDesktop } = data;
   return (
     <section className="w-full py-12">
       <div className="container mx-auto">
@@ -69,20 +67,33 @@ export const CarouselBlockUI = ({ data }: Props) => {
           className="pb-10"
         >
           {slides?.map((slide, i) => {
-            const image = slide.image && typeof slide.image === 'object' && 'url' in slide.image ? (slide.image as Media) : null
+            const image =
+              slide.image && typeof slide.image === 'object' && 'url' in slide.image
+                ? (slide.image as Media)
+                : null;
 
             return (
               <SwiperSlide key={slide.id || i}>
                 <div className="bg-card rounded-xl shadow-md mb-4 overflow-hidden h-full">
-                  {image?.url ? <img src={image.url} alt={image.alt || 'Slide'} className="w-full h-64 object-cover" /> : <div className="w-full h-64 bg-gray-200" />}
+                  {image?.url ? (
+                    <img
+                      src={image.url}
+                      alt={image.alt || 'Slide'}
+                      className="w-full h-64 object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-64 bg-gray-200" />
+                  )}
 
-                  <div className="p-6 prose max-w-none">{slide.content && <RichText data={slide.content as any} />}</div>
+                  <div className="p-6 prose max-w-none">
+                    {slide.content && <RichText data={slide.content as any} />}
+                  </div>
                 </div>
               </SwiperSlide>
-            )
+            );
           })}
         </Swiper>
       </div>
     </section>
-  )
-}
+  );
+};

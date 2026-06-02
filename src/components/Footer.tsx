@@ -1,12 +1,12 @@
-import { Box, Typography, Link as MuiLink, Container } from '@mui/material'
-import Link from 'next/link'
+import { Box, Typography, Link as MuiLink, Container } from '@mui/material';
+import Link from 'next/link';
 
 type FooterProps = {
-  data: any
-}
+  data: any;
+};
 
 export const Footer = ({ data }: FooterProps) => {
-  if (!data) return null
+  if (!data) return null;
 
   return (
     <Box
@@ -47,5 +47,5 @@ export const Footer = ({ data }: FooterProps) => {
         </Box>
       </Container>
     </Box>
-  )
-}
+  );
+};

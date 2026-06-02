@@ -1,9 +1,9 @@
-import { CollectionConfig, CollectionSlug } from 'payload'
+import { CollectionConfig, CollectionSlug } from 'payload';
 
-import { HeaderCentered } from '@/blocks/headers/HeaderCentered'
-import { HeaderCTA } from '@/blocks/headers/HeaderCTA'
-import { HeaderSimple } from '@/blocks/headers/HeaderSimple'
-import { ROLES } from '@/constants/AppOptions'
+import { HeaderCentered } from '@/blocks/headers/HeaderCentered';
+import { HeaderCTA } from '@/blocks/headers/HeaderCTA';
+import { HeaderSimple } from '@/blocks/headers/HeaderSimple';
+import { ROLES } from '@/constants/AppOptions';
 
 const Headers: CollectionConfig = {
   slug: 'headers',
@@ -15,40 +15,40 @@ const Headers: CollectionConfig = {
   access: {
     read: ({ req: { user } }) => {
       if (user?.role === ROLES.SUPERADMIN) {
-        return true
+        return true;
       }
 
       return {
         tenant: {
           equals: user?.tenant,
         },
-      }
+      };
     },
 
     create: ({ req: { user } }) => !!user,
 
     update: ({ req: { user } }) => {
       if (user?.role === ROLES.SUPERADMIN) {
-        return true
+        return true;
       }
 
       return {
         tenant: {
           equals: user?.tenant,
         },
-      }
+      };
     },
 
     delete: ({ req: { user } }) => {
       if (user?.role === ROLES.SUPERADMIN) {
-        return true
+        return true;
       }
 
       return {
         tenant: {
           equals: user?.tenant,
         },
-      }
+      };
     },
   },
 
@@ -56,10 +56,10 @@ const Headers: CollectionConfig = {
     beforeValidate: [
       ({ req, data }: any) => {
         if (req.user?.role !== ROLES.SUPERADMIN && req.user?.tenant) {
-          data.tenant = typeof req.user.tenant === 'object' ? req.user.tenant.id : req.user.tenant
+          data.tenant = typeof req.user.tenant === 'object' ? req.user.tenant.id : req.user.tenant;
         }
 
-        return data
+        return data;
       },
     ],
   },
@@ -81,7 +81,7 @@ const Headers: CollectionConfig = {
         position: 'sidebar',
 
         condition: (_, __, { user }) => {
-          return user?.role === ROLES.SUPERADMIN
+          return user?.role === ROLES.SUPERADMIN;
         },
       },
     },
@@ -93,6 +93,6 @@ const Headers: CollectionConfig = {
       required: true,
     },
   ],
-}
+};
 
-export default Headers
+export default Headers;

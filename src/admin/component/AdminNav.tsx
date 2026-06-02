@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import { useAuth } from '@payloadcms/ui'
+import { useAuth } from '@payloadcms/ui';
 
 export function AdminNav() {
-  const { user } = useAuth()
+  const { user } = useAuth();
 
   return (
     <div
@@ -30,5 +30,5 @@ export function AdminNav() {
         <div style={{ fontSize: 12 }}>{user?.role}</div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,8 +1,8 @@
-'use client'
-import { useState } from 'react'
+'use client';
+import { useState } from 'react';
 
 export const FAQBlockUI = ({ data }: any) => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <section className="py-16 px-6 max-w-4xl mx-auto">
@@ -21,5 +21,5 @@ export const FAQBlockUI = ({ data }: any) => {
         </div>
       ))}
     </section>
-  )
-}
+  );
+};

@@ -1,4 +1,4 @@
-import type { Block } from 'payload'
+import type { Block } from 'payload';
 
 export const HeaderCTA: Block = {
   slug: 'headerCTA',
@@ -56,7 +56,7 @@ export const HeaderCTA: Block = {
           label: 'Dropdown Items',
           admin: {
             condition: (_, siblingData) => {
-              return true
+              return true;
             },
           },
           fields: [
@@ -134,4 +134,4 @@ export const HeaderCTA: Block = {
       ],
     },
   ],
-}
+};

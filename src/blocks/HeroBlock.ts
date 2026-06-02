@@ -1,4 +1,4 @@
-import { Block } from 'payload'
+import { Block } from 'payload';
 
 export const HeroBlock: Block = {
   slug: 'hero',
@@ -37,4 +37,4 @@ export const HeroBlock: Block = {
       defaultValue: 'center',
     },
   ],
-}
+};

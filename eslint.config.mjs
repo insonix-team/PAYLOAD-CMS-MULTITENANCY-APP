@@ -1,16 +1,16 @@
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
-import { FlatCompat } from '@eslint/eslintrc'
+import js from '@eslint/js';
+import prettier from 'eslint-plugin-prettier/recommended';
+import { dirname } from 'path';
+import typescript from 'typescript-eslint';
+import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-})
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+  js.configs.recommended,
+  ...typescript.configs.recommended,
+  prettier,
   {
     rules: {
       '@typescript-eslint/ban-ts-comment': 'warn',
@@ -31,8 +31,18 @@ const eslintConfig = [
     },
   },
   {
-    ignores: ['.next/', 'src/payload-types.ts', 'src/payload-generated-schema.ts'],
+    ignores: [
+      '.next/',
+      'src/app/(payload)/admin/importMap.js',
+      'src/payload-types.ts',
+      'src/payload-generated-schema.ts',
+      'tests/',
+      'media/',
+      'dist/',
+      'node_modules/',
+      'github/',
+    ],
   },
-]
+];
 
-export default eslintConfig
+export default eslintConfig;

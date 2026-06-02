@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const ListBlockUI = ({ data }: any) => {
   return (
     <section className="py-12 px-6 max-w-4xl mx-auto">
@@ -12,5 +13,5 @@ export const ListBlockUI = ({ data }: any) => {
         ))}
       </ul>
     </section>
-  )
-}
+  );
+};

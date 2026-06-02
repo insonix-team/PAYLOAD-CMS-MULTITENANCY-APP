@@ -1,4 +1,4 @@
-import { s3Storage } from '@payloadcms/storage-s3'
+import { s3Storage } from '@payloadcms/storage-s3';
 
 export const PAYLOAD_PLUGINS = [
   s3Storage({
@@ -18,4 +18,4 @@ export const PAYLOAD_PLUGINS = [
       forcePathStyle: true,
     },
   }),
-]
+];

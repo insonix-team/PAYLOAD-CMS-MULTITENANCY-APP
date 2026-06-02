@@ -1,4 +1,4 @@
-import { Block } from 'payload'
+import { Block } from 'payload';
 
 export const NavigationLinks: Block = {
   slug: 'navigationLinks',
@@ -32,4 +32,4 @@ export const NavigationLinks: Block = {
       ],
     },
   ],
-}
+};

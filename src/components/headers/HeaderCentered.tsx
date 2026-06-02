@@ -1,21 +1,21 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
+import Link from 'next/link';
 
-import { AppBar, Toolbar, Typography, Box, Container, Stack } from '@mui/material'
+import { AppBar, Toolbar, Typography, Box, Container, Stack } from '@mui/material';
 
 type Props = {
-  announcementText?: string
+  announcementText?: string;
 
   logo?: {
-    url?: string
-  }
+    url?: string;
+  };
 
   menuItems?: {
-    label: string
-    url: string
-  }[]
-}
+    label: string;
+    url: string;
+  }[];
+};
 
 export default function HeaderCentered({ announcementText, logo, menuItems = [] }: Props) {
   return (
@@ -98,5 +98,5 @@ export default function HeaderCentered({ announcementText, logo, menuItems = [] 
         </Container>
       </AppBar>
     </>
-  )
+  );
 }

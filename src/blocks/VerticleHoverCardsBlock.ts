@@ -1,4 +1,4 @@
-import type { Block } from 'payload'
+import type { Block } from 'payload';
 
 export const VerticleHoverCardsBlock: Block = {
   slug: 'verticleHoverCardsBlock',
@@ -121,4 +121,4 @@ export const VerticleHoverCardsBlock: Block = {
       defaultValue: false,
     },
   ],
-}
+};

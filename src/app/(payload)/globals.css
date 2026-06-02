@@ -1,8 +1,6 @@
 @import 'tailwindcss';
 
-
 @config '../../../tailwind.config.mjs';
-
 
 @layer base {
   h1,
@@ -15,9 +13,6 @@
     font-size: unset;
   }
 }
-
-
-
 
 :root {
   --background: oklch(100% 0 0deg);
@@ -65,7 +60,7 @@
   --card-foreground: oklch(98.5% 0 0deg);
   --popover: oklch(14.5% 0 0deg);
   --popover-foreground: oklch(98.5% 0 0deg);
-   --bg-gray-200: oklch(14.5% 0 0deg);
+  --bg-gray-200: oklch(14.5% 0 0deg);
   --primary: #fff;
   --primary-foreground: oklch(20.5% 0 0deg);
   --secondary: #8e6b69;
@@ -138,7 +133,6 @@
   --color-warning: var(--warning);
   --color-error: var(--error);
 }
-
 
 html {
   opacity: 0;
