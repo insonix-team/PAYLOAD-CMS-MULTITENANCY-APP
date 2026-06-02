@@ -1,9 +1,19 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import { Box, Card, CardActionArea, Chip, Divider, Grid, Paper, Stack, Typography } from '@mui/material'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import {
+  Box,
+  Card,
+  CardActionArea,
+  Chip,
+  Divider,
+  Grid,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material';
 
 const themes = [
   {
@@ -42,45 +52,45 @@ const themes = [
       font: 'Roboto',
     },
   },
-]
+];
 
 export const ThemeSelector = ({ value, onChange }: any) => {
-  const [selectedValue, setSelectedValue] = useState(value || 'blue')
+  const [selectedValue, setSelectedValue] = useState(value || 'blue');
 
   useEffect(() => {
     if (value) {
-      setSelectedValue(value)
+      setSelectedValue(value);
     }
-  }, [value])
+  }, [value]);
 
-  const selectedTheme = themes.find((theme) => theme.value === selectedValue) || themes[0]
+  const selectedTheme = themes.find((theme) => theme.value === selectedValue) || themes[0];
 
   const handleSelect = async (val: string) => {
     try {
       // INSTANT UI UPDATE
-      setSelectedValue(val)
+      setSelectedValue(val);
 
       // PAYLOAD FIELD UPDATE
-      onChange?.(val)
+      onChange?.(val);
 
-      if (typeof window === 'undefined') return
+      if (typeof window === 'undefined') return;
 
-      const pathname = window.location.pathname
+      const pathname = window.location.pathname;
 
-      let match = pathname.match(/\/collections\/tenants\/([^/]+)/)
+      let match = pathname.match(/\/collections\/tenants\/([^/]+)/);
 
       if (!match) {
-        match = pathname.match(/\/admin\/collections\/tenants\/([^/]+)/)
+        match = pathname.match(/\/admin\/collections\/tenants\/([^/]+)/);
       }
 
-      let id = match?.[1]
+      let id = match?.[1];
 
       if (!id) {
-        const params = new URLSearchParams(window.location.search)
-        id = params.get('id') || undefined
+        const params = new URLSearchParams(window.location.search);
+        id = params.get('id') || undefined;
       }
 
-      if (!id) return
+      if (!id) return;
 
       // AUTO SAVE
       await fetch(`/api/tenants/${id}`, {
@@ -92,11 +102,11 @@ export const ThemeSelector = ({ value, onChange }: any) => {
         body: JSON.stringify({
           theme: val,
         }),
-      })
+      });
     } catch (err) {
-      console.error('Failed to auto-save tenant theme', err)
+      console.error('Failed to auto-save tenant theme', err);
     }
-  }
+  };
 
   return (
     <Stack spacing={4}>
@@ -109,7 +119,7 @@ export const ThemeSelector = ({ value, onChange }: any) => {
         }}
       >
         {themes.map((theme) => {
-          const isActive = selectedValue === theme.value
+          const isActive = selectedValue === theme.value;
 
           return (
             <Card
@@ -251,7 +261,7 @@ export const ThemeSelector = ({ value, onChange }: any) => {
                 </Box>
               </CardActionArea>
             </Card>
-          )
+          );
         })}
       </Box>
 
@@ -353,7 +363,8 @@ export const ThemeSelector = ({ value, onChange }: any) => {
             </Typography>
 
             <Typography variant="body2" sx={{ mb: 3 }}>
-              This preview demonstrates how your tenant dashboard will appear with the selected theme.
+              This preview demonstrates how your tenant dashboard will appear with the selected
+              theme.
             </Typography>
 
             <Stack direction="row" spacing={2}>
@@ -389,8 +400,8 @@ export const ThemeSelector = ({ value, onChange }: any) => {
         </Box>
       </Paper>
     </Stack>
-  )
-}
+  );
+};
 
 const ThemeColorRow = ({ label, value }: { label: string; value: string }) => {
   return (
@@ -429,8 +440,8 @@ const ThemeColorRow = ({ label, value }: { label: string; value: string }) => {
         </Typography>
       </Stack>
     </Stack>
-  )
-}
+  );
+};
 
 const ThemeInfoRow = ({ label, value }: { label: string; value: string }) => {
   return (
@@ -456,7 +467,7 @@ const ThemeInfoRow = ({ label, value }: { label: string; value: string }) => {
         {value}
       </Typography>
     </Stack>
-  )
-}
+  );
+};
 
-export default ThemeSelector
+export default ThemeSelector;

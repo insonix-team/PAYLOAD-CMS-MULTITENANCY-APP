@@ -25,5 +25,5 @@ export const CardsBlockUI = ({ data }: any) => {
         ))}
       </div>
     </section>
-  )
-}
+  );
+};

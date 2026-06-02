@@ -1,4 +1,4 @@
-import { Block } from 'payload'
+import { Block } from 'payload';
 
 export const ContentBlock: Block = {
   slug: 'content',
@@ -28,4 +28,4 @@ export const ContentBlock: Block = {
       defaultValue: 'right',
     },
   ],
-}
+};

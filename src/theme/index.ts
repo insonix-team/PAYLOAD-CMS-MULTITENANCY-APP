@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles';
 
 export const themes = {
   blue: createTheme({
@@ -27,4 +27,4 @@ export const themes = {
       background: { default: '#0f172a' },
     },
   }),
-}
+};

@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
-import { AppBar, Toolbar, Typography, Box, Button, Container } from '@mui/material'
-import Link from 'next/link'
+import { AppBar, Toolbar, Typography, Box, Button, Container } from '@mui/material';
+import Link from 'next/link';
 
 type HeaderProps = {
-  data: any
-  tenant: string
-}
+  data: any;
+  tenant: string;
+};
 
 export const Header = ({ data, tenant }: HeaderProps) => {
-  if (!data) return null
+  if (!data) return null;
 
   return (
     <AppBar
@@ -53,5 +53,5 @@ export const Header = ({ data, tenant }: HeaderProps) => {
         </Toolbar>
       </Container>
     </AppBar>
-  )
-}
+  );
+};

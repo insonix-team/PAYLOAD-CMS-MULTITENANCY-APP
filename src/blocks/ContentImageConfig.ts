@@ -1,5 +1,10 @@
-import { HeadingFeature, lexicalEditor, LinkFeature, UploadFeature } from '@payloadcms/richtext-lexical'
-import { Block } from 'payload'
+import {
+  HeadingFeature,
+  lexicalEditor,
+  LinkFeature,
+  UploadFeature,
+} from '@payloadcms/richtext-lexical';
+import { Block } from 'payload';
 
 export const MediaBlockContent: Block = {
   slug: 'mediaBlockcontent',
@@ -60,7 +65,12 @@ export const MediaBlockContent: Block = {
       name: 'content',
       type: 'richText',
       editor: lexicalEditor({
-        features: ({ rootFeatures }) => [...rootFeatures, HeadingFeature(), LinkFeature(), UploadFeature()],
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          HeadingFeature(),
+          LinkFeature(),
+          UploadFeature(),
+        ],
       }),
     },
 
@@ -85,4 +95,4 @@ export const MediaBlockContent: Block = {
       ],
     },
   ],
-}
+};

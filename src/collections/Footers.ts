@@ -1,9 +1,9 @@
-import { FooterColumns } from '@/blocks/footers/FooterColumns'
-import { FooterNewsletter } from '@/blocks/footers/FooterNewsletter'
-import { FooterSimple } from '@/blocks/footers/FooterSimple'
-import { ROLES } from '@/constants/AppOptions'
-import { tenantAccess, tenantCreateAccess } from '@/lib/utils'
-import { CollectionConfig, CollectionSlug } from 'payload'
+import { FooterColumns } from '@/blocks/footers/FooterColumns';
+import { FooterNewsletter } from '@/blocks/footers/FooterNewsletter';
+import { FooterSimple } from '@/blocks/footers/FooterSimple';
+import { ROLES } from '@/constants/AppOptions';
+import { tenantAccess, tenantCreateAccess } from '@/lib/utils';
+import { CollectionConfig, CollectionSlug } from 'payload';
 
 const Footers: CollectionConfig = {
   slug: 'footers',
@@ -19,9 +19,9 @@ const Footers: CollectionConfig = {
     beforeValidate: [
       ({ req, data }: any) => {
         if (req.user?.role !== ROLES.SUPERADMIN && req.user?.tenant) {
-          data.tenant = typeof req.user.tenant === 'object' ? req.user.tenant.id : req.user.tenant
+          data.tenant = typeof req.user.tenant === 'object' ? req.user.tenant.id : req.user.tenant;
         }
-        return data
+        return data;
       },
     ],
   },
@@ -36,7 +36,7 @@ const Footers: CollectionConfig = {
       admin: {
         position: 'sidebar',
         condition: (_, __, { user }) => {
-          return user?.role === ROLES.SUPERADMIN
+          return user?.role === ROLES.SUPERADMIN;
         },
       },
     },
@@ -48,6 +48,6 @@ const Footers: CollectionConfig = {
       required: true,
     },
   ],
-}
+};
 
-export default Footers
+export default Footers;

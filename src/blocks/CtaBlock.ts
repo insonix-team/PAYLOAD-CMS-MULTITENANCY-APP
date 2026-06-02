@@ -1,4 +1,4 @@
-import { Block } from 'payload'
+import { Block } from 'payload';
 
 export const CtaBlock: Block = {
   slug: 'cta',
@@ -34,4 +34,4 @@ export const CtaBlock: Block = {
       defaultValue: 'primary',
     },
   ],
-}
+};

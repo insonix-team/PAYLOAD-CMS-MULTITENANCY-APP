@@ -1,8 +1,8 @@
-import { ContentBlock } from '@/blocks/ContentBlock'
-import { CtaBlock } from '@/blocks/CtaBlock'
-import { FeaturesBlock } from '@/blocks/FeaturesBlock'
-import { HeroBlock } from '@/blocks/HeroBlock'
-import type { CollectionConfig } from 'payload'
+import { ContentBlock } from '@/blocks/ContentBlock';
+import { CtaBlock } from '@/blocks/CtaBlock';
+import { FeaturesBlock } from '@/blocks/FeaturesBlock';
+import { HeroBlock } from '@/blocks/HeroBlock';
+import type { CollectionConfig } from 'payload';
 
 export const AboutTemplate: CollectionConfig = {
   slug: 'about-templates',
@@ -29,4 +29,4 @@ export const AboutTemplate: CollectionConfig = {
       },
     },
   ],
-}
+};

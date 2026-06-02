@@ -1,4 +1,4 @@
-import { Block } from 'payload'
+import { Block } from 'payload';
 
 export const MapInfoBlock: Block = {
   slug: 'mapInfoBlock',
@@ -105,4 +105,4 @@ export const MapInfoBlock: Block = {
       ],
     },
   ],
-}
+};

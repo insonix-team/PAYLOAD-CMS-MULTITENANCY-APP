@@ -4,5 +4,5 @@ export const ImageBlockUI = ({ data }: any) => {
       <img src={data.image?.url} className="mx-auto rounded-xl shadow-md" />
       {data.caption && <p className="text-gray-500 mt-2">{data.caption}</p>}
     </section>
-  )
-}
+  );
+};

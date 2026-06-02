@@ -1,4 +1,4 @@
-import type { Block } from 'payload'
+import type { Block } from 'payload';
 
 export const HeroLeftLayoutBlock: Block = {
   slug: 'heroLeftLayoutBlock',
@@ -62,4 +62,4 @@ export const HeroLeftLayoutBlock: Block = {
       ],
     },
   ],
-}
+};

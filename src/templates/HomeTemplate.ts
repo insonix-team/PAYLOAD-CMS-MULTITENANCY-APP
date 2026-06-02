@@ -1,18 +1,16 @@
-// collections/HomeTemplate.ts
-
-import { CardsWithIcons } from '@/blocks/CardsIconBlock'
-import { CarouselBlock } from '@/blocks/CarouselBlock'
-import { ContentBlock } from '@/blocks/ContentBlock'
-import { MediaBlockContent } from '@/blocks/ContentImageConfig'
-import { CtaBlock } from '@/blocks/CtaBlock'
-import { FAQBlock } from '@/blocks/FaqConfig'
-import { FeaturesBlock } from '@/blocks/FeaturesBlock'
-import { HeroBlock } from '@/blocks/HeroBlock'
-import { HeroLeftLayoutBlock } from '@/blocks/HeroLeftLayoutBlock'
-import { MapInfoBlock } from '@/blocks/MapInfoBlock'
-import { TeamCarousalBlock } from '@/blocks/TeamCarousalBlock'
-import { VerticleHoverCardsBlock } from '@/blocks/VerticleHoverCardsBlock'
-import type { CollectionConfig } from 'payload'
+import { CardsWithIcons } from '@/blocks/CardsIconBlock';
+import { CarouselBlock } from '@/blocks/CarouselBlock';
+import { ContentBlock } from '@/blocks/ContentBlock';
+import { MediaBlockContent } from '@/blocks/ContentImageConfig';
+import { CtaBlock } from '@/blocks/CtaBlock';
+import { FAQBlock } from '@/blocks/FaqConfig';
+import { FeaturesBlock } from '@/blocks/FeaturesBlock';
+import { HeroBlock } from '@/blocks/HeroBlock';
+import { HeroLeftLayoutBlock } from '@/blocks/HeroLeftLayoutBlock';
+import { MapInfoBlock } from '@/blocks/MapInfoBlock';
+import { TeamCarousalBlock } from '@/blocks/TeamCarousalBlock';
+import { VerticleHoverCardsBlock } from '@/blocks/VerticleHoverCardsBlock';
+import type { CollectionConfig } from 'payload';
 
 export const HomeTemplate: CollectionConfig = {
   slug: 'home-templates',
@@ -33,10 +31,23 @@ export const HomeTemplate: CollectionConfig = {
     {
       name: 'blocks',
       type: 'blocks',
-      blocks: [HeroBlock, FeaturesBlock, ContentBlock, CtaBlock, MediaBlockContent, FAQBlock, CardsWithIcons, VerticleHoverCardsBlock, HeroLeftLayoutBlock, MapInfoBlock, CarouselBlock, TeamCarousalBlock],
+      blocks: [
+        HeroBlock,
+        FeaturesBlock,
+        ContentBlock,
+        CtaBlock,
+        MediaBlockContent,
+        FAQBlock,
+        CardsWithIcons,
+        VerticleHoverCardsBlock,
+        HeroLeftLayoutBlock,
+        MapInfoBlock,
+        CarouselBlock,
+        TeamCarousalBlock,
+      ],
       admin: {
         description: 'Predefined blocks structure for this template',
       },
     },
   ],
-}
+};

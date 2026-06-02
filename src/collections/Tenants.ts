@@ -1,5 +1,5 @@
-import { COLOR_OPTIONS, FONT_FAMILY_OPTIONS, ROLES } from '@/constants/AppOptions'
-import { CollectionConfig } from 'payload'
+import { COLOR_OPTIONS, FONT_FAMILY_OPTIONS, ROLES } from '@/constants/AppOptions';
+import { CollectionConfig } from 'payload';
 
 const Tenants: CollectionConfig = {
   slug: 'tenants',
@@ -7,7 +7,7 @@ const Tenants: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     hidden: ({ user }) => {
-      return user?.role !== ROLES.SUPERADMIN
+      return user?.role !== ROLES.SUPERADMIN;
     },
   },
 
@@ -77,6 +77,6 @@ const Tenants: CollectionConfig = {
     //   },
     // },
   ],
-}
+};
 
-export default Tenants
+export default Tenants;

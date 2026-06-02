@@ -1,26 +1,30 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
+import Link from 'next/link';
 
-import { Box, Container, Typography, Stack, TextField, Button } from '@mui/material'
+import { Box, Container, Typography, Stack, TextField, Button } from '@mui/material';
 
 type FooterLink = {
-  label: string
-  url: string
-}
+  label: string;
+  url: string;
+};
 
 type FooterColumn = {
-  title: string
-  links: FooterLink[]
-}
+  title: string;
+  links: FooterLink[];
+};
 
 type Props = {
-  columns?: FooterColumn[]
-  newsletterTitle?: string
-  newsletterPlaceholder?: string
-}
+  columns?: FooterColumn[];
+  newsletterTitle?: string;
+  newsletterPlaceholder?: string;
+};
 
-export default function FooterColumns({ columns = [], newsletterTitle, newsletterPlaceholder }: Props) {
+export default function FooterColumns({
+  columns = [],
+  newsletterTitle,
+  newsletterPlaceholder,
+}: Props) {
   return (
     <Box
       component="footer"
@@ -188,5 +192,5 @@ export default function FooterColumns({ columns = [], newsletterTitle, newslette
         </Box>
       </Container>
     </Box>
-  )
+  );
 }

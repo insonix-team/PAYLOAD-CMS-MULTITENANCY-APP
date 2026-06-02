@@ -1,30 +1,40 @@
-'use client'
-import { ROLES } from '@/constants/AppOptions'
-import { useAuth } from '@payloadcms/ui'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useEffect } from 'react'
+'use client';
+import { ROLES } from '@/constants/AppOptions';
+import { useAuth } from '@payloadcms/ui';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function CustomNav() {
-  const pathname = usePathname()
-  const { user } = useAuth()
-  const adminRoute = '/admin'
+  const pathname = usePathname();
+  const { user } = useAuth();
+  const adminRoute = '/admin';
 
-  const isActive = (path: string) => pathname === `${adminRoute}${path}`
+  const isActive = (path: string) => pathname === `${adminRoute}${path}`;
 
-  const navItems = [{ href: `/custom-dashboard`, label: 'Analytics' }, { href: '/collections/pages', label: 'Pages' }, { href: '/collections/media', label: 'Media' }, ...(user?.role === ROLES.SUPERADMIN || user?.role === ROLES.TENANT ? [{ href: '/collections/users', label: 'Users' }] : []), ...(user?.role === ROLES.SUPERADMIN ? [{ href: '/collections/tenants', label: 'Tenants' }] : [])]
+  const navItems = [
+    { href: `/custom-dashboard`, label: 'Analytics' },
+    { href: '/collections/pages', label: 'Pages' },
+    { href: '/collections/media', label: 'Media' },
+    ...(user?.role === ROLES.SUPERADMIN || user?.role === ROLES.TENANT
+      ? [{ href: '/collections/users', label: 'Users' }]
+      : []),
+    ...(user?.role === ROLES.SUPERADMIN
+      ? [{ href: '/collections/tenants', label: 'Tenants' }]
+      : []),
+  ];
 
   useEffect(() => {
-    const style = document.createElement('style')
+    const style = document.createElement('style');
     style.textContent = `
     /* Hide the user avatar/account link */
     .app-header__account {
       display: none !important;
     }
-  `
-    document.head.appendChild(style)
-    return () => style.remove()
-  }, [])
+  `;
+    document.head.appendChild(style);
+    return () => style.remove();
+  }, []);
 
   return (
     <>
@@ -77,7 +87,9 @@ export default function CustomNav() {
                 padding: '0.5rem 1rem',
                 borderRadius: '6px',
                 textDecoration: 'none',
-                color: isActive(item.href) ? 'var(--theme-success-500)' : 'var(--theme-elevation-800)',
+                color: isActive(item.href)
+                  ? 'var(--theme-success-500)'
+                  : 'var(--theme-elevation-800)',
                 backgroundColor: isActive(item.href) ? 'var(--theme-success-50)' : 'transparent',
                 transition: 'all 0.2s',
                 fontSize: '0.875rem',
@@ -85,12 +97,12 @@ export default function CustomNav() {
               }}
               onMouseEnter={(e) => {
                 if (!isActive(item.href)) {
-                  e.currentTarget.style.backgroundColor = 'var(--theme-elevation-50)'
+                  e.currentTarget.style.backgroundColor = 'var(--theme-elevation-50)';
                 }
               }}
               onMouseLeave={(e) => {
                 if (!isActive(item.href)) {
-                  e.currentTarget.style.backgroundColor = 'transparent'
+                  e.currentTarget.style.backgroundColor = 'transparent';
                 }
               }}
             >
@@ -122,10 +134,10 @@ export default function CustomNav() {
               transition: 'all 0.2s',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'var(--theme-elevation-100)'
+              e.currentTarget.style.backgroundColor = 'var(--theme-elevation-100)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'var(--theme-elevation-50)'
+              e.currentTarget.style.backgroundColor = 'var(--theme-elevation-50)';
             }}
           >
             <span>👤</span>
@@ -147,10 +159,10 @@ export default function CustomNav() {
               transition: 'all 0.2s',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'var(--theme-error-50)'
+              e.currentTarget.style.backgroundColor = 'var(--theme-error-50)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'transparent'
+              e.currentTarget.style.backgroundColor = 'transparent';
             }}
           >
             <span>🚪</span>
@@ -159,5 +171,5 @@ export default function CustomNav() {
         </div>
       </header>
     </>
-  )
+  );
 }

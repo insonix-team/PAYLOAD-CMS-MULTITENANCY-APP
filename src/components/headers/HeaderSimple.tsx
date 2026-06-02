@@ -1,27 +1,33 @@
-import Link from 'next/link'
+import Link from 'next/link';
 
-import { AppBar, Toolbar, Typography, Button, Container, Stack, Box } from '@mui/material'
+import { AppBar, Toolbar, Typography, Button, Container, Stack, Box } from '@mui/material';
 
 type MenuItem = {
-  label: string
-  url: string
-}
+  label: string;
+  url: string;
+};
 
 type Props = {
   logo?: {
-    url?: string
-  }
+    url?: string;
+  };
 
-  menuItems?: MenuItem[]
+  menuItems?: MenuItem[];
 
-  showButton?: boolean
+  showButton?: boolean;
 
-  buttonLabel?: string
+  buttonLabel?: string;
 
-  buttonUrl?: string
-}
+  buttonUrl?: string;
+};
 
-export default function HeaderSimple({ logo, menuItems = [], showButton, buttonLabel, buttonUrl }: Props) {
+export default function HeaderSimple({
+  logo,
+  menuItems = [],
+  showButton,
+  buttonLabel,
+  buttonUrl,
+}: Props) {
   return (
     <AppBar
       position="sticky"
@@ -111,5 +117,5 @@ export default function HeaderSimple({ logo, menuItems = [], showButton, buttonL
         </Toolbar>
       </Container>
     </AppBar>
-  )
+  );
 }
