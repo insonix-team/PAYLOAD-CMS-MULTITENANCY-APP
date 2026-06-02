@@ -10,6 +10,7 @@ import type { Block } from 'payload';
 
 export const CarouselBlock: Block = {
   slug: 'carouselBlock',
+  imageURL: '/block-thumbnails/carousel.webp',
   labels: {
     singular: 'Carousel Slider Block',
     plural: 'Carousel Slider Blocks',

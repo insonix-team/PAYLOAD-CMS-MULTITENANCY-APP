@@ -2,7 +2,7 @@ import type { Block } from 'payload';
 
 export const HeroLeftLayoutBlock: Block = {
   slug: 'heroLeftLayoutBlock',
-  imageURL: '/block-thumbnails/hero-left-lyout.png',
+  imageURL: '/block-thumbnails/hero-left-layout.webp',
   interfaceName: 'HeroLeftLayoutBlock',
   fields: [
     {
