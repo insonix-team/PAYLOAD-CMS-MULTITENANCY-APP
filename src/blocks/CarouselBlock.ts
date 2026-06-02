@@ -1,6 +1,5 @@
+import { FixedToolbarFeature, HeadingFeature, InlineToolbarFeature, lexicalEditor, LinkFeature, UploadFeature } from '@payloadcms/richtext-lexical'
 import type { Block } from 'payload'
-import { FixedToolbarFeature, InlineToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
-import { HeadingFeature, LinkFeature, UploadFeature } from '@payloadcms/richtext-lexical'
 
 export const CarouselBlock: Block = {
   slug: 'carouselBlock',
@@ -30,8 +29,6 @@ export const CarouselBlock: Block = {
         },
       ],
     },
-
-    // ✅ responsive CMS control
     {
       name: 'slidesPerMobile',
       type: 'number',
@@ -47,8 +44,6 @@ export const CarouselBlock: Block = {
       type: 'number',
       defaultValue: 3,
     },
-
-    // autoplay
     {
       name: 'autoplay',
       type: 'checkbox',

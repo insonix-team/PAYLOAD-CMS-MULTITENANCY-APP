@@ -1,10 +1,5 @@
+import { FixedToolbarFeature, HeadingFeature, InlineToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import type { Block } from 'payload'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import {
-  HeadingFeature,
-  FixedToolbarFeature,
-  InlineToolbarFeature,
-} from '@payloadcms/richtext-lexical'
 
 export const CardsWithIcons: Block = {
   slug: 'cardsWithIcons',
@@ -48,16 +43,10 @@ export const CardsWithIcons: Block = {
           name: 'description',
           type: 'richText',
           editor: lexicalEditor({
-            features: ({ rootFeatures }) => [
-              ...rootFeatures,
-              HeadingFeature(),
-              FixedToolbarFeature(),
-              InlineToolbarFeature(),
-            ],
+            features: ({ rootFeatures }) => [...rootFeatures, HeadingFeature(), FixedToolbarFeature(), InlineToolbarFeature()],
           }),
         },
 
-        // 🎨 Theme Gradient Colors (START)
         {
           name: 'gradientFrom',
           type: 'select',
@@ -71,7 +60,6 @@ export const CardsWithIcons: Block = {
           ],
         },
 
-        // 🎨 Theme Gradient Colors (END)
         {
           name: 'gradientTo',
           type: 'select',
@@ -85,7 +73,6 @@ export const CardsWithIcons: Block = {
           ],
         },
 
-        // 🌈 Gradient Direction
         {
           name: 'gradientDirection',
           type: 'select',
@@ -100,7 +87,6 @@ export const CardsWithIcons: Block = {
           ],
         },
 
-        // 🎛 Optional solid fallback (no picker, only theme)
         {
           name: 'solidBg',
           type: 'select',

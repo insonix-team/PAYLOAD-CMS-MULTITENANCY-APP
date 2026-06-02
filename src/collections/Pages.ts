@@ -1,17 +1,17 @@
 import { CardsWithIcons } from '@/blocks/CardsIconBlock'
+import { CarouselBlock } from '@/blocks/CarouselBlock'
 import { ContentBlock } from '@/blocks/ContentBlock'
 import { MediaBlockContent } from '@/blocks/ContentImageConfig'
 import { CtaBlock } from '@/blocks/CtaBlock'
 import { FAQBlock } from '@/blocks/FaqConfig'
 import { FeaturesBlock } from '@/blocks/FeaturesBlock'
 import { HeroBlock } from '@/blocks/HeroBlock'
+import { MapInfoBlock } from '@/blocks/MapInfoBlock'
+import { TeamCarousalBlock } from '@/blocks/TeamCarousalBlock'
 import { VerticleHoverCardsBlock } from '@/blocks/VerticleHoverCardsBlock'
 import { ROLES, TEMPLATE_TYPE_OPTIONS, TEMPLATE_TYPES } from '@/constants/AppOptions'
 import { CollectionSlug } from 'payload'
 import { HeroLeftLayoutBlock } from '../blocks/HeroLeftLayoutBlock'
-import { MapInfoBlock } from '@/blocks/MapInfoBlock'
-import { CarouselBlock } from '@/blocks/CarouselBlock'
-import { TeamCarousalBlock } from '@/blocks/TeamCarousalBlock'
 
 export const Pages: any = {
   slug: 'pages',

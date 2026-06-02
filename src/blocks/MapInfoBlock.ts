@@ -1,5 +1,3 @@
-// src/blocks/MapInfoBlock/index.ts
-
 import { Block } from 'payload'
 
 export const MapInfoBlock: Block = {
@@ -51,7 +49,6 @@ export const MapInfoBlock: Block = {
       required: true,
     },
 
-    // OPTIONAL AMENITIES
     {
       type: 'row',
       fields: [
@@ -68,14 +65,12 @@ export const MapInfoBlock: Block = {
       ],
     },
 
-    // HOURS REPEATER
     {
       name: 'officeHoursSection',
       type: 'group',
       label: 'Office Hours Section',
 
       fields: [
-        // 🟦 Title field for the whole section
         {
           name: 'officetitle',
           type: 'text',
@@ -83,7 +78,6 @@ export const MapInfoBlock: Block = {
           required: true,
         },
 
-        // 🟩 The array of office hours
         {
           name: 'officeHours',
           type: 'array',

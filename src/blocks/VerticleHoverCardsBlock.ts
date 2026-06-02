@@ -23,7 +23,6 @@ export const VerticleHoverCardsBlock: Block = {
         { label: 'White', value: 'white' },
       ],
     },
-    // ⭐ Multiple Cards
     {
       name: 'cards',
       type: 'array',
@@ -55,7 +54,6 @@ export const VerticleHoverCardsBlock: Block = {
           required: true,
         },
 
-        // ⭐ CTA BUTTON (inside each card)
         {
           name: 'cta',
           type: 'group',
@@ -98,7 +96,6 @@ export const VerticleHoverCardsBlock: Block = {
       relationTo: 'media',
       label: 'Section Background Image',
     },
-    // ⭐ Column selection
     {
       name: 'columns',
       type: 'select',

@@ -1,5 +1,5 @@
 import { ROLES } from '@/constants/AppOptions'
-import { isSuperAdmin, tenantAccess } from '@/lib/utils'
+import { tenantAccess } from '@/lib/utils'
 import { CollectionConfig, CollectionSlug } from 'payload'
 
 const Users: CollectionConfig = {
@@ -28,13 +28,11 @@ const Users: CollectionConfig = {
           return data
         }
 
-        // Count existing users
         const users = await req.payload.find({
           collection: 'users',
           limit: 1,
         })
 
-        // First user becomes superadmin
         if (users.totalDocs === 0) {
           return {
             ...data,
@@ -82,7 +80,6 @@ const Users: CollectionConfig = {
       hooks: {
         beforeValidate: [
           async ({ req, value }) => {
-            // Check if first user
             const users = await req.payload.find({
               collection: 'users',
               limit: 1,
@@ -116,7 +113,6 @@ const Users: CollectionConfig = {
       hooks: {
         beforeValidate: [
           async ({ req, value }) => {
-            // Check if first user
             const users = await req.payload.find({
               collection: 'users',
               limit: 1,
@@ -126,7 +122,6 @@ const Users: CollectionConfig = {
               return undefined
             }
 
-            // Auto assign tenant for tenant users
             if (req.user?.role !== ROLES.SUPERADMIN) {
               const tenant = req.user?.tenant
 

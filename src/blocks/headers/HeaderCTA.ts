@@ -65,8 +65,6 @@ export const HeaderCTA: Block = {
               type: 'text',
               required: true,
             },
-
-            // child icon
             {
               name: 'icon',
               type: 'upload',
@@ -93,8 +91,6 @@ export const HeaderCTA: Block = {
         },
       ],
     },
-
-    // ⭐ HEADER STYLE
     {
       name: 'headerStyle',
       type: 'select',
@@ -106,8 +102,6 @@ export const HeaderCTA: Block = {
         { label: 'Centered Header', value: 'centered' },
       ],
     },
-
-    // ⭐ DYNAMIC CTA BUTTONS
     {
       name: 'ctas',
       type: 'array',

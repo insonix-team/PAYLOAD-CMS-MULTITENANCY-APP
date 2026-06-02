@@ -1,6 +1,5 @@
+import { FixedToolbarFeature, HeadingFeature, InlineToolbarFeature, lexicalEditor, LinkFeature, UploadFeature } from '@payloadcms/richtext-lexical'
 import type { Block } from 'payload'
-import { FixedToolbarFeature, InlineToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
-import { HeadingFeature, LinkFeature, UploadFeature } from '@payloadcms/richtext-lexical'
 
 export const TeamCarousalBlock: Block = {
   slug: 'teamCarousalBlock',

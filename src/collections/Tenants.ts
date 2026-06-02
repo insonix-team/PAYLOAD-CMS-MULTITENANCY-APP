@@ -13,11 +13,8 @@ const Tenants: CollectionConfig = {
 
   access: {
     read: ({ req: { user } }) => user?.role === ROLES.SUPERADMIN,
-
     create: ({ req: { user } }) => user?.role === ROLES.SUPERADMIN,
-
     update: ({ req: { user } }) => user?.role === ROLES.SUPERADMIN,
-
     delete: ({ req: { user } }) => user?.role === ROLES.SUPERADMIN,
   },
 

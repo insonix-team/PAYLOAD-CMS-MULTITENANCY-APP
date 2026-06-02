@@ -1,6 +1,5 @@
+import { HeadingFeature, lexicalEditor, LinkFeature, UploadFeature } from '@payloadcms/richtext-lexical'
 import { Block } from 'payload'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { HeadingFeature, LinkFeature, UploadFeature } from '@payloadcms/richtext-lexical'
 
 export const MediaBlockContent: Block = {
   slug: 'mediaBlockcontent',

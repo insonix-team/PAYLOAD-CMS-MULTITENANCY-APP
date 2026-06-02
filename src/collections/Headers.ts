@@ -1,8 +1,8 @@
 import { CollectionConfig, CollectionSlug } from 'payload'
 
-import { HeaderSimple } from '@/blocks/headers/HeaderSimple'
 import { HeaderCentered } from '@/blocks/headers/HeaderCentered'
 import { HeaderCTA } from '@/blocks/headers/HeaderCTA'
+import { HeaderSimple } from '@/blocks/headers/HeaderSimple'
 import { ROLES } from '@/constants/AppOptions'
 
 const Headers: CollectionConfig = {
