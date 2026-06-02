@@ -13,7 +13,6 @@ export const VerticleHoverCardsBlock: Block = {
       name: 'blockHeading',
       type: 'text',
       required: true,
-      d,
     },
     {
       name: 'headingColor',
