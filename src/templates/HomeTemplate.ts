@@ -7,7 +7,9 @@ import { FAQBlock } from '@/blocks/FaqConfig';
 import { FeaturesBlock } from '@/blocks/FeaturesBlock';
 import { HeroBlock } from '@/blocks/HeroBlock';
 import { HeroLeftLayoutBlock } from '@/blocks/HeroLeftLayoutBlock';
+import { IconFeatureBlock } from '@/blocks/IconFeatureBlock';
 import { MapInfoBlock } from '@/blocks/MapInfoBlock';
+import { StepPocessBlock } from '@/blocks/StepPocessBlock';
 import { TeamCarousalBlock } from '@/blocks/TeamCarousalBlock';
 import { VerticleHoverCardsBlock } from '@/blocks/VerticleHoverCardsBlock';
 import type { CollectionConfig } from 'payload';
@@ -44,6 +46,8 @@ export const HomeTemplate: CollectionConfig = {
         MapInfoBlock,
         CarouselBlock,
         TeamCarousalBlock,
+        IconFeatureBlock,
+        StepPocessBlock,
       ],
       admin: {
         description: 'Predefined blocks structure for this template',

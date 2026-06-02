@@ -15,6 +15,8 @@ import { HeroLeftLayoutUI } from './HeroLeftLayoutUI';
 import MapInfoBlockUI from './MapInfoBlockUI';
 import { CarouselBlockUI } from './CarouselBlockUI';
 import { TeamCarousalUI } from './TeamCarousalUI';
+import IconFeatureBoxUI from './IconFeatureBoxUI';
+import StepProcessUI from './StepProcessUI';
 
 type Props = {
   blocks: any[];
@@ -50,6 +52,11 @@ export const BlockRenderer = ({ blocks, tenant }: Props) => {
             return <CarouselBlockUI key={index} data={block} tenant={tenant} />;
           case 'teamCarousalBlock':
             return <TeamCarousalUI key={index} data={block} tenant={tenant} />;
+
+          case 'stepPocessBlock':
+            return <IconFeatureBoxUI key={index} data={block} tenant={tenant} />;
+          case 'stepPocessBlock':
+            return <StepProcessUI key={index} data={block} tenant={tenant} />;
 
           case 'heroLeftLayoutBlock':
             return <HeroLeftLayoutUI key={index} data={block} tenant={tenant} />;

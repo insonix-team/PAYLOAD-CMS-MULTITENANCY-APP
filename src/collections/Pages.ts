@@ -12,6 +12,8 @@ import { VerticleHoverCardsBlock } from '@/blocks/VerticleHoverCardsBlock';
 import { ROLES, TEMPLATE_TYPE_OPTIONS, TEMPLATE_TYPES } from '@/constants/AppOptions';
 import { CollectionSlug } from 'payload';
 import { HeroLeftLayoutBlock } from '../blocks/HeroLeftLayoutBlock';
+import { IconFeatureBlock } from '@/blocks/IconFeatureBlock';
+import { StepPocessBlock } from '@/blocks/StepPocessBlock';
 
 export const Pages: any = {
   slug: 'pages',
@@ -202,6 +204,8 @@ export const Pages: any = {
         MapInfoBlock,
         CarouselBlock,
         TeamCarousalBlock,
+        IconFeatureBlock,
+        StepPocessBlock,
       ],
       admin: {
         condition: (data: any, siblingData: any) => {
