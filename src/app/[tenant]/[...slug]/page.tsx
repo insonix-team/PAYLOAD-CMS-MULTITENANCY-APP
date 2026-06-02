@@ -25,9 +25,7 @@ export default async function DynamicPage({
   ]);
 
   const page = pageData?.docs?.[0];
-
   if (!tenantDetails || !page) return notFound();
-  console.log('Tenant Details:', tenantDetails);
 
   return (
     <html lang="en">
