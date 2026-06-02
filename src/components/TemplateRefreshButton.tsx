@@ -58,7 +58,7 @@ export const TemplateRefreshButton: React.FC = () => {
           setNeedsRefresh(true);
         }
       } catch (error) {
-        console.error('Failed to check template:', error);
+        console.error('Failed to check template::', error);
       }
     };
 
