@@ -19,6 +19,7 @@ import Users from './collections/Users';
 import { PAYLOAD_PLUGINS } from './payload.plugins';
 import { AboutTemplate } from './templates/AboutTemplate';
 import { HomeTemplate } from './templates/HomeTemplate';
+import { ServiceTemplate } from './templates/ServiceTemplate';
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
@@ -40,7 +41,17 @@ export default buildConfig({
     },
   },
 
-  collections: [Users, Media, Tenants, Pages, HomeTemplate, AboutTemplate, Headers, Footers],
+  collections: [
+    Users,
+    Media,
+    Tenants,
+    Pages,
+    HomeTemplate,
+    AboutTemplate,
+    ServiceTemplate,
+    Headers,
+    Footers,
+  ],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,

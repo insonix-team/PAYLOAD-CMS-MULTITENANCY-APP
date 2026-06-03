@@ -73,6 +73,7 @@ export interface Config {
     pages: Page;
     'home-templates': HomeTemplate;
     'about-templates': AboutTemplate;
+    'service-templates': ServiceTemplate;
     headers: Header;
     footers: Footer;
     'payload-kv': PayloadKv;
@@ -88,12 +89,11 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     'home-templates': HomeTemplatesSelect<false> | HomeTemplatesSelect<true>;
     'about-templates': AboutTemplatesSelect<false> | AboutTemplatesSelect<true>;
+    'service-templates': ServiceTemplatesSelect<false> | ServiceTemplatesSelect<true>;
     headers: HeadersSelect<false> | HeadersSelect<true>;
     footers: FootersSelect<false> | FootersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
-    'payload-locked-documents':
-      | PayloadLockedDocumentsSelect<false>
-      | PayloadLockedDocumentsSelect<true>;
+    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
@@ -264,6 +264,7 @@ export interface Page {
   templateType: 'home' | 'about' | 'contact' | 'services';
   homeTemplate?: (string | null) | HomeTemplate;
   aboutTemplate?: (string | null) | AboutTemplate;
+  serviceTemplate?: (string | null) | ServiceTemplate;
   content?:
     | (
         | {
@@ -472,6 +473,48 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'teamCarousalBlock';
+          }
+        | {
+            heading: string;
+            subtitle?: string | null;
+            backgroundImage?: (string | null) | Media;
+            columns?: ('2' | '3' | '4') | null;
+            cards?:
+              | {
+                  title: string;
+                  description?: string | null;
+                  icon?: (string | null) | Media;
+                  /**
+                   * Paste SVG code here (optional)
+                   */
+                  svg_icon?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'iconFeatureBlock';
+          }
+        | {
+            heading: string;
+            subtitle?: string | null;
+            backgroundImage?: (string | null) | Media;
+            columns?: ('2' | '3' | '4') | null;
+            cards?:
+              | {
+                  title: string;
+                  description?: string | null;
+                  icon?: (string | null) | Media;
+                  /**
+                   * Paste SVG code here (optional)
+                   */
+                  svg_icon?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'stepPocessBlock';
           }
       )[]
     | null;
@@ -700,6 +743,48 @@ export interface HomeTemplate {
             blockName?: string | null;
             blockType: 'teamCarousalBlock';
           }
+        | {
+            heading: string;
+            subtitle?: string | null;
+            backgroundImage?: (string | null) | Media;
+            columns?: ('2' | '3' | '4') | null;
+            cards?:
+              | {
+                  title: string;
+                  description?: string | null;
+                  icon?: (string | null) | Media;
+                  /**
+                   * Paste SVG code here (optional)
+                   */
+                  svg_icon?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'iconFeatureBlock';
+          }
+        | {
+            heading: string;
+            subtitle?: string | null;
+            backgroundImage?: (string | null) | Media;
+            columns?: ('2' | '3' | '4') | null;
+            cards?:
+              | {
+                  title: string;
+                  description?: string | null;
+                  icon?: (string | null) | Media;
+                  /**
+                   * Paste SVG code here (optional)
+                   */
+                  svg_icon?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'stepPocessBlock';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -870,6 +955,273 @@ export interface AboutTemplate {
             id?: string | null;
             blockName?: string | null;
             blockType: 'cta';
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "service-templates".
+ */
+export interface ServiceTemplate {
+  id: string;
+  name: string;
+  description?: string | null;
+  /**
+   * Predefined blocks structure for this template
+   */
+  blocks?:
+    | (
+        | {
+            title: string;
+            subtitle?: string | null;
+            image?: (string | null) | Media;
+            ctaText?: string | null;
+            ctaLink?: string | null;
+            alignment?: ('left' | 'center' | 'right') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
+          }
+        | {
+            title?: string | null;
+            features?:
+              | {
+                  icon?: string | null;
+                  title: string;
+                  description: string;
+                  id?: string | null;
+                }[]
+              | null;
+            columns?: ('2' | '3' | '4') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'features';
+          }
+        | {
+            title?: string | null;
+            content: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            image?: (string | null) | Media;
+            imagePosition?: ('left' | 'right') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'content';
+          }
+        | {
+            title: string;
+            description?: string | null;
+            buttonText: string;
+            buttonLink: string;
+            backgroundColor?: ('primary' | 'secondary' | 'dark') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cta';
+          }
+        | {
+            media: string | Media;
+            imageName?: string | null;
+            imageShortDescription?: string | null;
+            availabilityText?: string | null;
+            relatedText?: string | null;
+            position: 'left' | 'right';
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            backgroundColor?: ('white' | 'bg-card') | null;
+            padding?: ('sm' | 'md' | 'lg') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mediaBlockcontent';
+          }
+        | {
+            title: string;
+            items: {
+              question: string;
+              answer: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faqBlock';
+          }
+        | CardsWithIcons
+        | {
+            blockHeading: string;
+            headingColor?: ('black' | 'white') | null;
+            cards: {
+              title: string;
+              slug: string;
+              image: string | Media;
+              description: string;
+              cta: {
+                text: string;
+                link: string;
+              };
+              id?: string | null;
+            }[];
+            sectionColor?: ('primary' | 'secondary' | 'bg-soft' | 'bg-dark') | null;
+            sectionBackground?: (string | null) | Media;
+            columns: '2' | '3' | '4';
+            delay?: number | null;
+            loading?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'verticleHoverCardsBlock';
+          }
+        | HeroLeftLayoutBlock
+        | MapInfoBlockType
+        | {
+            slides: {
+              image: string | Media;
+              content?: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
+              id?: string | null;
+            }[];
+            slidesPerMobile?: number | null;
+            slidesPerTablet?: number | null;
+            slidesPerDesktop?: number | null;
+            autoplay?: boolean | null;
+            delay?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'carouselBlock';
+          }
+        | {
+            slides: {
+              image: string | Media;
+              name: string;
+              designation?: string | null;
+              content?: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              } | null;
+              ctaButtons?:
+                | {
+                    label: string;
+                    url: string;
+                    newTab?: boolean | null;
+                    style?: ('primary' | 'secondary') | null;
+                    id?: string | null;
+                  }[]
+                | null;
+              id?: string | null;
+            }[];
+            slidesPerMobile?: number | null;
+            slidesPerTablet?: number | null;
+            slidesPerDesktop?: number | null;
+            autoplay?: boolean | null;
+            delay?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'teamCarousalBlock';
+          }
+        | {
+            heading: string;
+            subtitle?: string | null;
+            backgroundImage?: (string | null) | Media;
+            columns?: ('2' | '3' | '4') | null;
+            cards?:
+              | {
+                  title: string;
+                  description?: string | null;
+                  icon?: (string | null) | Media;
+                  /**
+                   * Paste SVG code here (optional)
+                   */
+                  svg_icon?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'iconFeatureBlock';
+          }
+        | {
+            heading: string;
+            subtitle?: string | null;
+            backgroundImage?: (string | null) | Media;
+            columns?: ('2' | '3' | '4') | null;
+            cards?:
+              | {
+                  title: string;
+                  description?: string | null;
+                  icon?: (string | null) | Media;
+                  /**
+                   * Paste SVG code here (optional)
+                   */
+                  svg_icon?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'stepPocessBlock';
           }
       )[]
     | null;
@@ -1072,6 +1424,10 @@ export interface PayloadLockedDocument {
         value: string | AboutTemplate;
       } | null)
     | ({
+        relationTo: 'service-templates';
+        value: string | ServiceTemplate;
+      } | null)
+    | ({
         relationTo: 'headers';
         value: string | Header;
       } | null)
@@ -1191,6 +1547,7 @@ export interface PagesSelect<T extends boolean = true> {
   templateType?: T;
   homeTemplate?: T;
   aboutTemplate?: T;
+  serviceTemplate?: T;
   content?:
     | T
     | {
@@ -1347,6 +1704,44 @@ export interface PagesSelect<T extends boolean = true> {
               slidesPerDesktop?: T;
               autoplay?: T;
               delay?: T;
+              id?: T;
+              blockName?: T;
+            };
+        iconFeatureBlock?:
+          | T
+          | {
+              heading?: T;
+              subtitle?: T;
+              backgroundImage?: T;
+              columns?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    icon?: T;
+                    svg_icon?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        stepPocessBlock?:
+          | T
+          | {
+              heading?: T;
+              subtitle?: T;
+              backgroundImage?: T;
+              columns?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    icon?: T;
+                    svg_icon?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -1594,6 +1989,44 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        iconFeatureBlock?:
+          | T
+          | {
+              heading?: T;
+              subtitle?: T;
+              backgroundImage?: T;
+              columns?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    icon?: T;
+                    svg_icon?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        stepPocessBlock?:
+          | T
+          | {
+              heading?: T;
+              subtitle?: T;
+              backgroundImage?: T;
+              columns?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    icon?: T;
+                    svg_icon?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1654,6 +2087,214 @@ export interface AboutTemplatesSelect<T extends boolean = true> {
               buttonText?: T;
               buttonLink?: T;
               backgroundColor?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "service-templates_select".
+ */
+export interface ServiceTemplatesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  blocks?:
+    | T
+    | {
+        hero?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              image?: T;
+              ctaText?: T;
+              ctaLink?: T;
+              alignment?: T;
+              id?: T;
+              blockName?: T;
+            };
+        features?:
+          | T
+          | {
+              title?: T;
+              features?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              columns?: T;
+              id?: T;
+              blockName?: T;
+            };
+        content?:
+          | T
+          | {
+              title?: T;
+              content?: T;
+              image?: T;
+              imagePosition?: T;
+              id?: T;
+              blockName?: T;
+            };
+        cta?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              buttonText?: T;
+              buttonLink?: T;
+              backgroundColor?: T;
+              id?: T;
+              blockName?: T;
+            };
+        mediaBlockcontent?:
+          | T
+          | {
+              media?: T;
+              imageName?: T;
+              imageShortDescription?: T;
+              availabilityText?: T;
+              relatedText?: T;
+              position?: T;
+              content?: T;
+              backgroundColor?: T;
+              padding?: T;
+              id?: T;
+              blockName?: T;
+            };
+        faqBlock?:
+          | T
+          | {
+              title?: T;
+              items?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        cardsWithIcons?: T | CardsWithIconsSelect<T>;
+        verticleHoverCardsBlock?:
+          | T
+          | {
+              blockHeading?: T;
+              headingColor?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    slug?: T;
+                    image?: T;
+                    description?: T;
+                    cta?:
+                      | T
+                      | {
+                          text?: T;
+                          link?: T;
+                        };
+                    id?: T;
+                  };
+              sectionColor?: T;
+              sectionBackground?: T;
+              columns?: T;
+              delay?: T;
+              loading?: T;
+              id?: T;
+              blockName?: T;
+            };
+        heroLeftLayoutBlock?: T | HeroLeftLayoutBlockSelect<T>;
+        mapInfoBlock?: T | MapInfoBlockTypeSelect<T>;
+        carouselBlock?:
+          | T
+          | {
+              slides?:
+                | T
+                | {
+                    image?: T;
+                    content?: T;
+                    id?: T;
+                  };
+              slidesPerMobile?: T;
+              slidesPerTablet?: T;
+              slidesPerDesktop?: T;
+              autoplay?: T;
+              delay?: T;
+              id?: T;
+              blockName?: T;
+            };
+        teamCarousalBlock?:
+          | T
+          | {
+              slides?:
+                | T
+                | {
+                    image?: T;
+                    name?: T;
+                    designation?: T;
+                    content?: T;
+                    ctaButtons?:
+                      | T
+                      | {
+                          label?: T;
+                          url?: T;
+                          newTab?: T;
+                          style?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              slidesPerMobile?: T;
+              slidesPerTablet?: T;
+              slidesPerDesktop?: T;
+              autoplay?: T;
+              delay?: T;
+              id?: T;
+              blockName?: T;
+            };
+        iconFeatureBlock?:
+          | T
+          | {
+              heading?: T;
+              subtitle?: T;
+              backgroundImage?: T;
+              columns?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    icon?: T;
+                    svg_icon?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        stepPocessBlock?:
+          | T
+          | {
+              heading?: T;
+              subtitle?: T;
+              backgroundImage?: T;
+              columns?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    icon?: T;
+                    svg_icon?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -1875,6 +2516,7 @@ export interface CollectionsWidget {
 export interface Auth {
   [k: string]: unknown;
 }
+
 
 declare module 'payload' {
   export interface GeneratedTypes extends Config {}

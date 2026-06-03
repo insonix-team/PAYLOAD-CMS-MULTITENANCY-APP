@@ -187,6 +187,15 @@ export const Pages: any = {
           siblingData?.templateType === TEMPLATE_TYPES.ABOUT,
       },
     },
+    {
+      name: 'serviceTemplate',
+      type: 'relationship',
+      relationTo: 'service-templates',
+      admin: {
+        condition: (data: any, siblingData: any) =>
+          siblingData?.templateType === TEMPLATE_TYPES.SERVICES,
+      },
+    },
 
     {
       name: 'content',

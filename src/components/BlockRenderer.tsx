@@ -53,8 +53,9 @@ export const BlockRenderer = ({ blocks, tenant }: Props) => {
           case 'teamCarousalBlock':
             return <TeamCarousalUI key={index} data={block} tenant={tenant} />;
 
-          case 'stepPocessBlock':
+          case 'iconFeatureBlock':
             return <IconFeatureBoxUI key={index} data={block} tenant={tenant} />;
+
           case 'stepPocessBlock':
             return <StepProcessUI key={index} data={block} tenant={tenant} />;
 

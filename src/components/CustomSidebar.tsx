@@ -18,6 +18,7 @@ export default function CustomSidebar() {
   const templateItems = [
     { href: '/collections/home-templates', label: 'Home Template', icon: '🏠' },
     { href: '/collections/about-templates', label: 'About Template', icon: '📖' },
+    { href: '/collections/service-templates', label: 'Service Template', icon: '📖' },
   ];
 
   // Check if any template is currently active
