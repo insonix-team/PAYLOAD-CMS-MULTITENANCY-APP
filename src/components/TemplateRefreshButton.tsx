@@ -14,6 +14,7 @@ export const TemplateRefreshButton: React.FC = () => {
   const templateType = useFormFields(([fields]) => fields.templateType?.value);
   const homeTemplate = useFormFields(([fields]) => fields.homeTemplate?.value);
   const aboutTemplate = useFormFields(([fields]) => fields.aboutTemplate?.value);
+  const serviceTemplate = useFormFields(([fields]) => fields.serviceTemplate?.value);
 
   const getTemplateInfo = () => {
     if (templateType === 'home' && homeTemplate) {
@@ -21,6 +22,9 @@ export const TemplateRefreshButton: React.FC = () => {
     }
     if (templateType === 'about' && aboutTemplate) {
       return { collection: 'about-templates', id: aboutTemplate };
+    }
+    if (templateType === 'services' && serviceTemplate) {
+      return { collection: 'service-templates', id: serviceTemplate };
     }
     return null;
   };
