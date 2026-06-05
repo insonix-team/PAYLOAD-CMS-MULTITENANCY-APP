@@ -222,7 +222,7 @@ export const Pages: any = {
             siblingData?.homeTemplate ||
             siblingData?.aboutTemplate ||
             siblingData?.contactTemplate ||
-            siblingData?.servicesTemplate
+            siblingData?.serviceTemplate
           );
         },
       },
@@ -278,11 +278,11 @@ export const Pages: any = {
               field: 'contactTemplate',
             };
           }
-          if (data.templateType === 'services' && data.servicesTemplate) {
+          if (data.templateType === 'services' && data.serviceTemplate) {
             return {
-              collection: 'services-templates',
-              id: data.servicesTemplate,
-              field: 'servicesTemplate',
+              collection: 'service-templates',
+              id: data.serviceTemplate,
+              field: 'serviceTemplate',
             };
           }
           return null;
