@@ -83,16 +83,12 @@ interface TemplateData {
   blocks?: Block[];
 }
 
-interface ConditionArgs {
-  data: unknown;
-  siblingData: {
-    templateType?: string;
-    homeTemplate?: string;
-    aboutTemplate?: string;
-    contactTemplate?: string;
-    serviceTemplate?: string;
-  };
-  user?: User;
+interface siblingData {
+  templateType?: string;
+  homeTemplate?: string;
+  aboutTemplate?: string;
+  contactTemplate?: string;
+  serviceTemplate?: string;
 }
 
 // ========== COLLECTION CONFIG ==========
@@ -257,7 +253,7 @@ export const Pages: CollectionConfig = {
       type: 'relationship',
       relationTo: 'home-templates',
       admin: {
-        condition: (_data: unknown, siblingData: ConditionArgs['siblingData']) =>
+        condition: (_data: unknown, siblingData: siblingData) =>
           siblingData?.templateType === TEMPLATE_TYPES.HOME,
       },
     },
@@ -266,7 +262,7 @@ export const Pages: CollectionConfig = {
       type: 'relationship',
       relationTo: 'about-templates',
       admin: {
-        condition: (_data: unknown, siblingData: ConditionArgs['siblingData']) =>
+        condition: (_data: unknown, siblingData: siblingData) =>
           siblingData?.templateType === TEMPLATE_TYPES.ABOUT,
       },
     },
@@ -275,7 +271,7 @@ export const Pages: CollectionConfig = {
       type: 'relationship',
       relationTo: 'service-templates',
       admin: {
-        condition: (_data: unknown, siblingData: ConditionArgs['siblingData']) =>
+        condition: (_data: unknown, siblingData: siblingData) =>
           siblingData?.templateType === TEMPLATE_TYPES.SERVICES,
       },
     },
@@ -300,7 +296,7 @@ export const Pages: CollectionConfig = {
         StepPocessBlock,
       ],
       admin: {
-        condition: (_data: unknown, siblingData: ConditionArgs['siblingData']) => {
+        condition: (_data: unknown, siblingData: siblingData) => {
           return !!(
             siblingData?.homeTemplate ||
             siblingData?.aboutTemplate ||
