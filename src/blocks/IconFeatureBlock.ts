@@ -86,5 +86,24 @@ export const IconFeatureBlock: Block = {
         },
       ],
     },
+    {
+      name: '_templateBlockId',
+      type: 'text',
+      admin: {
+        hidden: true,
+      },
+    },
+    {
+      name: '_blockId',
+      type: 'text',
+      admin: { hidden: true },
+    },
+    {
+      name: '_originalPosition',
+      type: 'number',
+      admin: {
+        hidden: true,
+      },
+    },
   ],
 };
