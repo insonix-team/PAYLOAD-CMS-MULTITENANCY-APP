@@ -28,3 +28,9 @@ export const tenantAccess = ({ req: { user } }: any) => {
 export const tenantCreateAccess = ({ req: { user } }: any) => {
   return !!user;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const superAdminAccess = ({ req: { user } }: any) => {
+  if (!user) return false;
+  return isSuperAdmin(user);
+};

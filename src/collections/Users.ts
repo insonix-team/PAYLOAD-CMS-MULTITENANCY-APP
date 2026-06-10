@@ -66,8 +66,8 @@ const Users: CollectionConfig = {
           value: ROLES.TENANT,
         },
         {
-          label: 'Designer',
-          value: ROLES.DESIGNER,
+          label: 'Editor',
+          value: ROLES.EDITOR,
         },
       ],
 
@@ -90,7 +90,7 @@ const Users: CollectionConfig = {
             }
 
             if (req.user?.role === ROLES.TENANT) {
-              return ROLES.DESIGNER;
+              return ROLES.EDITOR;
             }
 
             return value;

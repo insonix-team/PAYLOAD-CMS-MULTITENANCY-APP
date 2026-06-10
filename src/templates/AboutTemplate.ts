@@ -2,6 +2,7 @@ import { ContentBlock } from '@/blocks/ContentBlock';
 import { CtaBlock } from '@/blocks/CtaBlock';
 import { FeaturesBlock } from '@/blocks/FeaturesBlock';
 import { HeroBlock } from '@/blocks/HeroBlock';
+import { superAdminAccess } from '@/lib/utils';
 import type { CollectionConfig } from 'payload';
 
 export const AboutTemplate: CollectionConfig = {
@@ -9,6 +10,12 @@ export const AboutTemplate: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     group: 'Templates',
+  },
+  access: {
+    create: superAdminAccess,
+    read: ({ req }) => !!req.user,
+    update: superAdminAccess,
+    delete: superAdminAccess,
   },
   fields: [
     {

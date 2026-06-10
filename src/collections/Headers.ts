@@ -4,6 +4,7 @@ import { HeaderCentered } from '@/blocks/headers/HeaderCentered';
 import { HeaderCTA } from '@/blocks/headers/HeaderCTA';
 import { HeaderSimple } from '@/blocks/headers/HeaderSimple';
 import { ROLES } from '@/constants/AppOptions';
+import { superAdminAccess } from '@/lib/utils';
 
 const Headers: CollectionConfig = {
   slug: 'headers',
@@ -13,43 +14,10 @@ const Headers: CollectionConfig = {
   },
 
   access: {
-    read: ({ req: { user } }) => {
-      if (user?.role === ROLES.SUPERADMIN) {
-        return true;
-      }
-
-      return {
-        tenant: {
-          equals: user?.tenant,
-        },
-      };
-    },
-
-    create: ({ req: { user } }) => !!user,
-
-    update: ({ req: { user } }) => {
-      if (user?.role === ROLES.SUPERADMIN) {
-        return true;
-      }
-
-      return {
-        tenant: {
-          equals: user?.tenant,
-        },
-      };
-    },
-
-    delete: ({ req: { user } }) => {
-      if (user?.role === ROLES.SUPERADMIN) {
-        return true;
-      }
-
-      return {
-        tenant: {
-          equals: user?.tenant,
-        },
-      };
-    },
+    create: superAdminAccess,
+    read: ({ req }) => !!req.user,
+    update: superAdminAccess,
+    delete: superAdminAccess,
   },
 
   hooks: {

@@ -12,6 +12,7 @@ import { MapInfoBlock } from '@/blocks/MapInfoBlock';
 import { StepPocessBlock } from '@/blocks/StepPocessBlock';
 import { TeamCarousalBlock } from '@/blocks/TeamCarousalBlock';
 import { VerticleHoverCardsBlock } from '@/blocks/VerticleHoverCardsBlock';
+import { superAdminAccess } from '@/lib/utils';
 import type { CollectionConfig } from 'payload';
 
 export const ServiceTemplate: CollectionConfig = {
@@ -19,6 +20,12 @@ export const ServiceTemplate: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     group: 'Templates',
+  },
+  access: {
+    create: superAdminAccess,
+    read: ({ req }) => !!req.user,
+    update: superAdminAccess,
+    delete: superAdminAccess,
   },
   fields: [
     {
