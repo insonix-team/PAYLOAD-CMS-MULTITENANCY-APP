@@ -11,11 +11,16 @@ import { Metadata } from 'next';
 // Generate dynamic metadata for SEO
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: { tenant?: string; slug?: string[] };
+  searchParams: { preview?: string; id?: string };
 }): Promise<Metadata> {
   const pageParams = await params;
+  const resolvedSearchParams = await searchParams;
   const tenant = pageParams?.tenant;
+  const isPreview = resolvedSearchParams?.preview === 'true';
+  const pageId = resolvedSearchParams?.id;
 
   if (!tenant || tenant.includes('.')) {
     return { title: 'Not Found' };
@@ -27,7 +32,10 @@ export async function generateMetadata({
   try {
     const [tenantDetails, pageData] = await Promise.all([
       getTenant(tenant),
-      getPages(pageSlug, tenant),
+      getPages(pageSlug, tenant, {
+        draft: isPreview,
+        id: pageId,
+      }),
     ]);
 
     const page = pageData?.docs?.[0];
@@ -65,8 +73,8 @@ export async function generateMetadata({
         images: ogImage ? [ogImage] : [],
       },
       robots: {
-        index: true,
-        follow: true,
+        index: !isPreview, // Don't index preview pages
+        follow: !isPreview,
       },
       alternates: {
         canonical: url,
@@ -83,23 +91,58 @@ export async function generateMetadata({
 
 export default async function DynamicPage({
   params,
+  searchParams,
 }: {
   params: { tenant?: string; slug?: string[] };
+  searchParams: { preview?: string; id?: string };
 }) {
   const pageParams = await params;
+  const resolvedSearchParams = await searchParams;
   const tenant = pageParams?.tenant;
   if (!tenant || tenant.includes('.')) return null;
   const slugArr = pageParams?.slug || [];
   const pageSlug = slugArr.join('/');
+
+  // Check if we're in preview mode
+  const isPreview = resolvedSearchParams?.preview === 'true';
+  const pageId = resolvedSearchParams?.id;
+
+  console.log('Preview mode:', isPreview, 'Page ID:', pageId); // Debug log
+
   const [tenantDetails, header, footer, pageData] = await Promise.all([
     getTenant(tenant),
     getHeader(tenant),
     getFooter(tenant),
-    getPages(pageSlug, tenant),
+    getPages(pageSlug, tenant, {
+      draft: isPreview,
+      id: pageId,
+    }),
   ]);
 
   const page = pageData?.docs?.[0];
   if (!tenantDetails || !page) return notFound();
+
+  // Add preview indicator if in draft mode
+  const previewBadge =
+    isPreview && page._status === 'draft' ? (
+      <div
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          background: '#ff6b6b',
+          color: 'white',
+          padding: '8px 16px',
+          borderRadius: '4px',
+          zIndex: 9999,
+          fontSize: '14px',
+          fontWeight: 'bold',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+        }}
+      >
+        🚧 DRAFT PREVIEW - Not Published
+      </div>
+    ) : null;
 
   return (
     <html lang="en">
@@ -114,6 +157,7 @@ export default async function DynamicPage({
           <HeaderRenderer header={header} />
           <BlockRenderer blocks={page?.layout || page?.content} tenant={tenantDetails?.slug} />
           <FooterRenderer footer={footer} />
+          {previewBadge}
         </ThemeRegistry>
       </body>
     </html>

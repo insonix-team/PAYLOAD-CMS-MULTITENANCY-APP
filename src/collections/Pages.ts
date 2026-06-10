@@ -167,7 +167,19 @@ export const Pages: CollectionConfig = {
           }
         }
 
-        return `/api/live-preview?slug=${data?.slug}&tenant=${tenantSlug}&t=${Date.now()}`;
+        // Get frontend URL
+        const frontendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+
+        // Handle home page slug
+        const slug = data?.slug === 'home' ? '' : data?.slug;
+
+        // Add a timestamp to prevent caching
+        const timestamp = Date.now();
+
+        // Build the preview URL with required parameters
+        const previewUrl = `${frontendUrl}/${tenantSlug}/${slug}?preview=true&id=${data?.id}&t=${timestamp}`;
+
+        return previewUrl;
       },
     },
   },
