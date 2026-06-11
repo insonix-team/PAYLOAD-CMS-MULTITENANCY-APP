@@ -7,6 +7,8 @@ import { notFound } from 'next/navigation';
 import '../../globals.css';
 import { ThemeRegistry } from '@/providers/ThemeRegistry';
 import { Metadata } from 'next';
+import AnalyticsTracker from 'inx-next-analytics-tracker';
+import AnalyticsScript from '@/components/AnalyticsScript';
 
 // Generate dynamic metadata for SEO
 export async function generateMetadata({
@@ -107,8 +109,6 @@ export default async function DynamicPage({
   const isPreview = resolvedSearchParams?.preview === 'true';
   const pageId = resolvedSearchParams?.id;
 
-  console.log('Preview mode:', isPreview, 'Page ID:', pageId); // Debug log
-
   const [tenantDetails, header, footer, pageData] = await Promise.all([
     getTenant(tenant),
     getHeader(tenant),
@@ -121,6 +121,8 @@ export default async function DynamicPage({
 
   const page = pageData?.docs?.[0];
   if (!tenantDetails || !page) return notFound();
+
+  const gaId: string | undefined = tenantDetails.googleAnalyticsId || undefined;
 
   // Add preview indicator if in draft mode
   const previewBadge =
@@ -147,6 +149,7 @@ export default async function DynamicPage({
   return (
     <html lang="en">
       <body>
+        <AnalyticsScript GA_ID={gaId} />
         <ThemeRegistry
           tenantTheme={{
             primaryColor: tenantDetails.primaryColor,
@@ -154,6 +157,7 @@ export default async function DynamicPage({
             fontFamily: tenantDetails.fontFamily,
           }}
         >
+          {gaId && <AnalyticsTracker gaId={gaId} />}
           <HeaderRenderer header={header} />
           <BlockRenderer blocks={page?.layout || page?.content} tenant={tenantDetails?.slug} />
           <FooterRenderer footer={footer} />

@@ -7,15 +7,56 @@ const Tenants: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     hidden: ({ user }) => {
-      return user?.role !== ROLES.SUPERADMIN;
+      return user?.role !== ROLES.SUPERADMIN && user?.role !== ROLES.TENANT;
     },
   },
 
   access: {
-    read: ({ req: { user } }) => user?.role === ROLES.SUPERADMIN,
-    create: ({ req: { user } }) => user?.role === ROLES.SUPERADMIN,
-    update: ({ req: { user } }) => user?.role === ROLES.SUPERADMIN,
-    delete: ({ req: { user } }) => user?.role === ROLES.SUPERADMIN,
+    read: ({ req: { user } }) => {
+      if (!user) return false;
+
+      // Super admin can see all
+      if (user.role === ROLES.SUPERADMIN) return true;
+
+      // Tenant admin can only see their own
+      if (user.role === ROLES.TENANT) {
+        return {
+          id: {
+            equals: typeof user.tenant === 'object' ? user.tenant?.id : user.tenant,
+          },
+        };
+      }
+
+      return false;
+    },
+
+    create: ({ req: { user } }) => {
+      // Only super admin can create tenants
+      return user?.role === ROLES.SUPERADMIN;
+    },
+
+    update: ({ req: { user } }) => {
+      if (!user) return false;
+
+      // Super admin can update any
+      if (user.role === ROLES.SUPERADMIN) return true;
+
+      // Tenant admin can only update their own
+      if (user.role === ROLES.TENANT) {
+        return {
+          id: {
+            equals: typeof user.tenant === 'object' ? user.tenant?.id : user.tenant,
+          },
+        };
+      }
+
+      return false;
+    },
+
+    delete: ({ req: { user } }) => {
+      // Only super admin can delete
+      return user?.role === ROLES.SUPERADMIN;
+    },
   },
 
   fields: [
@@ -63,6 +104,15 @@ const Tenants: CollectionConfig = {
       type: 'select',
       defaultValue: 'Inter',
       options: FONT_FAMILY_OPTIONS,
+    },
+    {
+      name: 'googleAnalyticsId',
+      type: 'text',
+      label: 'Google Analytics Measurement ID',
+      admin: {
+        description: 'Enter GA4 Measurement ID (e.g., G-XXXXXXXXXX)',
+        placeholder: 'G-XXXXXXXXXX',
+      },
     },
 
     // {

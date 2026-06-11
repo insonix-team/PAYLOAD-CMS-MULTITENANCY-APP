@@ -6,6 +6,8 @@ import { ThemeRegistry } from '@/providers/ThemeRegistry';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import '../globals.css';
+import AnalyticsScript from '@/components/AnalyticsScript';
+import AnalyticsTracker from 'inx-next-analytics-tracker';
 
 // Generate dynamic metadata for SEO
 export async function generateMetadata({
@@ -121,6 +123,7 @@ export default async function DynamicPage({
   if (!page) {
     return notFound();
   }
+  const gaId: string | undefined = tenantDetails.googleAnalyticsId || undefined;
 
   // Add preview indicator if in draft mode
   const previewBadge =
@@ -147,6 +150,7 @@ export default async function DynamicPage({
   return (
     <html lang="en">
       <body>
+        <AnalyticsScript GA_ID={gaId} />
         <ThemeRegistry
           tenantTheme={{
             primaryColor: tenantDetails.primaryColor,
@@ -154,6 +158,7 @@ export default async function DynamicPage({
             fontFamily: tenantDetails.fontFamily,
           }}
         >
+          {gaId && <AnalyticsTracker gaId={gaId} />}
           <HeaderRenderer header={header} />
 
           <BlockRenderer blocks={page?.layout || page?.content} tenant={tenantDetails?.slug} />
