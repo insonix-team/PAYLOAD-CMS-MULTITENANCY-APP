@@ -11,13 +11,20 @@ import AnalyticsTracker from 'inx-next-analytics-tracker';
 
 // Generate dynamic metadata for SEO
 export async function generateMetadata({
+  params,
   searchParams,
 }: {
+  params: { slug?: string[] };
   searchParams: { preview?: string; id?: string };
 }): Promise<Metadata> {
+  const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
+
   const isPreview = resolvedSearchParams?.preview === 'true';
   const pageId = resolvedSearchParams?.id;
+
+  const slugArr = resolvedParams?.slug || [];
+  const pageSlug = slugArr?.join('/') || 'home';
 
   try {
     // tenant auto-detected from domain
@@ -27,7 +34,7 @@ export async function generateMetadata({
       return { title: 'Not Found' };
     }
 
-    const pageData = await getPages('', null, {
+    const pageData = await getPages(pageSlug, null, {
       draft: isPreview,
       id: pageId,
     });
