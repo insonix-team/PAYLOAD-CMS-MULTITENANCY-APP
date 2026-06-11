@@ -153,6 +153,7 @@ export const Pages: CollectionConfig = {
     livePreview: {
       url: async ({ data, req }) => {
         let tenantSlug = '';
+        let tenantDomain = '';
 
         if (data.tenant) {
           try {
@@ -162,22 +163,26 @@ export const Pages: CollectionConfig = {
               id: tenantId,
             });
             tenantSlug = tenant?.slug || '';
+            tenantDomain = tenant?.domain || '';
           } catch (error) {
             console.error('Failed to fetch tenant:', error);
           }
         }
 
-        // Get frontend URL
-        const frontendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+        // Check if running locally based on request host
+        const requestHost = req?.headers?.get?.('host') || '';
+        const isLocalDev = requestHost.includes('localhost') || requestHost.includes('127.0.0.1');
 
-        // Handle home page slug
         const slug = data?.slug === 'home' ? '' : data?.slug;
-
-        // Add a timestamp to prevent caching
         const timestamp = Date.now();
 
-        // Build the preview URL with required parameters
-        const previewUrl = `${frontendUrl}/${tenantSlug}/${slug}?preview=true&id=${data?.id}&t=${timestamp}`;
+        let previewUrl;
+
+        if (isLocalDev) {
+          previewUrl = `${process.env.NEXT_PUBLIC_API_URL}/${tenantSlug}/${slug}?preview=true&id=${data?.id}&t=${timestamp}`;
+        } else {
+          previewUrl = `https://${tenantDomain}/${slug}?preview=true&id=${data?.id}&t=${timestamp}`;
+        }
 
         return previewUrl;
       },
