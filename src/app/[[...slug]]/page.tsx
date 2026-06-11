@@ -40,6 +40,7 @@ export async function generateMetadata({
     });
 
     const page = pageData?.docs?.[0];
+    console.log('generateMetadata - Page data:', pageData);
 
     if (!page) {
       return { title: 'Page Not Found' };
