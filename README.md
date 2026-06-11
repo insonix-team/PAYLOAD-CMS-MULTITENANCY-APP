@@ -26,6 +26,7 @@ That's it! Changes made in `./src` will be reflected in your app. Follow the on-
 
 #### Docker (Optional)
 
+
 If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
 
 To do so, follow these steps:
