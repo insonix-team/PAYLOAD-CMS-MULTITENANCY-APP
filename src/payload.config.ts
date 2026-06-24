@@ -28,7 +28,7 @@ export default buildConfig({
       Nav: '@/components/CustomSidebar',
       views: {
         customDashboard: {
-          Component: '@/components/views/CustomDashboard',
+          Component: '@/components/admin/AnalyticsDashboard',
           path: '/custom-dashboard',
         },
       },
