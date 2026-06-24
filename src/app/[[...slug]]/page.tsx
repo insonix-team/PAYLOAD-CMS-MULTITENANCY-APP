@@ -34,7 +34,6 @@ export async function generateMetadata({ params, searchParams }: { params: { slu
     });
 
     const page = pageData?.docs?.[0];
-    console.log('generateMetadata - Page data:', pageData);
 
     if (!page) {
       return { title: 'Page Not Found' };
@@ -95,8 +94,6 @@ export default async function DynamicPage({ params, searchParams }: { params: { 
   // Check if we're in preview mode
   const isPreview = resolvedSearchParams?.preview === 'true';
   const pageId = resolvedSearchParams?.id;
-
-  console.log('Product page - Preview mode:', isPreview, 'Page ID:', pageId);
 
   // tenant auto-detected from domain
   const tenantDetails = await getTenant();

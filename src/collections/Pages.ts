@@ -177,7 +177,6 @@ export const Pages: CollectionConfig = {
         const timestamp = Date.now();
 
         let previewUrl;
-        console.log('Is Local Dev:', isLocalDev);
 
         if (isLocalDev) {
           slug = data.slug;
@@ -186,7 +185,6 @@ export const Pages: CollectionConfig = {
           slug = data?.slug === 'home' ? '' : data?.slug;
           previewUrl = `https://${tenantDomain}/${slug}?preview=true&id=${data?.id}&t=${timestamp}`;
         }
-        console.log('Preview URL:', previewUrl);
 
         return previewUrl;
       },

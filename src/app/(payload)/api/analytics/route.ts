@@ -1,15 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { analyticsService } from '@/services/analytics';
-import { getTenant } from '@/lib/api';
 
 export async function GET(request: NextRequest) {
   try {
-    // Check tenant GA config
-    const tenant = await getTenant();
-    if (!tenant?.googleAnalyticsId) {
-      return NextResponse.json({ error: 'GA not configured for this tenant' }, { status: 400 });
-    }
-
     const { searchParams } = new URL(request.url);
     const endpoint = searchParams.get('endpoint') || searchParams.get('type') || 'dashboard-summary';
     const startDate = searchParams.get('startDate') || undefined;
