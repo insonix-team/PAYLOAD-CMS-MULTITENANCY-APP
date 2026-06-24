@@ -173,14 +173,16 @@ export const Pages: CollectionConfig = {
         const requestHost = req?.headers?.get?.('host') || '';
         const isLocalDev = requestHost.includes('localhost') || requestHost.includes('127.0.0.1');
 
-        const slug = data?.slug === 'home' ? '' : data?.slug;
+        let slug;
         const timestamp = Date.now();
 
         let previewUrl;
 
         if (isLocalDev) {
+          slug = data.slug;
           previewUrl = `${process.env.NEXT_PUBLIC_API_URL}/${tenantSlug}/${slug}?preview=true&id=${data?.id}&t=${timestamp}`;
         } else {
+          slug = data?.slug === 'home' ? '' : data?.slug;
           previewUrl = `https://${tenantDomain}/${slug}?preview=true&id=${data?.id}&t=${timestamp}`;
         }
 
