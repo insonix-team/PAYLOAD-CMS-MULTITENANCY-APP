@@ -41,12 +41,7 @@ const DEFAULT_HOURS = {
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-export function OfficeHoursCard({
-  timings = [],
-  title,
-  timezone = 'America/Los_Angeles',
-  hours = DEFAULT_HOURS,
-}: OfficeHoursCardProps) {
+export function OfficeHoursCard({ timings = [], title, timezone = 'America/Los_Angeles', hours = DEFAULT_HOURS }: OfficeHoursCardProps) {
   const [time, setTime] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
   const [countdown, setCountdown] = useState('');
@@ -99,9 +94,7 @@ export function OfficeHoursCard({
 
     const isClosed = todayHours.closed || false;
 
-    const open = isClosed
-      ? false
-      : currentHours >= todayHours.open && currentHours < todayHours.close;
+    const open = isClosed ? false : currentHours >= todayHours.open && currentHours < todayHours.close;
 
     setIsOpen(open);
 
@@ -155,20 +148,11 @@ export function OfficeHoursCard({
       {/* ANIMATED CLOCK WATERMARK */}
       <div className="absolute right-8 bottom-16 w-32 h-32 opacity-10">
         <div className="relative w-full h-full border border-white rounded-full">
-          <div
-            style={{ transform: `rotate(${hourDeg}deg)` }}
-            className="absolute top-1/2 left-1/2 w-[3px] h-6 bg-white origin-bottom -translate-x-1/2 -translate-y-full rounded-full"
-          />
+          <div style={{ transform: `rotate(${hourDeg}deg)` }} className="absolute top-1/2 left-1/2 w-[3px] h-6 bg-white origin-bottom -translate-x-1/2 -translate-y-full rounded-full" />
 
-          <div
-            style={{ transform: `rotate(${minuteDeg}deg)` }}
-            className="absolute top-1/2 left-1/2 w-[2px] h-10 bg-white origin-bottom -translate-x-1/2 -translate-y-full rounded-full"
-          />
+          <div style={{ transform: `rotate(${minuteDeg}deg)` }} className="absolute top-1/2 left-1/2 w-[2px] h-10 bg-white origin-bottom -translate-x-1/2 -translate-y-full rounded-full" />
 
-          <div
-            style={{ transform: `rotate(${secondDeg}deg)` }}
-            className="absolute top-1/2 left-1/2 w-[1px] h-12 bg-white/70 origin-bottom -translate-x-1/2 -translate-y-full rounded-full"
-          />
+          <div style={{ transform: `rotate(${secondDeg}deg)` }} className="absolute top-1/2 left-1/2 w-[1px] h-12 bg-white/70 origin-bottom -translate-x-1/2 -translate-y-full rounded-full" />
         </div>
       </div>
 
@@ -177,11 +161,7 @@ export function OfficeHoursCard({
         <div className="flex items-center justify-between mb-4">
           <h3 className="tracking-wide">{title}</h3>
 
-          <span
-            className={`text-xs px-3 py-1 rounded-full font-medium ${isOpen ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'}`}
-          >
-            {isOpen ? 'Open Now' : 'Closed'}
-          </span>
+          <span className={`text-xs px-3 py-1 rounded-full font-medium ${isOpen ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'}`}>{isOpen ? 'Open Now' : 'Closed'}</span>
         </div>
 
         {/* ✅ timings array render */}
@@ -196,9 +176,7 @@ export function OfficeHoursCard({
       </div>
 
       <div className="absolute bottom-4 right-10 w-full left-0 mt-20">
-        <p className="text-sm mx-8 bg-primary/50 rounded-sm shadow flex justify-center p-2 text-white/80 mt-2">
-          {isOpen ? `Closes in ${countdown}` : `Opens in ${countdown}`}
-        </p>
+        <p className="text-sm mx-8 bg-primary/50 rounded-sm shadow flex justify-center p-2 text-white/80 mt-2">{isOpen ? `Closes in ${countdown}` : `Opens in ${countdown}`}</p>
       </div>
     </div>
   );

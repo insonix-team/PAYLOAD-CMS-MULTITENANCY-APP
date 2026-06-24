@@ -23,17 +23,7 @@ type Props = {
 };
 
 export default function MapInfoBlockUI({ data }: Props) {
-  const {
-    title,
-    mapEmbedUrl,
-    mapLink,
-    address,
-    phone,
-    email,
-    accessibilityFeatures,
-    parkingAvailable,
-    officeHoursSection,
-  } = data;
+  const { title, mapEmbedUrl, mapLink, address, phone, email, accessibilityFeatures, parkingAvailable, officeHoursSection } = data;
 
   const sectionRef = useRef(null);
 
@@ -51,13 +41,7 @@ export default function MapInfoBlockUI({ data }: Props) {
       <motion.div style={{ y, scale }} className="md:absolute relative inset-0 h-[300px] md:h-full">
         <div className="hidden md:block absolute inset-0 z-[5] pointer-events-none"></div>
 
-        <iframe
-          title={title}
-          src={data.mapEmbedUrl}
-          className="w-full h-full pointer-events-auto"
-          loading="lazy"
-          allowFullScreen
-        />
+        <iframe title={title} src={data.mapEmbedUrl} className="w-full h-full pointer-events-auto" loading="lazy" allowFullScreen />
       </motion.div>
 
       {/* ✨ Spot Light */}
@@ -66,8 +50,7 @@ export default function MapInfoBlockUI({ data }: Props) {
           className="absolute left-1/2 top-1/2 w-64 h-64 rounded-full"
           style={{
             transform: 'translate(-50%, -50%)',
-            WebkitMask:
-              'radial-gradient(circle 170px at center, transparent 0%, transparent 60%, black 61%)',
+            WebkitMask: 'radial-gradient(circle 170px at center, transparent 0%, transparent 60%, black 61%)',
             mask: 'radial-gradient(circle 170px at center, transparent 0%, transparent 60%, black 61%)',
           }}
         />
@@ -113,12 +96,7 @@ export default function MapInfoBlockUI({ data }: Props) {
                 <div className="space-y-4 text-sm">
                   {/* ADDRESS */}
                   <div className="flex gap-3 items-start">
-                    <Link
-                      target="_blank"
-                      href={data?.mapLink || '#'}
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-3 text-sm group"
-                    >
+                    <Link target="_blank" href={data?.mapLink || '#'} rel="noopener noreferrer" className="flex items-center gap-3 text-sm group">
                       <div className="w-9 h-9 rounded-lg bg-background/5 group-hover:bg-secondary flex items-center justify-center transition-colors shrink-0">
                         <MapPin className="w-5 h-5" />
                       </div>
@@ -128,11 +106,7 @@ export default function MapInfoBlockUI({ data }: Props) {
 
                   {/* PHONE */}
                   <div className="flex gap-3 items-start">
-                    <Link
-                      href={`tel:${data.phone}`}
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-3 text-sm group"
-                    >
+                    <Link href={`tel:${data.phone}`} rel="noopener noreferrer" className="flex items-center gap-3 text-sm group">
                       <div className="w-9 h-9 rounded-lg bg-background/5 group-hover:bg-secondary flex items-center justify-center transition-colors shrink-0">
                         <Phone className="w-5 h-5" />
                       </div>
@@ -142,11 +116,7 @@ export default function MapInfoBlockUI({ data }: Props) {
 
                   {/* EMAIL */}
                   <div className="flex gap-3 items-start">
-                    <Link
-                      href={`mailto:${data.email}`}
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-3 text-sm group"
-                    >
+                    <Link href={`mailto:${data.email}`} rel="noopener noreferrer" className="flex items-center gap-3 text-sm group">
                       <div className="w-9 h-9 rounded-lg bg-background/5 group-hover:bg-secondary flex items-center justify-center transition-colors shrink-0">
                         <Mail className="w-5 h-5" />
                       </div>
@@ -181,11 +151,7 @@ export default function MapInfoBlockUI({ data }: Props) {
               </motion.div>
 
               {/* OFFICE HOURS CARD */}
-              <OfficeHoursCard
-                timings={officeHoursSection?.officeHours}
-                title={officeHoursSection?.officetitle}
-                timezone="America/Los_Angeles"
-              />
+              <OfficeHoursCard timings={officeHoursSection?.officeHours} title={officeHoursSection?.officetitle} timezone="America/Los_Angeles" />
               {/* INFO */}
               <motion.div
                 variants={{
@@ -208,47 +174,29 @@ export default function MapInfoBlockUI({ data }: Props) {
                     {/* Info Items */}
                     <div className="grid sm:grid-cols-1 gap-4">
                       <div className="flex items-start gap-3">
-                        <Link
-                          href={'#'}
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 text-sm group cursor-pointer"
-                        >
+                        <Link href={'#'} rel="noopener noreferrer" className="flex items-center gap-3 text-sm group cursor-pointer">
                           <div className="w-9 h-9 rounded-lg bg-background/5 group-hover:bg-secondary flex items-center justify-center transition-colors shrink-0">
                             <ParkingCircle className="w-5 h-5 " />
                           </div>
-                          <p className="text-sm text-white/90">
-                            Easy parking available for a hassle-free visit
-                          </p>
+                          <p className="text-sm text-white/90">Easy parking available for a hassle-free visit</p>
                         </Link>
                       </div>
 
                       <div className="flex items-start gap-3">
-                        <Link
-                          href={'#'}
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 text-sm group cursor-pointer"
-                        >
+                        <Link href={'#'} rel="noopener noreferrer" className="flex items-center gap-3 text-sm group cursor-pointer">
                           <div className="w-9 h-9 rounded-lg bg-background/5 group-hover:bg-secondary flex items-center justify-center transition-colors shrink-0">
                             <Accessibility className="w-5 h-5 " />
                           </div>
-                          <p className="text-sm text-white/90">
-                            Fully wheelchair accessible clinic
-                          </p>
+                          <p className="text-sm text-white/90">Fully wheelchair accessible clinic</p>
                         </Link>
                       </div>
 
                       <div className="flex items-start gap-3">
-                        <Link
-                          href={'#'}
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 text-sm group cursor-pointer"
-                        >
+                        <Link href={'#'} rel="noopener noreferrer" className="flex items-center gap-3 text-sm group cursor-pointer">
                           <div className="w-9 h-9 rounded-lg bg-background/5 group-hover:bg-secondary flex items-center justify-center transition-colors shrink-0">
                             <MapPin className="w-5 h-5 " />
                           </div>
-                          <p className="text-sm text-white/90">
-                            Conveniently located in a central area
-                          </p>
+                          <p className="text-sm text-white/90">Conveniently located in a central area</p>
                         </Link>
                       </div>
                     </div>

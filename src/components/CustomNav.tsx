@@ -16,12 +16,8 @@ export default function CustomNav() {
     { href: `/custom-dashboard`, label: 'Analytics' },
     { href: '/collections/pages', label: 'Pages' },
     { href: '/collections/media', label: 'Media' },
-    ...(user?.role === ROLES.SUPERADMIN || user?.role === ROLES.TENANT
-      ? [{ href: '/collections/users', label: 'Users' }]
-      : []),
-    ...(user?.role === ROLES.SUPERADMIN
-      ? [{ href: '/collections/tenants', label: 'Tenants' }]
-      : []),
+    ...(user?.role === ROLES.SUPERADMIN || user?.role === ROLES.TENANT ? [{ href: '/collections/users', label: 'Users' }] : []),
+    ...(user?.role === ROLES.SUPERADMIN ? [{ href: '/collections/tenants', label: 'Tenants' }] : []),
   ];
 
   useEffect(() => {
@@ -87,9 +83,7 @@ export default function CustomNav() {
                 padding: '0.5rem 1rem',
                 borderRadius: '6px',
                 textDecoration: 'none',
-                color: isActive(item.href)
-                  ? 'var(--theme-success-500)'
-                  : 'var(--theme-elevation-800)',
+                color: isActive(item.href) ? 'var(--theme-success-500)' : 'var(--theme-elevation-800)',
                 backgroundColor: isActive(item.href) ? 'var(--theme-success-50)' : 'transparent',
                 transition: 'all 0.2s',
                 fontSize: '0.875rem',

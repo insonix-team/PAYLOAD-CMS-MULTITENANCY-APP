@@ -21,16 +21,8 @@ export interface TenantTheme {
 
 const ThemeContext = createContext(initialContext);
 
-export const ThemeProvider = ({
-  children,
-  tenantTheme,
-}: {
-  children: React.ReactNode;
-  tenantTheme?: TenantTheme | null;
-}) => {
-  const [theme, setThemeState] = useState<Theme | undefined>(
-    canUseDOM ? (document.documentElement.getAttribute('data-theme') as Theme) : undefined
-  );
+export const ThemeProvider = ({ children, tenantTheme }: { children: React.ReactNode; tenantTheme?: TenantTheme | null }) => {
+  const [theme, setThemeState] = useState<Theme | undefined>(canUseDOM ? (document.documentElement.getAttribute('data-theme') as Theme) : undefined);
 
   const applyTenantTheme = (tenantTheme?: TenantTheme | null) => {
     if (!canUseDOM) return;

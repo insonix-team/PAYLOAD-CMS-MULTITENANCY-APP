@@ -42,18 +42,15 @@ export default function StepProcessUI({ data }: Props) {
     >
       <div
         className="
-    absolute inset-0 
+    absolute inset-0
   bg-gradient-to-b from-white/70 to-secondary/50
-   
+
   "
       ></div>
       <div className="container relative mx-auto px-4">
         {/* Heading */}
         <div className="text-left mx-auto mb-16">
-          <h2
-            className="mt-3 mb-3 text-black! text-3xl leading-tight "
-            aria-describedby="about-description"
-          >
+          <h2 className="mt-3 mb-3 text-black! text-3xl leading-tight " aria-describedby="about-description">
             {heading}
           </h2>
           <p className="text-lg text-gray-500!"> {subtitle}</p>
@@ -65,25 +62,14 @@ export default function StepProcessUI({ data }: Props) {
           {data.cards?.map((service, index) => (
             <div key={index} className="group relative text-center transition-all duration-300">
               {/* Connector Line */}
-              {index < data.cards.length - 1 && (
-                <div className="hidden lg:block absolute top-10 left-[60%] w-full h-[2px] bg-gray-300 z-0" />
-              )}
+              {index < data.cards.length - 1 && <div className="hidden lg:block absolute top-10 left-[60%] w-full h-[2px] bg-gray-300 z-0" />}
 
               {/* Icon */}
               <div className="relative z-10 mx-auto w-20 h-20 rounded-full bg-white flex items-center justify-center shadow mb-6">
                 {service.svg_icon ? (
-                  <div
-                    dangerouslySetInnerHTML={{ __html: service.svg_icon }}
-                    className="w-10 h-10 flex items-center justify-center"
-                  />
+                  <div dangerouslySetInnerHTML={{ __html: service.svg_icon }} className="w-10 h-10 flex items-center justify-center" />
                 ) : service.icon?.url ? (
-                  <Image
-                    src={service.icon.url}
-                    alt={service.icon.alt || service.title}
-                    width={40}
-                    height={40}
-                    className="w-10 h-10"
-                  />
+                  <Image src={service.icon.url} alt={service.icon.alt || service.title} width={40} height={40} className="w-10 h-10" />
                 ) : null}
               </div>
 

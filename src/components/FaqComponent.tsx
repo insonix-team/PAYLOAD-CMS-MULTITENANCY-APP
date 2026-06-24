@@ -19,10 +19,7 @@ export const FAQComponentUI = ({ data }: any) => {
 
               return (
                 <div key={i} className="border border-gray-300 rounded-xl p-1">
-                  <button
-                    className="w-full flex justify-between items-center p-4 text-left"
-                    onClick={() => setOpenIndex(isOpen ? null : i)}
-                  >
+                  <button className="w-full flex justify-between items-center p-4 text-left" onClick={() => setOpenIndex(isOpen ? null : i)}>
                     <span className="text-lg font-semibold">{faq.question}</span>
                     <span className="text-2xl">{isOpen ? '−' : '+'}</span>
                   </button>

@@ -63,9 +63,7 @@ export default function CustomSidebar() {
               padding: '0.6rem 0.75rem',
               borderRadius: '6px',
               textDecoration: 'none',
-              color: isActive(item.href)
-                ? 'var(--theme-success-500)'
-                : 'var(--theme-elevation-800)',
+              color: isActive(item.href) ? 'var(--theme-success-500)' : 'var(--theme-elevation-800)',
               backgroundColor: isActive(item.href) ? 'var(--theme-success-50)' : 'transparent',
               marginBottom: '0.25rem',
               transition: 'all 0.2s',
@@ -102,9 +100,7 @@ export default function CustomSidebar() {
               padding: '0.6rem 0.75rem',
               borderRadius: '6px',
               cursor: 'pointer',
-              color: isAnyTemplateActive
-                ? 'var(--theme-success-500)'
-                : 'var(--theme-elevation-800)',
+              color: isAnyTemplateActive ? 'var(--theme-success-500)' : 'var(--theme-elevation-800)',
               backgroundColor: isAnyTemplateActive ? 'var(--theme-success-50)' : 'transparent',
               marginBottom: '0.25rem',
               transition: 'all 0.2s',
@@ -138,12 +134,8 @@ export default function CustomSidebar() {
                     padding: '0.6rem 0.75rem',
                     borderRadius: '6px',
                     textDecoration: 'none',
-                    color: isActive(item.href)
-                      ? 'var(--theme-success-500)'
-                      : 'var(--theme-elevation-800)',
-                    backgroundColor: isActive(item.href)
-                      ? 'var(--theme-success-50)'
-                      : 'transparent',
+                    color: isActive(item.href) ? 'var(--theme-success-500)' : 'var(--theme-elevation-800)',
+                    backgroundColor: isActive(item.href) ? 'var(--theme-success-50)' : 'transparent',
                     marginBottom: '0.25rem',
                     transition: 'all 0.2s',
                   }}

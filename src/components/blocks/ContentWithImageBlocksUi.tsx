@@ -8,16 +8,7 @@ type Props = {
 };
 
 export const ContentWithImageBlock = ({ data, tenant }: Props) => {
-  const {
-    layoutStyle = 'side-by-side',
-    imagePosition = 'left',
-    image,
-    isBackgroundImage,
-    theme = 'light',
-    heading,
-    description,
-    buttons = [],
-  } = data;
+  const { layoutStyle = 'side-by-side', imagePosition = 'left', image, isBackgroundImage, theme = 'light', heading, description, buttons = [] } = data;
 
   const isLeft = imagePosition === 'left';
   const isDark = theme === 'dark';
@@ -35,9 +26,7 @@ export const ContentWithImageBlock = ({ data, tenant }: Props) => {
           : {}
       }
     >
-      <div
-        className={`max-w-6xl mx-auto flex flex-col ${layoutStyle === 'side-by-side' ? `md:flex-row ${isLeft ? '' : 'md:flex-row-reverse'}` : ''} items-center gap-10`}
-      >
+      <div className={`max-w-6xl mx-auto flex flex-col ${layoutStyle === 'side-by-side' ? `md:flex-row ${isLeft ? '' : 'md:flex-row-reverse'}` : ''} items-center gap-10`}>
         {/* IMAGE */}
         {!isBackgroundImage && image?.url && (
           <div className="w-full md:w-1/2">
@@ -55,12 +44,7 @@ export const ContentWithImageBlock = ({ data, tenant }: Props) => {
           {buttons.length > 0 && (
             <div className="flex gap-4 pt-4 flex-wrap">
               {buttons.map((btn: any, i: number) => (
-                <a
-                  key={i}
-                  href={`/${tenant}${btn.url}`}
-                  target={btn.openInNewTab ? '_blank' : '_self'}
-                  className="px-5 py-2 rounded-full bg-black text-white"
-                >
+                <a key={i} href={`/${tenant}${btn.url}`} target={btn.openInNewTab ? '_blank' : '_self'} className="px-5 py-2 rounded-full bg-black text-white">
                   {btn.label}
                 </a>
               ))}

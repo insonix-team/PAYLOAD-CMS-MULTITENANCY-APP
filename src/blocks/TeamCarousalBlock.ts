@@ -1,11 +1,4 @@
-import {
-  FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-  LinkFeature,
-  UploadFeature,
-} from '@payloadcms/richtext-lexical';
+import { FixedToolbarFeature, HeadingFeature, InlineToolbarFeature, lexicalEditor, LinkFeature, UploadFeature } from '@payloadcms/richtext-lexical';
 import type { Block } from 'payload';
 
 export const TeamCarousalBlock: Block = {
@@ -43,14 +36,7 @@ export const TeamCarousalBlock: Block = {
           name: 'content',
           type: 'richText',
           editor: lexicalEditor({
-            features: ({ rootFeatures }) => [
-              ...rootFeatures,
-              HeadingFeature(),
-              LinkFeature(),
-              UploadFeature(),
-              FixedToolbarFeature(),
-              InlineToolbarFeature(),
-            ],
+            features: ({ rootFeatures }) => [...rootFeatures, HeadingFeature(), LinkFeature(), UploadFeature(), FixedToolbarFeature(), InlineToolbarFeature()],
           }),
         },
 

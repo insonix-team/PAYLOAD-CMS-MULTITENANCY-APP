@@ -36,18 +36,13 @@ export const HeroBlock = ({ data }: HeroBlockProps) => {
   return (
     <section className="hero py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="container mx-auto px-4">
-        <div
-          className={`flex flex-col ${alignmentClasses[alignment]} max-w-4xl ${contentAlignment[alignment]}`}
-        >
+        <div className={`flex flex-col ${alignmentClasses[alignment]} max-w-4xl ${contentAlignment[alignment]}`}>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">{title}</h1>
 
           {subtitle && <p className="text-xl text-gray-600 mb-8 max-w-2xl">{subtitle}</p>}
 
           {ctaText && ctaLink && (
-            <a
-              href={ctaLink}
-              className="inline-block px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
-            >
+            <a href={ctaLink} className="inline-block px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
               {ctaText}
             </a>
           )}
@@ -58,14 +53,7 @@ export const HeroBlock = ({ data }: HeroBlockProps) => {
 
         {image && image.url && (
           <div className="mt-12 flex justify-center">
-            <Image
-              src={image.url}
-              alt={image.alt || title}
-              width={1200}
-              height={600}
-              className="rounded-xl shadow-2xl"
-              priority
-            />
+            <Image src={image.url} alt={image.alt || title} width={1200} height={600} className="rounded-xl shadow-2xl" priority />
           </div>
         )}
       </div>

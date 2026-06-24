@@ -33,9 +33,7 @@ export const TemplateTypeSelect: React.FC = () => {
 
   return (
     <div>
-      <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>
-        Template Type
-      </label>
+      <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Template Type</label>
       <select
         value={value as string}
         onChange={handleChange}

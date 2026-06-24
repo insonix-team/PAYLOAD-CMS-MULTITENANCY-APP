@@ -199,13 +199,9 @@ export const TemplateRefreshButton: React.FC = () => {
       });
 
       // Find manual blocks with their original positions
-      const manualBlocksWithIndex: ManualBlockWithIndex[] = currentContent
-        .map((block: Block, idx: number) => ({ block, idx }))
-        .filter(({ block }: ManualBlockWithIndex) => !block._templateBlockId);
+      const manualBlocksWithIndex: ManualBlockWithIndex[] = currentContent.map((block: Block, idx: number) => ({ block, idx })).filter(({ block }: ManualBlockWithIndex) => !block._templateBlockId);
 
-      const manualIndices = new Set<number>(
-        manualBlocksWithIndex.map(({ idx }: ManualBlockWithIndex) => idx)
-      );
+      const manualIndices = new Set<number>(manualBlocksWithIndex.map(({ idx }: ManualBlockWithIndex) => idx));
 
       const finalContent: Block[] = [];
       let templateQueuePointer = 0;
@@ -244,9 +240,7 @@ export const TemplateRefreshButton: React.FC = () => {
             blockType: block.blockType,
             position: idx,
           })),
-          manualBlockSignatures: finalContent
-            .filter((block: Block) => !block._templateBlockId)
-            .map((block: Block) => ({ blockType: block.blockType })),
+          manualBlockSignatures: finalContent.filter((block: Block) => !block._templateBlockId).map((block: Block) => ({ blockType: block.blockType })),
         },
         _isRefresh: true,
       };
@@ -282,24 +276,13 @@ export const TemplateRefreshButton: React.FC = () => {
         marginTop: '20px',
       }}
     >
-      <Button
-        onClick={handleRefresh}
-        disabled={isRefreshing || !needsRefresh}
-        buttonStyle={needsRefresh ? 'primary' : 'secondary'}
-        size="medium"
-      >
-        {isRefreshing
-          ? '🔄 Refreshing...'
-          : needsRefresh
-            ? '📥 Update Template Layout'
-            : '✅ Template Synced'}
+      <Button onClick={handleRefresh} disabled={isRefreshing || !needsRefresh} buttonStyle={needsRefresh ? 'primary' : 'secondary'} size="medium">
+        {isRefreshing ? '🔄 Refreshing...' : needsRefresh ? '📥 Update Template Layout' : '✅ Template Synced'}
       </Button>
       {needsRefresh && (
         <div style={{ marginTop: '8px', fontSize: '12px', color: '#e67e22' }}>
           <p>Template has been updated.</p>
-          <p style={{ fontSize: '11px', marginTop: '4px' }}>
-            Click to update template blocks while keeping your custom blocks.
-          </p>
+          <p style={{ fontSize: '11px', marginTop: '4px' }}>Click to update template blocks while keeping your custom blocks.</p>
         </div>
       )}
     </div>

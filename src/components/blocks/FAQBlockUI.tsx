@@ -10,10 +10,7 @@ export const FAQBlockUI = ({ data }: any) => {
 
       {data.faqs?.map((faq: any, i: number) => (
         <div key={i} className="border-b py-4">
-          <button
-            className="w-full text-left font-semibold"
-            onClick={() => setOpenIndex(openIndex === i ? null : i)}
-          >
+          <button className="w-full text-left font-semibold" onClick={() => setOpenIndex(openIndex === i ? null : i)}>
             {faq.question}
           </button>
 

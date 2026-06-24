@@ -21,13 +21,7 @@ type Props = {
   buttonUrl?: string;
 };
 
-export default function HeaderSimple({
-  logo,
-  menuItems = [],
-  showButton,
-  buttonLabel,
-  buttonUrl,
-}: Props) {
+export default function HeaderSimple({ logo, menuItems = [], showButton, buttonLabel, buttonUrl }: Props) {
   return (
     <AppBar
       position="sticky"

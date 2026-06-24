@@ -42,18 +42,15 @@ export default function IconFeatureBoxUI({ data }: Props) {
     >
       <div
         className="
-    absolute inset-0 
+    absolute inset-0
   bg-gradient-to-b from-white/70 to-secondary/50
-   
+
   "
       ></div>
       <div className="container relative mx-auto px-4">
         {/* Heading */}
         <div className="text-left mx-auto mb-16">
-          <h2
-            className="mt-3 mb-3 text-black! text-3xl leading-tight "
-            aria-describedby="about-description"
-          >
+          <h2 className="mt-3 mb-3 text-black! text-3xl leading-tight " aria-describedby="about-description">
             {heading}
           </h2>
           <p className="text-lg text-gray-500!"> {subtitle}</p>
@@ -63,24 +60,12 @@ export default function IconFeatureBoxUI({ data }: Props) {
 
         <div className={`grid sm:grid-cols-2 gap-6 ${gridCols[data.columns || '4']}`}>
           {data.cards?.map((service, index) => (
-            <div
-              key={index}
-              className="group transition-all bg-white duration-300 hover:-translate-y-1 hover:bg-primary hover:text-white p-6 rounded-xl"
-            >
+            <div key={index} className="group transition-all bg-white duration-300 hover:-translate-y-1 hover:bg-primary hover:text-white p-6 rounded-xl">
               <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center shadow mb-4">
                 {service.svg_icon ? (
-                  <div
-                    dangerouslySetInnerHTML={{ __html: service.svg_icon }}
-                    className="w-10 h-10 flex items-center justify-center"
-                  />
+                  <div dangerouslySetInnerHTML={{ __html: service.svg_icon }} className="w-10 h-10 flex items-center justify-center" />
                 ) : service.icon?.url ? (
-                  <Image
-                    src={service.icon.url}
-                    alt={service.icon.alt || service.title}
-                    width={40}
-                    height={40}
-                    className="w-10 h-10"
-                  />
+                  <Image src={service.icon.url} alt={service.icon.alt || service.title} width={40} height={40} className="w-10 h-10" />
                 ) : null}
               </div>
 

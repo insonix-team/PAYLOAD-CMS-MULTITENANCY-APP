@@ -83,10 +83,7 @@ export const TeamCarousalUI = ({ data }: Props) => {
           className="pb-10"
         >
           {slides?.map((slide, i) => {
-            const image =
-              slide.image && typeof slide.image === 'object' && 'url' in slide.image
-                ? (slide.image as Media)
-                : null;
+            const image = slide.image && typeof slide.image === 'object' && 'url' in slide.image ? (slide.image as Media) : null;
 
             return (
               <SwiperSlide key={slide.id || i}>
@@ -127,25 +124,16 @@ export const TeamCarousalUI = ({ data }: Props) => {
                         )}
                         {/* GRADIENT OVERLAY */}
                         <div className="absolute text-right bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent px-6 py-5">
-                          <p className="text-secondary-50 text-xl font-light italic font-serif">
-                            {'Clinical Excellence'}
-                          </p>
-                          <p className="text-white/60 text-[10px] uppercase tracking-[0.2em] mt-0.5">
-                            {'Local Roots · Patient-Focused'}
-                          </p>
+                          <p className="text-secondary-50 text-xl font-light italic font-serif">{'Clinical Excellence'}</p>
+                          <p className="text-white/60 text-[10px] uppercase tracking-[0.2em] mt-0.5">{'Local Roots · Patient-Focused'}</p>
                         </div>
                       </div>
                     </div>
 
-                    <div
-                      className="absolute -top-6 left-4 md:-left-1 bg-white border border-secondary/40 shadow-xl px-5 py-3.5"
-                      style={{ animation: 'floatBadge 4s ease-in-out 1.2s infinite' }}
-                    >
+                    <div className="absolute -top-6 left-4 md:-left-1 bg-white border border-secondary/40 shadow-xl px-5 py-3.5" style={{ animation: 'floatBadge 4s ease-in-out 1.2s infinite' }}>
                       <div className="flex items-center gap-2 mb-1">
                         <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                        <span className="text-[9px] uppercase tracking-[0.2em] text-green-700 font-semibold">
-                          Available Today
-                        </span>
+                        <span className="text-[9px] uppercase tracking-[0.2em] text-green-700 font-semibold">Available Today</span>
                       </div>
 
                       <p className="text-primary text-lg font-serif">{slide.name}</p>
@@ -168,11 +156,7 @@ export const TeamCarousalUI = ({ data }: Props) => {
                             href={button.url}
                             target={button.newTab ? '_blank' : undefined}
                             rel={button.newTab ? 'noopener noreferrer' : undefined}
-                            className={
-                              button.style === 'secondary'
-                                ? 'px-4 py-2 border border-primary rounded-0'
-                                : 'px-4 py-2 bg-primary text-white rounded-0'
-                            }
+                            className={button.style === 'secondary' ? 'px-4 py-2 border border-primary rounded-0' : 'px-4 py-2 bg-primary text-white rounded-0'}
                           >
                             {button.label}
                           </Link>

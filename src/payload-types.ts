@@ -138,7 +138,7 @@ export interface UserAuthOperations {
 export interface User {
   id: string;
   name: string;
-  role?: ('superadmin' | 'tenant' | 'designer') | null;
+  role?: ('superadmin' | 'tenant' | 'editor') | null;
   tenant?: (string | null) | Tenant;
   updatedAt: string;
   createdAt: string;
@@ -171,62 +171,16 @@ export interface Tenant {
   smtpPassword?: string | null;
   domain?: string | null;
   primaryColor?:
-    | (
-        | 'blue'
-        | 'light-blue'
-        | 'powder-blue'
-        | 'sky-blue'
-        | 'gray'
-        | 'slate'
-        | 'black'
-        | 'green'
-        | 'emerald'
-        | 'teal'
-        | 'purple'
-        | 'indigo'
-        | 'pink'
-        | 'rose'
-        | 'red'
-        | 'orange'
-        | 'amber'
-      )
+    | ('blue' | 'light-blue' | 'powder-blue' | 'sky-blue' | 'gray' | 'slate' | 'black' | 'green' | 'emerald' | 'teal' | 'purple' | 'indigo' | 'pink' | 'rose' | 'red' | 'orange' | 'amber')
     | null;
   secondaryColor?:
-    | (
-        | 'blue'
-        | 'light-blue'
-        | 'powder-blue'
-        | 'sky-blue'
-        | 'gray'
-        | 'slate'
-        | 'black'
-        | 'green'
-        | 'emerald'
-        | 'teal'
-        | 'purple'
-        | 'indigo'
-        | 'pink'
-        | 'rose'
-        | 'red'
-        | 'orange'
-        | 'amber'
-      )
+    | ('blue' | 'light-blue' | 'powder-blue' | 'sky-blue' | 'gray' | 'slate' | 'black' | 'green' | 'emerald' | 'teal' | 'purple' | 'indigo' | 'pink' | 'rose' | 'red' | 'orange' | 'amber')
     | null;
-  fontFamily?:
-    | (
-        | 'Inter'
-        | 'Poppins'
-        | 'Roboto'
-        | 'Montserrat'
-        | 'Outfit'
-        | 'DM Sans'
-        | 'Open Sans'
-        | 'Lato'
-        | 'Nunito'
-        | 'Cursive'
-        | 'Playfair Display'
-      )
-    | null;
+  fontFamily?: ('Inter' | 'Poppins' | 'Roboto' | 'Montserrat' | 'Outfit' | 'DM Sans' | 'Open Sans' | 'Lato' | 'Nunito' | 'Cursive' | 'Playfair Display') | null;
+  /**
+   * Enter GA4 Measurement ID (e.g., G-XXXXXXXXXX)
+   */
+  googleAnalyticsId?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -274,6 +228,9 @@ export interface Page {
             ctaText?: string | null;
             ctaLink?: string | null;
             alignment?: ('left' | 'center' | 'right') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'hero';
@@ -289,6 +246,9 @@ export interface Page {
                 }[]
               | null;
             columns?: ('2' | '3' | '4') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'features';
@@ -312,6 +272,9 @@ export interface Page {
             };
             image?: (string | null) | Media;
             imagePosition?: ('left' | 'right') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'content';
@@ -322,6 +285,9 @@ export interface Page {
             buttonText: string;
             buttonLink: string;
             backgroundColor?: ('primary' | 'secondary' | 'dark') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'cta';
@@ -350,6 +316,9 @@ export interface Page {
             } | null;
             backgroundColor?: ('white' | 'bg-card') | null;
             padding?: ('sm' | 'md' | 'lg') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'mediaBlockcontent';
@@ -374,6 +343,9 @@ export interface Page {
             columns: '2' | '3' | '4';
             delay?: number | null;
             loading?: boolean | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'verticleHoverCardsBlock';
@@ -399,6 +371,9 @@ export interface Page {
               };
               id?: string | null;
             }[];
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'faqBlock';
@@ -430,6 +405,9 @@ export interface Page {
             slidesPerDesktop?: number | null;
             autoplay?: boolean | null;
             delay?: number | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'carouselBlock';
@@ -470,6 +448,9 @@ export interface Page {
             slidesPerDesktop?: number | null;
             autoplay?: boolean | null;
             delay?: number | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'teamCarousalBlock';
@@ -491,6 +472,9 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'iconFeatureBlock';
@@ -512,6 +496,9 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'stepPocessBlock';
@@ -519,6 +506,30 @@ export interface Page {
       )[]
     | null;
   tenant?: (string | null) | Tenant;
+  templateSyncInfo?: {
+    lastSyncedTemplateId?: string | null;
+    lastSyncedTemplateUpdatedAt?: string | null;
+    templateBlockIds?:
+      | {
+          id?: string | null;
+          blockType?: string | null;
+        }[]
+      | null;
+    manualBlockSignatures?:
+      | {
+          blockType?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -543,6 +554,9 @@ export interface HomeTemplate {
             ctaText?: string | null;
             ctaLink?: string | null;
             alignment?: ('left' | 'center' | 'right') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'hero';
@@ -558,6 +572,9 @@ export interface HomeTemplate {
                 }[]
               | null;
             columns?: ('2' | '3' | '4') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'features';
@@ -581,6 +598,9 @@ export interface HomeTemplate {
             };
             image?: (string | null) | Media;
             imagePosition?: ('left' | 'right') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'content';
@@ -591,6 +611,9 @@ export interface HomeTemplate {
             buttonText: string;
             buttonLink: string;
             backgroundColor?: ('primary' | 'secondary' | 'dark') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'cta';
@@ -619,6 +642,9 @@ export interface HomeTemplate {
             } | null;
             backgroundColor?: ('white' | 'bg-card') | null;
             padding?: ('sm' | 'md' | 'lg') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'mediaBlockcontent';
@@ -644,6 +670,9 @@ export interface HomeTemplate {
               };
               id?: string | null;
             }[];
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'faqBlock';
@@ -668,6 +697,9 @@ export interface HomeTemplate {
             columns: '2' | '3' | '4';
             delay?: number | null;
             loading?: boolean | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'verticleHoverCardsBlock';
@@ -699,6 +731,9 @@ export interface HomeTemplate {
             slidesPerDesktop?: number | null;
             autoplay?: boolean | null;
             delay?: number | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'carouselBlock';
@@ -739,6 +774,9 @@ export interface HomeTemplate {
             slidesPerDesktop?: number | null;
             autoplay?: boolean | null;
             delay?: number | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'teamCarousalBlock';
@@ -760,6 +798,9 @@ export interface HomeTemplate {
                   id?: string | null;
                 }[]
               | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'iconFeatureBlock';
@@ -781,6 +822,9 @@ export interface HomeTemplate {
                   id?: string | null;
                 }[]
               | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'stepPocessBlock';
@@ -821,6 +865,9 @@ export interface CardsWithIcons {
     solidBg?: ('white' | 'primary' | 'secondary' | 'gray') | null;
     id?: string | null;
   }[];
+  _templateBlockId?: string | null;
+  _blockId?: string | null;
+  _originalPosition?: number | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'cardsWithIcons';
@@ -844,6 +891,9 @@ export interface HeroLeftLayoutBlock {
         id?: string | null;
       }[]
     | null;
+  _templateBlockId?: string | null;
+  _blockId?: string | null;
+  _originalPosition?: number | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'heroLeftLayoutBlock';
@@ -880,6 +930,9 @@ export interface MapInfoBlockType {
         }[]
       | null;
   };
+  _templateBlockId?: string | null;
+  _blockId?: string | null;
+  _originalPosition?: number | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mapInfoBlock';
@@ -904,6 +957,9 @@ export interface AboutTemplate {
             ctaText?: string | null;
             ctaLink?: string | null;
             alignment?: ('left' | 'center' | 'right') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'hero';
@@ -919,6 +975,9 @@ export interface AboutTemplate {
                 }[]
               | null;
             columns?: ('2' | '3' | '4') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'features';
@@ -942,6 +1001,9 @@ export interface AboutTemplate {
             };
             image?: (string | null) | Media;
             imagePosition?: ('left' | 'right') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'content';
@@ -952,6 +1014,9 @@ export interface AboutTemplate {
             buttonText: string;
             buttonLink: string;
             backgroundColor?: ('primary' | 'secondary' | 'dark') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'cta';
@@ -981,6 +1046,9 @@ export interface ServiceTemplate {
             ctaText?: string | null;
             ctaLink?: string | null;
             alignment?: ('left' | 'center' | 'right') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'hero';
@@ -996,6 +1064,9 @@ export interface ServiceTemplate {
                 }[]
               | null;
             columns?: ('2' | '3' | '4') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'features';
@@ -1019,6 +1090,9 @@ export interface ServiceTemplate {
             };
             image?: (string | null) | Media;
             imagePosition?: ('left' | 'right') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'content';
@@ -1029,6 +1103,9 @@ export interface ServiceTemplate {
             buttonText: string;
             buttonLink: string;
             backgroundColor?: ('primary' | 'secondary' | 'dark') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'cta';
@@ -1057,6 +1134,9 @@ export interface ServiceTemplate {
             } | null;
             backgroundColor?: ('white' | 'bg-card') | null;
             padding?: ('sm' | 'md' | 'lg') | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'mediaBlockcontent';
@@ -1082,6 +1162,9 @@ export interface ServiceTemplate {
               };
               id?: string | null;
             }[];
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'faqBlock';
@@ -1106,6 +1189,9 @@ export interface ServiceTemplate {
             columns: '2' | '3' | '4';
             delay?: number | null;
             loading?: boolean | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'verticleHoverCardsBlock';
@@ -1137,6 +1223,9 @@ export interface ServiceTemplate {
             slidesPerDesktop?: number | null;
             autoplay?: boolean | null;
             delay?: number | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'carouselBlock';
@@ -1177,6 +1266,9 @@ export interface ServiceTemplate {
             slidesPerDesktop?: number | null;
             autoplay?: boolean | null;
             delay?: number | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'teamCarousalBlock';
@@ -1198,6 +1290,9 @@ export interface ServiceTemplate {
                   id?: string | null;
                 }[]
               | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'iconFeatureBlock';
@@ -1219,6 +1314,9 @@ export interface ServiceTemplate {
                   id?: string | null;
                 }[]
               | null;
+            _templateBlockId?: string | null;
+            _blockId?: string | null;
+            _originalPosition?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'stepPocessBlock';
@@ -1534,6 +1632,7 @@ export interface TenantsSelect<T extends boolean = true> {
   primaryColor?: T;
   secondaryColor?: T;
   fontFamily?: T;
+  googleAnalyticsId?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1560,6 +1659,9 @@ export interface PagesSelect<T extends boolean = true> {
               ctaText?: T;
               ctaLink?: T;
               alignment?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1576,6 +1678,9 @@ export interface PagesSelect<T extends boolean = true> {
                     id?: T;
                   };
               columns?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1586,6 +1691,9 @@ export interface PagesSelect<T extends boolean = true> {
               content?: T;
               image?: T;
               imagePosition?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1597,6 +1705,9 @@ export interface PagesSelect<T extends boolean = true> {
               buttonText?: T;
               buttonLink?: T;
               backgroundColor?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1612,6 +1723,9 @@ export interface PagesSelect<T extends boolean = true> {
               content?: T;
               backgroundColor?: T;
               padding?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1641,6 +1755,9 @@ export interface PagesSelect<T extends boolean = true> {
               columns?: T;
               delay?: T;
               loading?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1655,6 +1772,9 @@ export interface PagesSelect<T extends boolean = true> {
                     answer?: T;
                     id?: T;
                   };
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1675,6 +1795,9 @@ export interface PagesSelect<T extends boolean = true> {
               slidesPerDesktop?: T;
               autoplay?: T;
               delay?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1704,6 +1827,9 @@ export interface PagesSelect<T extends boolean = true> {
               slidesPerDesktop?: T;
               autoplay?: T;
               delay?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1723,6 +1849,9 @@ export interface PagesSelect<T extends boolean = true> {
                     svg_icon?: T;
                     id?: T;
                   };
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1742,11 +1871,39 @@ export interface PagesSelect<T extends boolean = true> {
                     svg_icon?: T;
                     id?: T;
                   };
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
       };
   tenant?: T;
+  templateSyncInfo?:
+    | T
+    | {
+        lastSyncedTemplateId?: T;
+        lastSyncedTemplateUpdatedAt?: T;
+        templateBlockIds?:
+          | T
+          | {
+              id?: T;
+              blockType?: T;
+            };
+        manualBlockSignatures?:
+          | T
+          | {
+              blockType?: T;
+              id?: T;
+            };
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -1770,6 +1927,9 @@ export interface CardsWithIconsSelect<T extends boolean = true> {
         solidBg?: T;
         id?: T;
       };
+  _templateBlockId?: T;
+  _blockId?: T;
+  _originalPosition?: T;
   id?: T;
   blockName?: T;
 }
@@ -1792,6 +1952,9 @@ export interface HeroLeftLayoutBlockSelect<T extends boolean = true> {
         style?: T;
         id?: T;
       };
+  _templateBlockId?: T;
+  _blockId?: T;
+  _originalPosition?: T;
   id?: T;
   blockName?: T;
 }
@@ -1820,6 +1983,9 @@ export interface MapInfoBlockTypeSelect<T extends boolean = true> {
               id?: T;
             };
       };
+  _templateBlockId?: T;
+  _blockId?: T;
+  _originalPosition?: T;
   id?: T;
   blockName?: T;
 }
@@ -1842,6 +2008,9 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
               ctaText?: T;
               ctaLink?: T;
               alignment?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1858,6 +2027,9 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
                     id?: T;
                   };
               columns?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1868,6 +2040,9 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
               content?: T;
               image?: T;
               imagePosition?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1879,6 +2054,9 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
               buttonText?: T;
               buttonLink?: T;
               backgroundColor?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1894,6 +2072,9 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
               content?: T;
               backgroundColor?: T;
               padding?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1908,6 +2089,9 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
                     answer?: T;
                     id?: T;
                   };
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1937,6 +2121,9 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
               columns?: T;
               delay?: T;
               loading?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1957,6 +2144,9 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
               slidesPerDesktop?: T;
               autoplay?: T;
               delay?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -1986,6 +2176,9 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
               slidesPerDesktop?: T;
               autoplay?: T;
               delay?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2005,6 +2198,9 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
                     svg_icon?: T;
                     id?: T;
                   };
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2024,6 +2220,9 @@ export interface HomeTemplatesSelect<T extends boolean = true> {
                     svg_icon?: T;
                     id?: T;
                   };
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2050,6 +2249,9 @@ export interface AboutTemplatesSelect<T extends boolean = true> {
               ctaText?: T;
               ctaLink?: T;
               alignment?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2066,6 +2268,9 @@ export interface AboutTemplatesSelect<T extends boolean = true> {
                     id?: T;
                   };
               columns?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2076,6 +2281,9 @@ export interface AboutTemplatesSelect<T extends boolean = true> {
               content?: T;
               image?: T;
               imagePosition?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2087,6 +2295,9 @@ export interface AboutTemplatesSelect<T extends boolean = true> {
               buttonText?: T;
               buttonLink?: T;
               backgroundColor?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2113,6 +2324,9 @@ export interface ServiceTemplatesSelect<T extends boolean = true> {
               ctaText?: T;
               ctaLink?: T;
               alignment?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2129,6 +2343,9 @@ export interface ServiceTemplatesSelect<T extends boolean = true> {
                     id?: T;
                   };
               columns?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2139,6 +2356,9 @@ export interface ServiceTemplatesSelect<T extends boolean = true> {
               content?: T;
               image?: T;
               imagePosition?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2150,6 +2370,9 @@ export interface ServiceTemplatesSelect<T extends boolean = true> {
               buttonText?: T;
               buttonLink?: T;
               backgroundColor?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2165,6 +2388,9 @@ export interface ServiceTemplatesSelect<T extends boolean = true> {
               content?: T;
               backgroundColor?: T;
               padding?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2179,6 +2405,9 @@ export interface ServiceTemplatesSelect<T extends boolean = true> {
                     answer?: T;
                     id?: T;
                   };
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2208,6 +2437,9 @@ export interface ServiceTemplatesSelect<T extends boolean = true> {
               columns?: T;
               delay?: T;
               loading?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2228,6 +2460,9 @@ export interface ServiceTemplatesSelect<T extends boolean = true> {
               slidesPerDesktop?: T;
               autoplay?: T;
               delay?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2257,6 +2492,9 @@ export interface ServiceTemplatesSelect<T extends boolean = true> {
               slidesPerDesktop?: T;
               autoplay?: T;
               delay?: T;
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2276,6 +2514,9 @@ export interface ServiceTemplatesSelect<T extends boolean = true> {
                     svg_icon?: T;
                     id?: T;
                   };
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2295,6 +2536,9 @@ export interface ServiceTemplatesSelect<T extends boolean = true> {
                     svg_icon?: T;
                     id?: T;
                   };
+              _templateBlockId?: T;
+              _blockId?: T;
+              _originalPosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -2516,7 +2760,6 @@ export interface CollectionsWidget {
 export interface Auth {
   [k: string]: unknown;
 }
-
 
 declare module 'payload' {
   export interface GeneratedTypes extends Config {}

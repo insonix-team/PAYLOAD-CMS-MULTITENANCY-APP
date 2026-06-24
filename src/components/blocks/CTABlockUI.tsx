@@ -7,10 +7,7 @@ export const CTABlockUI = ({ data, tenant }: any) => {
 
       <p className="mb-6">{data.subtext}</p>
 
-      <a
-        href={`/${tenant}${data.buttonLink}`}
-        className="bg-white text-black px-6 py-3 rounded-full font-semibold"
-      >
+      <a href={`/${tenant}${data.buttonLink}`} className="bg-white text-black px-6 py-3 rounded-full font-semibold">
         {data.buttonText}
       </a>
     </section>

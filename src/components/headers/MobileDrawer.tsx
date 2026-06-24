@@ -6,19 +6,7 @@ import { ChevronDown, Phone, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
-export default function MobileDrawer({
-  open,
-  setOpen,
-  nav,
-  logo,
-  ctas,
-}: {
-  open: boolean;
-  setOpen: (v: boolean) => void;
-  nav: any;
-  ctas?: any;
-  logo: Media | null;
-}) {
+export default function MobileDrawer({ open, setOpen, nav, logo, ctas }: { open: boolean; setOpen: (v: boolean) => void; nav: any; ctas?: any; logo: Media | null }) {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   const resolveUrl = (link: string | Page | null | undefined) => {
@@ -31,9 +19,7 @@ export default function MobileDrawer({
   return (
     <>
       {/* BACKDROP */}
-      {open && (
-        <div className="fixed md:hidden inset-0 bg-black/40 z-40" onClick={() => setOpen(false)} />
-      )}
+      {open && <div className="fixed md:hidden inset-0 bg-black/40 z-40" onClick={() => setOpen(false)} />}
 
       {/* DRAWER */}
       <div
@@ -46,11 +32,7 @@ export default function MobileDrawer({
         {/* HEADER */}
         <div className="flex items-center justify-between p-4 border-b">
           <Link href="/" onClick={() => setOpen(false)} className="flex items-center">
-            {logo?.url ? (
-              <img src={logo?.url} alt={logo?.alt} className="h-14 w-auto object-contain" />
-            ) : (
-              <span className="text-xl font-semibold">Menu</span>
-            )}
+            {logo?.url ? <img src={logo?.url} alt={logo?.alt} className="h-14 w-auto object-contain" /> : <span className="text-xl font-semibold">Menu</span>}
           </Link>
 
           <button onClick={() => setOpen(false)}>
@@ -69,26 +51,14 @@ export default function MobileDrawer({
               <div key={itemKey} className="border-b pb-2">
                 {/* MAIN LINK */}
                 <button
-                  onClick={() =>
-                    hasDropdown
-                      ? setActiveDropdown(activeDropdown === itemKey ? null : itemKey)
-                      : setOpen(false)
-                  }
+                  onClick={() => (hasDropdown ? setActiveDropdown(activeDropdown === itemKey ? null : itemKey) : setOpen(false))}
                   className="w-full flex items-center justify-between text-left text-gray-700 font-medium"
                 >
-                  <Link
-                    href={itemUrl}
-                    onClick={() => !hasDropdown && setOpen(false)}
-                    className="flex-1 py-2"
-                  >
+                  <Link href={itemUrl} onClick={() => !hasDropdown && setOpen(false)} className="flex-1 py-2">
                     {item.label}
                   </Link>
 
-                  {hasDropdown && (
-                    <ChevronDown
-                      className={`transition ${activeDropdown === itemKey ? 'rotate-180' : ''}`}
-                    />
-                  )}
+                  {hasDropdown && <ChevronDown className={`transition ${activeDropdown === itemKey ? 'rotate-180' : ''}`} />}
                 </button>
 
                 {/* DROPDOWN */}
@@ -97,24 +67,11 @@ export default function MobileDrawer({
                     {item.children.map((child: any, cIdx: number) => {
                       const childKey = child?.id ?? `${child.label}-${cIdx}`;
 
-                      const iconUrl = child?.icon?.url
-                        ? `${process.env.NEXT_PUBLIC_SERVER_URL}${child.icon.url}`
-                        : null;
+                      const iconUrl = child?.icon?.url ? `${process.env.NEXT_PUBLIC_SERVER_URL}${child.icon.url}` : null;
 
                       return (
-                        <Link
-                          key={childKey}
-                          href={resolveUrl(child.href)}
-                          onClick={() => setOpen(false)}
-                          className="flex items-center gap-3 py-2 rounded hover:bg-gray-100 transition"
-                        >
-                          {iconUrl && (
-                            <img
-                              src={iconUrl}
-                              className="w-7 h-7 object-contain"
-                              alt={child.label}
-                            />
-                          )}
+                        <Link key={childKey} href={resolveUrl(child.href)} onClick={() => setOpen(false)} className="flex items-center gap-3 py-2 rounded hover:bg-gray-100 transition">
+                          {iconUrl && <img src={iconUrl} className="w-7 h-7 object-contain" alt={child.label} />}
 
                           <span className="text-gray-700">{child.label}</span>
                         </Link>

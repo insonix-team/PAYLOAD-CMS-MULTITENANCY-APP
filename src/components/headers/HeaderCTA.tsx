@@ -7,15 +7,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import MobileDrawer from './MobileDrawer';
 
-export function HeaderCTA({
-  navItems,
-  ctas,
-  logo,
-}: {
-  navItems: any[];
-  ctas: any[];
-  logo: Media | null;
-}) {
+export function HeaderCTA({ navItems, ctas, logo }: { navItems: any[]; ctas: any[]; logo: Media | null }) {
   const nav = navItems || [];
 
   const [open, setOpen] = useState(false);
@@ -36,20 +28,11 @@ export function HeaderCTA({
     return '/';
   };
   return (
-    <header
-      className={[
-        'fixed w-full z-[999] top-0 bg-white backdrop-blur-xl transition-all duration-300 ',
-        small ? 'shadow-md' : 'shadow-sm',
-      ].join(' ')}
-    >
+    <header className={['fixed w-full z-[999] top-0 bg-white backdrop-blur-xl transition-all duration-300 ', small ? 'shadow-md' : 'shadow-sm'].join(' ')}>
       <div className="mx-auto  flex items-center justify-between h-20">
         {/* LOGO */}
         <Link href="/" className="flex items-center">
-          {logo?.url ? (
-            <img src={logo?.url} alt={logo?.alt} className="h-14 w-auto object-contain" />
-          ) : (
-            <span className="text-2xl font-bold text-[#01325a]">DentalCare</span>
-          )}
+          {logo?.url ? <img src={logo?.url} alt={logo?.alt} className="h-14 w-auto object-contain" /> : <span className="text-2xl font-bold text-[#01325a]">DentalCare</span>}
         </Link>
 
         {/* DESKTOP NAV */}
@@ -59,17 +42,9 @@ export function HeaderCTA({
             const itemKey = item?.id ?? `${item.label}-${i}`;
 
             return (
-              <div
-                key={itemKey}
-                className="relative"
-                onMouseEnter={() => setActiveDropdown(item.label)}
-                onMouseLeave={() => setActiveDropdown(null)}
-              >
+              <div key={itemKey} className="relative" onMouseEnter={() => setActiveDropdown(item.label)} onMouseLeave={() => setActiveDropdown(null)}>
                 {/* MAIN LINK */}
-                <Link
-                  href={resolveUrl(item.link)}
-                  className="flex items-center gap-1 text-gray-700 font-medium hover:text-[#01325a] transition"
-                >
+                <Link href={resolveUrl(item.link)} className="flex items-center gap-1 text-gray-700 font-medium hover:text-[#01325a] transition">
                   {item.label}
                   {hasDropdown && <ChevronDown size={16} />}
                 </Link>
@@ -81,18 +56,8 @@ export function HeaderCTA({
                       const childKey = child?.id ?? `${child.label}-${cIdx}`;
 
                       return (
-                        <Link
-                          key={childKey}
-                          href={resolveUrl(child.href)}
-                          className="flex items-center gap-3 px-3 py-2 rounded hover:bg-gray-100 transition"
-                        >
-                          {child.icon.url && (
-                            <img
-                              src={child.icon.url}
-                              alt={child.label}
-                              className="w-8 h-8 object-contain"
-                            />
-                          )}
+                        <Link key={childKey} href={resolveUrl(child.href)} className="flex items-center gap-3 px-3 py-2 rounded hover:bg-gray-100 transition">
+                          {child.icon.url && <img src={child.icon.url} alt={child.label} className="w-8 h-8 object-contain" />}
                           <span>{child.label}</span>
                         </Link>
                       );
