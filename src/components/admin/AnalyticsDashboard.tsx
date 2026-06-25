@@ -2,633 +2,13 @@
 
 import { ROLES } from '@/constants/AppOptions';
 import { useAuth } from '@payloadcms/ui';
-import { BarChart3, CalendarDays, Eye, Globe, MousePointerClick, Users } from 'lucide-react';
-import dynamic from 'next/dynamic';
+import { BarChart3, MousePointerClick } from 'lucide-react';
 import { useEffect, useState } from 'react';
-
-// Dynamically import ApexCharts to avoid SSR issues
-const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
-
-const AnalyticsCards = ({
-  data,
-}: {
-  data: { avgSessionDuration: number; engagementRate: number; engagedSessions: number };
-}) => {
-  const formatDuration = (seconds: number) => {
-    if (!seconds) return '0s';
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.round(seconds % 60);
-    return mins ? `${mins}m ${secs}s` : `${secs}s`;
-  };
-
-  const formatPercentage = (value: number) => {
-    return `${(value * 100).toFixed(1)}%`;
-  };
-
-  return (
-    <div
-      style={{
-        display: 'flex',
-        gap: 16,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-      }}
-    >
-      <div style={cardStyle}>
-        <p style={labelStyle}>Avg Session Duration</p>
-        <h2 style={valueStyle}>{formatDuration(data.avgSessionDuration || 0)}</h2>
-      </div>
-      <div style={cardStyle}>
-        <p style={labelStyle}>Engagement Rate</p>
-        <h2 style={valueStyle}>{formatPercentage(data.engagementRate || 0)}</h2>
-      </div>
-      <div style={cardStyle}>
-        <p style={labelStyle}>Engaged Sessions</p>
-        <h2 style={valueStyle}>{data.engagedSessions || 0}</h2>
-      </div>
-    </div>
-  );
-};
-
-const cardStyle: React.CSSProperties = {
-  flex: '1 1 200px',
-  background: '#fff',
-  padding: 16,
-  borderRadius: 10,
-  boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
-};
-
-const labelStyle: React.CSSProperties = {
-  fontSize: 12,
-  color: '#777',
-  marginBottom: 6,
-};
-
-const valueStyle: React.CSSProperties = {
-  margin: 0,
-  fontSize: 22,
-  fontWeight: 700,
-  color: '#333',
-};
-
-const ColumnChart = ({
-  title,
-  data,
-}: {
-  title: string;
-  data: { key: string; value: number }[];
-}) => {
-  const categories = data.map((item) => item?.key);
-  const seriesData = data.map((item) => item.value);
-
-  const options: ApexCharts.ApexOptions = {
-    chart: {
-      type: 'bar',
-      toolbar: { show: false },
-      fontFamily: 'inherit',
-    },
-    plotOptions: {
-      bar: {
-        columnWidth: '40%',
-        borderRadius: 4,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    xaxis: {
-      categories,
-      labels: {
-        style: {
-          fontSize: '12px',
-          colors: '#333', // Added explicit color
-        },
-      },
-    },
-    yaxis: {
-      labels: {
-        style: {
-          fontSize: '12px',
-          colors: '#333', // Added explicit color
-        },
-      },
-    },
-    grid: {
-      strokeDashArray: 4,
-    },
-    tooltip: {
-      y: {
-        formatter: (val: number) => `${val} users`,
-      },
-    },
-    colors: ['#4945ff'],
-    responsive: [
-      {
-        breakpoint: 768,
-        options: {
-          plotOptions: {
-            bar: {
-              columnWidth: '60%',
-            },
-          },
-        },
-      },
-    ],
-  };
-
-  const series = [
-    {
-      name: 'Users',
-      data: seriesData,
-    },
-  ];
-
-  return (
-    <div
-      style={{
-        background: '#fff',
-        padding: 16,
-        borderRadius: 10,
-        width: '100%',
-        height: '100%',
-        boxSizing: 'border-box',
-      }}
-    >
-      <h3
-        style={{
-          margin: 0,
-          marginBottom: 12,
-          fontSize: 14,
-          fontWeight: 'bold',
-          color: '#555',
-        }}
-      >
-        <BarChart3 size={16} style={{ marginRight: 8 }} />
-        {title}
-      </h3>
-
-      <Chart options={options} series={series} type="bar" height={220} />
-    </div>
-  );
-};
-
-const DateRange = ({
-  onClick,
-  setStartDate,
-  startDate,
-  setEndDate,
-  endDate,
-}: {
-  onClick: (range: { start: string; end: string }) => void;
-  setStartDate: (date: string) => void;
-  startDate: string;
-  setEndDate: (date: string) => void;
-  endDate: string;
-}) => {
-  const [localStart, setLocalStart] = useState(startDate);
-  const [localEnd, setLocalEnd] = useState(endDate);
-
-  useEffect(() => {
-    setLocalStart(startDate);
-  }, [startDate]);
-
-  useEffect(() => {
-    setLocalEnd(endDate);
-  }, [endDate]);
-
-  const handleFilter = () => {
-    if (localStart && localEnd) {
-      setStartDate(localStart);
-      setEndDate(localEnd);
-      onClick({ start: localStart, end: localEnd });
-    }
-  };
-
-  return (
-    <div
-      style={{
-        display: 'flex',
-        gap: '12px',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        marginBottom: '20px',
-        background: '#fff',
-        padding: '5px',
-        borderRadius: '8px',
-      }}
-    >
-      <div style={{ position: 'relative', display: 'inline-block' }}>
-        <CalendarDays
-          size={18}
-          color="#777"
-          style={{
-            position: 'absolute',
-            left: '10px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            pointerEvents: 'none',
-            zIndex: 1,
-          }}
-        />
-        <input
-          type="date"
-          value={localStart}
-          onChange={(e) => setLocalStart(e.target.value)}
-          style={{
-            padding: '8px 12px 8px 34px',
-            borderRadius: '6px',
-            border: '1px solid #ddd',
-            color: '#333',
-            background: '#fff',
-            width: '150px',
-          }}
-        />
-      </div>
-
-      <span style={{ color: '#333' }}>to</span>
-
-      <div style={{ position: 'relative', display: 'inline-block' }}>
-        <CalendarDays
-          size={18}
-          color="#777"
-          style={{
-            position: 'absolute',
-            left: '10px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            pointerEvents: 'none',
-            zIndex: 1,
-          }}
-        />
-        <input
-          type="date"
-          value={localEnd}
-          onChange={(e) => setLocalEnd(e.target.value)}
-          style={{
-            padding: '8px 12px 8px 34px',
-            borderRadius: '6px',
-            border: '1px solid #ddd',
-            color: '#333',
-            background: '#fff',
-            width: '150px',
-          }}
-        />
-      </div>
-
-      <button
-        onClick={handleFilter}
-        style={{
-          padding: '8px 16px',
-          background: '#4945ff',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '6px',
-          cursor: 'pointer',
-          fontWeight: 500,
-          display: 'flex',
-          alignItems: 'center',
-          gap: 6,
-        }}
-      >
-        Apply
-      </button>
-    </div>
-  );
-};
-
-const DemographicCustomCard = ({
-  countries,
-  onCountrySelect,
-  selectedCountry,
-  cities,
-}: {
-  countries: { country: string; users?: number }[];
-  onCountrySelect: (country: string) => void;
-  selectedCountry: string | null;
-  cities: { city: string; users: number }[];
-}) => {
-  return (
-    <div
-      style={{
-        padding: 10,
-        width: '100%',
-        height: '100%',
-      }}
-    >
-      <h3
-        style={{
-          margin: 0,
-          marginBottom: 12,
-          fontSize: 14,
-          fontWeight: 'bold',
-          color: '#555',
-        }}
-      >
-        <Globe size={16} style={{ marginRight: 8 }} />
-        User Demographics
-      </h3>
-      <div
-        style={{
-          display: 'flex',
-          height: 'calc(100% - 40px)',
-          border: '1px solid #e5e7eb',
-          borderRadius: 10,
-          overflow: 'hidden',
-          background: '#fff',
-        }}
-      >
-        <div
-          style={{
-            width: '30%',
-            borderRight: '1px solid #eee',
-            padding: 10,
-            overflowY: 'auto',
-            background: '#fafafa',
-          }}
-        >
-          <h4 style={{ margin: '0 0 10px 0', color: '#333' }}>Countries</h4>
-          {countries.map((item) => (
-            <div
-              key={item.country}
-              onClick={() => onCountrySelect(item.country)}
-              style={{
-                padding: '8px 10px',
-                marginBottom: 6,
-                borderRadius: 6,
-                cursor: 'pointer',
-                background: selectedCountry === item.country ? '#7e7ce6' : 'transparent',
-                fontWeight: 'bold',
-                color: selectedCountry === item.country ? '#fff' : '#333',
-                transition: 'all 0.2s ease',
-              }}
-            >
-              <p style={{ display: 'flex', justifyContent: 'space-between', margin: 0 }}>
-                <span>{item.country}</span>
-                <span style={{ fontWeight: 'normal' }}>{item.users || 0}</span>
-              </p>
-            </div>
-          ))}
-          {countries.length === 0 && <div style={{ color: '#999' }}>No Data</div>}
-        </div>
-
-        <div
-          style={{
-            width: '70%',
-            padding: 10,
-            overflowY: 'auto',
-          }}
-        >
-          <h4 style={{ margin: '0 0 10px 0', fontWeight: 'bold', color: '#333' }}>
-            Cities {selectedCountry && `— ${selectedCountry}`}
-          </h4>
-          {cities.length > 0 ? (
-            cities
-              .filter((city) => city.city && city.city !== '')
-              .map((city) => (
-                <div
-                  key={city.city}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    padding: '8px 10px',
-                    fontWeight: 'bold',
-                    borderBottom: '1px solid #f1f1f1',
-                  }}
-                >
-                  <p style={{ margin: 0, color: '#333' }}>{city.city}</p>
-                  <p style={{ margin: 0, fontWeight: 'bold', color: '#333' }}>{city.users}</p>
-                </div>
-              ))
-          ) : (
-            <div style={{ color: '#999', textAlign: 'center', marginTop: 20 }}>
-              {selectedCountry ? 'No cities data available' : 'Select a country to view cities'}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const PieChart = ({
-  title,
-  data,
-}: {
-  title: string;
-  data: { key: string; value: string | number }[];
-}) => {
-  const labels = data.map((item) => item?.key);
-  const series = data.map((item) => Number(item?.value || 0));
-
-  const options: ApexCharts.ApexOptions = {
-    chart: {
-      type: 'donut',
-      fontFamily: 'inherit',
-    },
-    labels,
-    legend: {
-      position: 'bottom',
-      fontSize: '13px',
-      labels: {
-        colors: '#333', // Added explicit color
-      },
-    },
-    dataLabels: {
-      formatter: (val: number) => `${val.toFixed(0)}%`,
-      style: {
-        colors: ['#333'], // Added explicit color
-      },
-    },
-    tooltip: {
-      y: {
-        formatter: (val: number) => `${val} users`,
-      },
-    },
-    stroke: {
-      width: 1,
-    },
-    colors: ['#4945ff', '#ef4444', '#22c55e', '#f59e0b', '#8b5cf6', '#ec4899', '#14b8a6'],
-    responsive: [
-      {
-        breakpoint: 768,
-        options: {
-          chart: {
-            height: 260,
-          },
-          legend: {
-            position: 'bottom',
-          },
-        },
-      },
-    ],
-  };
-
-  return (
-    <div
-      style={{
-        background: '#fff',
-        padding: 16,
-        borderRadius: 10,
-        width: '100%',
-        height: '100%',
-        boxSizing: 'border-box',
-      }}
-    >
-      <h3
-        style={{
-          margin: 0,
-          marginBottom: 12,
-          fontSize: 14,
-          fontWeight: 'bold',
-          color: '#555',
-        }}
-      >
-        <Users size={16} style={{ marginRight: 8 }} />
-        {title}
-      </h3>
-
-      <Chart options={options} series={series} type="donut" height={250} />
-    </div>
-  );
-};
-
-const TopPagesTable = ({
-  data,
-}: {
-  data: {
-    page: string;
-    views: number;
-    avgEngagementTime: number;
-  }[];
-}) => {
-  const formatTime = (seconds: number) => {
-    if (!seconds) return '0s';
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.round(seconds % 60);
-    return mins ? `${mins}m ${secs}s` : `${secs}s`;
-  };
-
-  return (
-    <div
-      style={{
-        background: '#fff',
-        borderRadius: 10,
-        padding: 16,
-        width: '100%',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
-      }}
-    >
-      <div
-        style={{
-          marginBottom: 10,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <h3
-          style={{
-            margin: 0,
-            fontSize: 14,
-            fontWeight: 'bold',
-            color: '#555',
-          }}
-        >
-          <Eye size={16} style={{ marginRight: 8 }} />
-          Top Pages
-        </h3>
-        <div style={{ fontSize: 12, color: '#888' }}>Records: {data.length}</div>
-      </div>
-
-      <div
-        style={{
-          border: '1px solid #eee',
-          borderRadius: 8,
-          overflow: 'hidden',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            fontWeight: 600,
-            fontSize: 13,
-            background: '#fafafa',
-            borderBottom: '1px solid #eee',
-            padding: '10px 12px',
-          }}
-        >
-          <div style={{ flex: 1, color: '#000' }}>Page</div>
-          <div style={{ width: 100, textAlign: 'right', color: '#000' }}>Visits</div>
-          <div style={{ width: 160, textAlign: 'right', color: '#000' }}>Avg Engagement Time</div>
-        </div>
-
-        <div
-          style={{
-            maxHeight: 300,
-            overflowY: 'auto',
-          }}
-        >
-          {data.length ? (
-            data.map((item, index) => (
-              <div
-                key={index}
-                style={{
-                  display: 'flex',
-                  padding: '8px 12px',
-                  borderBottom: index < data.length - 1 ? '1px solid #f5f5f5' : 'none',
-                  fontSize: 13,
-                  alignItems: 'center',
-                }}
-              >
-                <div
-                  style={{
-                    flex: 1,
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  }}
-                  title={item.page}
-                >
-                  <span style={{ color: '#4945ff', fontWeight: 500 }}>{item.page || '/'}</span>
-                </div>
-                <div
-                  style={{
-                    width: 100,
-                    textAlign: 'right',
-                    fontWeight: 600,
-                    color: '#333',
-                  }}
-                >
-                  {item.views}
-                </div>
-                <div
-                  style={{
-                    width: 160,
-                    textAlign: 'right',
-                    fontWeight: 600,
-                    color: '#333',
-                  }}
-                >
-                  {formatTime(item.avgEngagementTime)}
-                </div>
-              </div>
-            ))
-          ) : (
-            <div
-              style={{
-                padding: 20,
-                textAlign: 'center',
-                color: '#999',
-              }}
-            >
-              No Data
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
+import { AnalyticsCards } from './analytics/AnalyticsCards';
+import { ColumnChart, PieChart } from './analytics/AnalyticsCharts';
+import { AnalyticsDateRange } from './analytics/AnalyticsDateRange';
+import { DemographicCustomCard } from './analytics/AnalyticsDemographicsCard';
+import { TopPagesTable } from './analytics/AnalyticsTopPagesTable';
 
 const Card = ({ children }: { children: React.ReactNode }) => (
   <div
@@ -682,23 +62,39 @@ const Chip = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
+type AnalyticsRange = { start: string; end: string };
+type TrafficSource = { source: string; sessions: number };
+type VisitorType = { type?: string; users: number };
+type TrendPoint = { date: string; users: number };
+type CountryData = { country: string; users: number };
+type PageView = { page: string; views: number; avgEngagementTime: number };
+type CityData = { city: string; users: number };
+type ButtonClick = { button: string; clicks: number };
+type TenantOption = { id: string; name: string; slug?: string };
+type TenantApiItem = { id?: string; _id?: string; name?: string; title?: string; slug?: string };
+
+type AuthUser = {
+  role?: string;
+  tenant?: string | { slug?: string; id?: string };
+};
+
 const AnalyticsPage = () => {
   const [loading, setLoading] = useState(true);
   const [totalVisits, setTotalVisits] = useState<number>(0);
-  const [trafficSources, setTrafficSources] = useState<any>(null);
-  const [usersTypes, setUsersTypes] = useState<any>(null);
-  const [usersTrends, setUsersTrends] = useState<any>(null);
-  const [userWithCountries, setUserWithCountries] = useState<any>(null);
-  const [viewsByPages, setViewsByPages] = useState<any>(null);
+  const [trafficSources, setTrafficSources] = useState<TrafficSource[]>([]);
+  const [usersTypes, setUsersTypes] = useState<VisitorType[]>([]);
+  const [usersTrends, setUsersTrends] = useState<TrendPoint[]>([]);
+  const [userWithCountries, setUserWithCountries] = useState<CountryData[]>([]);
+  const [viewsByPages, setViewsByPages] = useState<PageView[]>([]);
   const [sessionDuration, setSessionDuration] = useState<number>(0);
   const [engagementRate, setEngagementRate] = useState<number>(0);
   const [engagedSessions, setEngagedSessions] = useState<number>(0);
-  const [buttonClicks, setButtonClicks] = useState<{ button: string; clicks: number }[]>([]);
+  const [buttonClicks, setButtonClicks] = useState<ButtonClick[]>([]);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-  const [cities, setCities] = useState<{ city: string; users: number }[]>([]);
-  const [countriesList, setCountriesList] = useState<{ country: string; users: number }[]>([]);
+  const [cities, setCities] = useState<CityData[]>([]);
+  const [countriesList, setCountriesList] = useState<CountryData[]>([]);
 
   useEffect(() => {
     if (!startDate && !endDate) {
@@ -713,7 +109,7 @@ const AnalyticsPage = () => {
     }
   }, []);
 
-  const getTotalVisits = async (range?: any) => {
+  const getTotalVisits = async (range?: AnalyticsRange) => {
     try {
       let url = '/api/analytics?endpoint=total-visits';
       if (selectedTenant) url += `&tenant=${selectedTenant}`;
@@ -728,7 +124,7 @@ const AnalyticsPage = () => {
     }
   };
 
-  const getTrafficSources = async (range?: any) => {
+  const getTrafficSources = async (range?: AnalyticsRange) => {
     try {
       let url = '/api/analytics?endpoint=traffic-sources';
       if (selectedTenant) url += `&tenant=${selectedTenant}`;
@@ -743,7 +139,7 @@ const AnalyticsPage = () => {
     }
   };
 
-  const getUsersTypes = async (range?: any) => {
+  const getUsersTypes = async (range?: AnalyticsRange) => {
     try {
       let url = '/api/analytics?endpoint=user-type';
       if (selectedTenant) url += `&tenant=${selectedTenant}`;
@@ -758,7 +154,7 @@ const AnalyticsPage = () => {
     }
   };
 
-  const getUsersTrends = async (range?: any) => {
+  const getUsersTrends = async (range?: AnalyticsRange) => {
     try {
       let url = '/api/analytics?endpoint=users-trend';
       if (selectedTenant) url += `&tenant=${selectedTenant}`;
@@ -773,7 +169,7 @@ const AnalyticsPage = () => {
     }
   };
 
-  const getUsersWithCountries = async (range?: any) => {
+  const getUsersWithCountries = async (range?: AnalyticsRange) => {
     try {
       let url = '/api/analytics?endpoint=countries';
       if (selectedTenant) url += `&tenant=${selectedTenant}`;
@@ -782,12 +178,12 @@ const AnalyticsPage = () => {
       }
       const res = await fetch(url);
       const result = await res.json();
-      const data = result?.data || [];
+      const data = (result?.data || []) as CountryData[];
       setUserWithCountries(data);
 
       const countriesData = data
-        .filter((e: any) => e.country && e.country !== '')
-        .map((e: any) => ({ country: e.country, users: Number(e.users || 0) }));
+        .filter((e) => e.country && e.country !== '')
+        .map((e) => ({ country: e.country, users: Number(e.users || 0) }));
       setCountriesList(countriesData);
 
       if (countriesData.length > 0 && !selectedCountry) {
@@ -798,7 +194,7 @@ const AnalyticsPage = () => {
       console.log(err);
     }
   };
-  const getDemographicDetails = async (range?: any, country?: string) => {
+  const getDemographicDetails = async (range?: AnalyticsRange, country?: string) => {
     if (!country) return;
 
     try {
@@ -810,7 +206,7 @@ const AnalyticsPage = () => {
       const res = await fetch(url);
       const result = await res.json();
 
-      const cityData = result?.data || [];
+      const cityData = (result?.data || []) as CityData[];
       setCities(cityData);
     } catch (err) {
       console.error('Failed to fetch city details:', err);
@@ -818,7 +214,7 @@ const AnalyticsPage = () => {
     }
   };
 
-  const getViewsByPages = async (range?: any) => {
+  const getViewsByPages = async (range?: AnalyticsRange) => {
     try {
       let url = '/api/analytics?endpoint=top-pages';
       if (selectedTenant) url += `&tenant=${selectedTenant}`;
@@ -827,13 +223,13 @@ const AnalyticsPage = () => {
       }
       const res = await fetch(url);
       const result = await res.json();
-      setViewsByPages(result?.data || []);
+      setViewsByPages((result?.data || []) as PageView[]);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const getButtonsClicks = async (range?: any) => {
+  const getButtonsClicks = async (range?: AnalyticsRange) => {
     try {
       let url = '/api/analytics?endpoint=button-clicks';
       if (selectedTenant) url += `&tenant=${selectedTenant}`;
@@ -842,13 +238,15 @@ const AnalyticsPage = () => {
       }
       const res = await fetch(url);
       const result = await res.json();
-      setButtonClicks(result?.data?.filter((e: { button: string }) => e.button !== '/') || []);
+      setButtonClicks(
+        (result?.data?.filter((e: ButtonClick) => e.button !== '/') || []) as ButtonClick[]
+      );
     } catch (err) {
       console.log(err);
     }
   };
 
-  const getEngagments = async (range?: any) => {
+  const getEngagments = async (range?: AnalyticsRange) => {
     try {
       let url = '/api/analytics?endpoint=engagement';
       if (selectedTenant) url += `&tenant=${selectedTenant}`;
@@ -857,7 +255,11 @@ const AnalyticsPage = () => {
       }
       const res = await fetch(url);
       const result = await res.json();
-      const data = result?.data || {};
+      const data = (result?.data || {}) as {
+        avgSessionDuration?: number;
+        engagementRate?: number;
+        engagedSessions?: number;
+      };
       setSessionDuration(data?.avgSessionDuration || 0);
       setEngagementRate(data?.engagementRate || 0);
       setEngagedSessions(data?.engagedSessions || 0);
@@ -866,7 +268,7 @@ const AnalyticsPage = () => {
     }
   };
 
-  const fetchAnalytics = async (range?: any) => {
+  const fetchAnalytics = async (range?: AnalyticsRange) => {
     await Promise.all([
       getTotalVisits(range),
       getTrafficSources(range),
@@ -881,15 +283,15 @@ const AnalyticsPage = () => {
 
   const handleCountrySelect = (country: string) => {
     setSelectedCountry(country);
-    getDemographicDetails({ start: startDate, end: endDate }, country);
+    void getDemographicDetails({ start: startDate, end: endDate }, country);
   };
 
   // Role-aware tenant selection
-  const { user } = useAuth() as any;
-  const [tenants, setTenants] = useState<{ id: string; name: string; slug?: string }[]>([]);
+  const { user } = useAuth() as { user?: AuthUser };
+  const [tenants, setTenants] = useState<TenantOption[]>([]);
   const [selectedTenant, setSelectedTenant] = useState<string | undefined>(undefined);
 
-  const getTenantSlug = (tenant: any) => {
+  const getTenantSlug = (tenant: AuthUser['tenant']) => {
     if (!tenant) return undefined;
     return typeof tenant === 'string' ? tenant : tenant.slug || tenant.id;
   };
@@ -912,11 +314,13 @@ const AnalyticsPage = () => {
         const json = await res.json();
         const items =
           json?.docs || json?.entries || json?.rows || json?.data || json?.tenants || json;
-        const mapped = (items || []).map((t: any) => ({
-          id: t.id || t._id || t.id,
-          name: t.name || t.title || t.slug,
-          slug: t.slug || t.id,
-        }));
+        const mapped = (items || []).map(
+          (t: TenantApiItem): TenantOption => ({
+            id: t.id || t._id || t.slug || 'tenant',
+            name: t.name || t.title || t.slug || 'Tenant',
+            slug: t.slug || t.id || t._id,
+          })
+        );
         setTenants(mapped);
         setSelectedTenant((current) => current || mapped[0]?.slug || mapped[0]?.id);
       } catch (err) {
@@ -933,7 +337,7 @@ const AnalyticsPage = () => {
     fetchAnalytics({ start: startDate, end: endDate }).finally(() => setLoading(false));
   }, [selectedTenant, startDate, endDate]);
 
-  const handleFetchAnalytics = (range: any) => {
+  const handleFetchAnalytics = (range: AnalyticsRange) => {
     setLoading(true);
     fetchAnalytics(range).finally(() => setLoading(false));
   };
@@ -946,7 +350,6 @@ const AnalyticsPage = () => {
 
   const formatDate = (d: string) => {
     if (!d) return '';
-    const year = d.substring(0, 4);
     const month = d.substring(4, 6);
     const day = d.substring(6, 8);
     return `${day}/${month}`;
@@ -975,7 +378,7 @@ const AnalyticsPage = () => {
             <p style={{ color: '#666', margin: 0 }}>Overview of site analytics</p>
           </div>
           <div style={{ display: 'flex', gap: 12, alignItems: 'center', justifyContent: 'center' }}>
-            <DateRange
+            <AnalyticsDateRange
               onClick={handleFetchAnalytics}
               setStartDate={setStartDate}
               startDate={startDate}
@@ -1014,7 +417,7 @@ const AnalyticsPage = () => {
         <Card>
           <Title>Traffic Sources</Title>
           <ChipWrap>
-            {trafficSources?.map((e: any) => (
+            {trafficSources?.map((e) => (
               <Chip key={e.source}>
                 {String(e.source).toUpperCase()}: {e.sessions}
               </Chip>
@@ -1024,7 +427,7 @@ const AnalyticsPage = () => {
         <Card>
           <Title>Visits Types</Title>
           <ChipWrap>
-            {usersTypes?.map((e: any) => (
+            {usersTypes?.map((e) => (
               <Chip key={e.type}>
                 {String(e.type || 'Unknown').toUpperCase()}: {e.users}
               </Chip>
@@ -1074,7 +477,7 @@ const AnalyticsPage = () => {
           >
             <ColumnChart
               title="Users Trends"
-              data={usersTrends.map((e: any) => ({
+              data={usersTrends.map((e) => ({
                 key: formatDate(e.date),
                 value: e.users,
               }))}
@@ -1092,7 +495,7 @@ const AnalyticsPage = () => {
           >
             <PieChart
               title="Users by Countries"
-              data={userWithCountries.map((e: any) => ({
+              data={userWithCountries.map((e) => ({
                 key: e.country,
                 value: e.users,
               }))}
@@ -1152,8 +555,8 @@ const AnalyticsPage = () => {
             </h3>
 
             <div style={{ overflowY: 'auto', flex: 1 }}>
-              {buttonClicks.map((item: any, index: number) => {
-                const maxClicks = Math.max(...buttonClicks.map((b: any) => b.clicks));
+              {buttonClicks.map((item, index) => {
+                const maxClicks = Math.max(...buttonClicks.map((b) => b.clicks));
                 const percentage = (item.clicks / maxClicks) * 100;
 
                 return (
