@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { ROLES } from '@/constants/AppOptions';
+import { useAuth } from '@payloadcms/ui';
+import { BarChart3, CalendarDays, Eye, Globe, MousePointerClick, Users } from 'lucide-react';
 import dynamic from 'next/dynamic';
-import { Eye, Users, Globe, MousePointerClick, BarChart3, CalendarDays } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 // Dynamically import ApexCharts to avoid SSR issues
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
@@ -703,6 +705,7 @@ const AnalyticsPage = () => {
   const getTotalVisits = async (range?: any) => {
     try {
       let url = '/api/analytics?endpoint=total-visits';
+      if (selectedTenant) url += `&tenant=${selectedTenant}`;
       if (range?.start && range?.end) {
         url += `&startDate=${range.start}&endDate=${range.end}`;
       }
@@ -717,6 +720,7 @@ const AnalyticsPage = () => {
   const getTrafficSources = async (range?: any) => {
     try {
       let url = '/api/analytics?endpoint=traffic-sources';
+      if (selectedTenant) url += `&tenant=${selectedTenant}`;
       if (range?.start && range?.end) {
         url += `&startDate=${range.start}&endDate=${range.end}`;
       }
@@ -731,6 +735,7 @@ const AnalyticsPage = () => {
   const getUsersTypes = async (range?: any) => {
     try {
       let url = '/api/analytics?endpoint=user-type';
+      if (selectedTenant) url += `&tenant=${selectedTenant}`;
       if (range?.start && range?.end) {
         url += `&startDate=${range.start}&endDate=${range.end}`;
       }
@@ -745,6 +750,7 @@ const AnalyticsPage = () => {
   const getUsersTrends = async (range?: any) => {
     try {
       let url = '/api/analytics?endpoint=users-trend';
+      if (selectedTenant) url += `&tenant=${selectedTenant}`;
       if (range?.start && range?.end) {
         url += `&startDate=${range.start}&endDate=${range.end}`;
       }
@@ -759,6 +765,7 @@ const AnalyticsPage = () => {
   const getUsersWithCountries = async (range?: any) => {
     try {
       let url = '/api/analytics?endpoint=countries';
+      if (selectedTenant) url += `&tenant=${selectedTenant}`;
       if (range?.start && range?.end) {
         url += `&startDate=${range.start}&endDate=${range.end}`;
       }
@@ -773,6 +780,7 @@ const AnalyticsPage = () => {
   const getViewsByPages = async (range?: any) => {
     try {
       let url = '/api/analytics?endpoint=top-pages';
+      if (selectedTenant) url += `&tenant=${selectedTenant}`;
       if (range?.start && range?.end) {
         url += `&startDate=${range.start}&endDate=${range.end}`;
       }
@@ -787,6 +795,7 @@ const AnalyticsPage = () => {
   const getButtonsClicks = async (range?: any) => {
     try {
       let url = '/api/analytics?endpoint=button-clicks';
+      if (selectedTenant) url += `&tenant=${selectedTenant}`;
       if (range?.start && range?.end) {
         url += `&startDate=${range.start}&endDate=${range.end}`;
       }
@@ -801,6 +810,7 @@ const AnalyticsPage = () => {
   const getEngagments = async (range?: any) => {
     try {
       let url = '/api/analytics?endpoint=engagement';
+      if (selectedTenant) url += `&tenant=${selectedTenant}`;
       if (range?.start && range?.end) {
         url += `&startDate=${range.start}&endDate=${range.end}`;
       }
@@ -828,9 +838,54 @@ const AnalyticsPage = () => {
     ]);
   };
 
+  // Role-aware tenant selection
+  const { user } = useAuth() as any;
+  const [tenants, setTenants] = useState<{ id: string; name: string; slug?: string }[]>([]);
+  const [selectedTenant, setSelectedTenant] = useState<string | undefined>(undefined);
+
+  const getTenantSlug = (tenant: any) => {
+    if (!tenant) return undefined;
+    return typeof tenant === 'string' ? tenant : tenant.slug || tenant.id;
+  };
+
   useEffect(() => {
-    fetchAnalytics().finally(() => setLoading(false));
-  }, []);
+    if (user?.role === ROLES.TENANT && user?.tenant) {
+      const tenantSlug = getTenantSlug(user.tenant);
+      if (tenantSlug) {
+        setSelectedTenant(tenantSlug);
+      }
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const fetchTenants = async () => {
+      if (user?.role !== ROLES.SUPERADMIN) return;
+
+      try {
+        const res = await fetch('/api/tenants?limit=200');
+        const json = await res.json();
+        const items =
+          json?.docs || json?.entries || json?.rows || json?.data || json?.tenants || json;
+        const mapped = (items || []).map((t: any) => ({
+          id: t.id || t._id || t.id,
+          name: t.name || t.title || t.slug,
+          slug: t.slug || t.id,
+        }));
+        setTenants(mapped);
+        setSelectedTenant((current) => current || mapped[0]?.slug || mapped[0]?.id);
+      } catch (err) {
+        console.error('Failed to load tenants', err);
+      }
+    };
+
+    fetchTenants();
+  }, [user]);
+
+  useEffect(() => {
+    if (!startDate || !endDate) return;
+    setLoading(true);
+    fetchAnalytics({ start: startDate, end: endDate }).finally(() => setLoading(false));
+  }, [selectedTenant, startDate, endDate]);
 
   const handleFetchAnalytics = (range: any) => {
     setLoading(true);
@@ -873,13 +928,35 @@ const AnalyticsPage = () => {
             </h1>
             <p style={{ color: '#666', margin: 0 }}>Overview of site analytics</p>
           </div>
-          <DateRange
-            onClick={handleFetchAnalytics}
-            setStartDate={setStartDate}
-            startDate={startDate}
-            setEndDate={setEndDate}
-            endDate={endDate}
-          />
+          <div style={{ display: 'flex', gap: 12, alignItems: 'center', justifyContent: 'center' }}>
+            <DateRange
+              onClick={handleFetchAnalytics}
+              setStartDate={setStartDate}
+              startDate={startDate}
+              setEndDate={setEndDate}
+              endDate={endDate}
+            />
+
+            {/* Tenant selector for super-admins; tenant users see their tenant label */}
+            {user?.role === ROLES.SUPERADMIN && (
+              <select
+                value={selectedTenant}
+                onChange={(e) => setSelectedTenant(e.target.value)}
+                style={{
+                  padding: '10px 10px',
+                  borderRadius: 6,
+                  border: '1px solid #ddd',
+                  marginBottom: 15,
+                }}
+              >
+                {tenants.map((t) => (
+                  <option key={t.id} value={t.slug || t.id}>
+                    {t.name || t.slug || t.id}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
         </div>
       </div>
 
