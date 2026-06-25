@@ -1,6 +1,10 @@
 import { BetaAnalyticsDataClient } from '@google-analytics/data';
 import { getTenant } from '@/lib/api';
 
+// ============================================
+// GA4 CLIENT INITIALIZATION
+// ============================================
+
 const buildDateRange = (startDate?: string, endDate?: string) => [
   {
     startDate: startDate || '7daysAgo',
@@ -14,10 +18,34 @@ function formatSeconds(seconds: number): string {
   return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
+function formatPrivateKey(key: string): string {
+  if (!key) return '';
+
+  if (key.includes('\\n')) {
+    return key.replace(/\\n/g, '\n');
+  }
+
+  if (key.includes('-----BEGIN PRIVATE KEY-----') && key.includes('-----END PRIVATE KEY-----')) {
+    const hasSpaces = key.includes('-----BEGIN PRIVATE KEY----- ') || key.includes(' -----END PRIVATE KEY-----');
+
+    if (hasSpaces) {
+      const begin = '-----BEGIN PRIVATE KEY-----';
+      const end = '-----END PRIVATE KEY-----';
+
+      const content = key.replace(begin, '').replace(end, '').trim().replace(/\s+/g, '\n'); // Replace all spaces with newlines
+
+      return `${begin}\n${content}\n${end}`;
+    }
+  }
+
+  return key;
+}
+
 const getAnalyticsContext = async () => {
   const tenant = await getTenant();
   const clientEmail = tenant?.gaClientEmail;
-  const privateKey = tenant?.gaPrivateKey?.replace(/\\n/g, '\n');
+  const Key = tenant?.gaPrivateKey;
+  const privateKey = formatPrivateKey(Key);
   const projectId = tenant?.gaProjectId;
   const propertyId = tenant?.gaPropertyId;
 
