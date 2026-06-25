@@ -168,9 +168,15 @@ export interface User {
 export interface Tenant {
   id: string;
   name: string;
+  /**
+   * Note: only Administrators can change this.
+   */
   slug: string;
   smtpUser?: string | null;
   smtpPassword?: string | null;
+  /**
+   * Note: only Administrators can change this.
+   */
   domain?: string | null;
   primaryColor?:
     | (
@@ -233,6 +239,22 @@ export interface Tenant {
    * Enter GA4 Measurement ID (e.g., G-XXXXXXXXXX)
    */
   googleAnalyticsId?: string | null;
+  /**
+   * Google Analytics service account client email
+   */
+  gaClientEmail?: string | null;
+  /**
+   * Google Analytics service account private key
+   */
+  gaPrivateKey?: string | null;
+  /**
+   * Google Analytics property ID
+   */
+  gaPropertyId?: string | null;
+  /**
+   * Google Analytics project ID
+   */
+  gaProjectId?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1685,6 +1707,10 @@ export interface TenantsSelect<T extends boolean = true> {
   secondaryColor?: T;
   fontFamily?: T;
   googleAnalyticsId?: T;
+  gaClientEmail?: T;
+  gaPrivateKey?: T;
+  gaPropertyId?: T;
+  gaProjectId?: T;
   updatedAt?: T;
   createdAt?: T;
 }

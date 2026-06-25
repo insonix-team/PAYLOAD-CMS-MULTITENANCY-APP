@@ -42,8 +42,8 @@ function formatPrivateKey(key: string): string {
   return key;
 }
 
-const getAnalyticsContext = async () => {
-  const tenant = await getTenant();
+const getAnalyticsContext = async (tenantSlug?: string) => {
+  const tenant = await getTenant(tenantSlug);
   const clientEmail = tenant?.gaClientEmail;
   const Key = tenant?.gaPrivateKey;
   const privateKey = formatPrivateKey(Key);
@@ -71,8 +71,8 @@ const getAnalyticsContext = async () => {
 // ============================================
 
 export const analyticsService = {
-  async getTotalUsers(startDate?: string, endDate?: string) {
-    const { analyticsDataClient, propertyId } = await getAnalyticsContext();
+  async getTotalUsers(startDate?: string, endDate?: string, tenantSlug?: string) {
+    const { analyticsDataClient, propertyId } = await getAnalyticsContext(tenantSlug);
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
       dateRanges: buildDateRange(startDate, endDate),
@@ -84,8 +84,8 @@ export const analyticsService = {
     };
   },
 
-  async getTotalVisits(startDate?: string, endDate?: string) {
-    const { analyticsDataClient, propertyId } = await getAnalyticsContext();
+  async getTotalVisits(startDate?: string, endDate?: string, tenantSlug?: string) {
+    const { analyticsDataClient, propertyId } = await getAnalyticsContext(tenantSlug);
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
       dateRanges: buildDateRange(startDate, endDate),
@@ -97,8 +97,8 @@ export const analyticsService = {
     };
   },
 
-  async getCountries(startDate?: string, endDate?: string) {
-    const { analyticsDataClient, propertyId } = await getAnalyticsContext();
+  async getCountries(startDate?: string, endDate?: string, tenantSlug?: string) {
+    const { analyticsDataClient, propertyId } = await getAnalyticsContext(tenantSlug);
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
       dateRanges: buildDateRange(startDate, endDate),
@@ -114,8 +114,13 @@ export const analyticsService = {
     );
   },
 
-  async getCountryAnalytics(country: string, startDate?: string, endDate?: string) {
-    const { analyticsDataClient, propertyId } = await getAnalyticsContext();
+  async getCountryAnalytics(
+    country: string,
+    startDate?: string,
+    endDate?: string,
+    tenantSlug?: string
+  ) {
+    const { analyticsDataClient, propertyId } = await getAnalyticsContext(tenantSlug);
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
       dateRanges: buildDateRange(startDate, endDate),
@@ -142,8 +147,8 @@ export const analyticsService = {
     };
   },
 
-  async getTrafficSources(startDate?: string, endDate?: string) {
-    const { analyticsDataClient, propertyId } = await getAnalyticsContext();
+  async getTrafficSources(startDate?: string, endDate?: string, tenantSlug?: string) {
+    const { analyticsDataClient, propertyId } = await getAnalyticsContext(tenantSlug);
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
       dateRanges: buildDateRange(startDate, endDate),
@@ -159,8 +164,8 @@ export const analyticsService = {
     );
   },
 
-  async getUsersByCity(country: string, startDate?: string, endDate?: string) {
-    const { analyticsDataClient, propertyId } = await getAnalyticsContext();
+  async getUsersByCity(country: string, startDate?: string, endDate?: string, tenantSlug?: string) {
+    const { analyticsDataClient, propertyId } = await getAnalyticsContext(tenantSlug);
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
       dateRanges: buildDateRange(startDate, endDate),
@@ -191,8 +196,8 @@ export const analyticsService = {
     );
   },
 
-  async getUsersByPlatform(startDate?: string, endDate?: string) {
-    const { analyticsDataClient, propertyId } = await getAnalyticsContext();
+  async getUsersByPlatform(startDate?: string, endDate?: string, tenantSlug?: string) {
+    const { analyticsDataClient, propertyId } = await getAnalyticsContext(tenantSlug);
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
       dateRanges: buildDateRange(startDate, endDate),
@@ -214,8 +219,8 @@ export const analyticsService = {
     );
   },
 
-  async getUsersTrend(startDate?: string, endDate?: string) {
-    const { analyticsDataClient, propertyId } = await getAnalyticsContext();
+  async getUsersTrend(startDate?: string, endDate?: string, tenantSlug?: string) {
+    const { analyticsDataClient, propertyId } = await getAnalyticsContext(tenantSlug);
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
       dateRanges: buildDateRange(startDate, endDate),
@@ -232,9 +237,9 @@ export const analyticsService = {
     );
   },
 
-  async getTopPages(startDate?: string, endDate?: string) {
+  async getTopPages(startDate?: string, endDate?: string, tenantSlug?: string) {
     try {
-      const { analyticsDataClient, propertyId } = await getAnalyticsContext();
+      const { analyticsDataClient, propertyId } = await getAnalyticsContext(tenantSlug);
       const [response] = await analyticsDataClient.runReport({
         property: `properties/${propertyId}`,
         dateRanges: buildDateRange(startDate, endDate),
@@ -264,8 +269,8 @@ export const analyticsService = {
     }
   },
 
-  async getUserType(startDate?: string, endDate?: string) {
-    const { analyticsDataClient, propertyId } = await getAnalyticsContext();
+  async getUserType(startDate?: string, endDate?: string, tenantSlug?: string) {
+    const { analyticsDataClient, propertyId } = await getAnalyticsContext(tenantSlug);
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
       dateRanges: buildDateRange(startDate, endDate),
@@ -281,8 +286,8 @@ export const analyticsService = {
     );
   },
 
-  async getDashboardSummary(startDate?: string, endDate?: string) {
-    const { analyticsDataClient, propertyId } = await getAnalyticsContext();
+  async getDashboardSummary(startDate?: string, endDate?: string, tenantSlug?: string) {
+    const { analyticsDataClient, propertyId } = await getAnalyticsContext(tenantSlug);
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
       dateRanges: buildDateRange(startDate, endDate),
@@ -304,8 +309,8 @@ export const analyticsService = {
     };
   },
 
-  async getUsersByDevice(startDate?: string, endDate?: string) {
-    const { analyticsDataClient, propertyId } = await getAnalyticsContext();
+  async getUsersByDevice(startDate?: string, endDate?: string, tenantSlug?: string) {
+    const { analyticsDataClient, propertyId } = await getAnalyticsContext(tenantSlug);
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
       dateRanges: buildDateRange(startDate, endDate),
@@ -327,8 +332,8 @@ export const analyticsService = {
     );
   },
 
-  async getUsersByBrowser(startDate?: string, endDate?: string) {
-    const { analyticsDataClient, propertyId } = await getAnalyticsContext();
+  async getUsersByBrowser(startDate?: string, endDate?: string, tenantSlug?: string) {
+    const { analyticsDataClient, propertyId } = await getAnalyticsContext(tenantSlug);
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
       dateRanges: buildDateRange(startDate, endDate),
@@ -350,8 +355,8 @@ export const analyticsService = {
     );
   },
 
-  async getRealtimeUsers() {
-    const { analyticsDataClient, propertyId } = await getAnalyticsContext();
+  async getRealtimeUsers(tenantSlug?: string) {
+    const { analyticsDataClient, propertyId } = await getAnalyticsContext(tenantSlug);
     const [response] = await analyticsDataClient.runRealtimeReport({
       property: `properties/${propertyId}`,
       metrics: [{ name: 'activeUsers' }],
@@ -362,8 +367,8 @@ export const analyticsService = {
     };
   },
 
-  async getGeoAnalytics(startDate?: string, endDate?: string) {
-    const { analyticsDataClient, propertyId } = await getAnalyticsContext();
+  async getGeoAnalytics(startDate?: string, endDate?: string, tenantSlug?: string) {
+    const { analyticsDataClient, propertyId } = await getAnalyticsContext(tenantSlug);
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
       dateRanges: buildDateRange(startDate, endDate),
@@ -380,8 +385,8 @@ export const analyticsService = {
     );
   },
 
-  async getEngagementMetrics(startDate?: string, endDate?: string) {
-    const { analyticsDataClient, propertyId } = await getAnalyticsContext();
+  async getEngagementMetrics(startDate?: string, endDate?: string, tenantSlug?: string) {
+    const { analyticsDataClient, propertyId } = await getAnalyticsContext(tenantSlug);
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
       dateRanges: buildDateRange(startDate, endDate),
@@ -401,9 +406,9 @@ export const analyticsService = {
     };
   },
 
-  async getButtonClicks(startDate?: string, endDate?: string) {
+  async getButtonClicks(startDate?: string, endDate?: string, tenantSlug?: string) {
     try {
-      const { analyticsDataClient, propertyId } = await getAnalyticsContext();
+      const { analyticsDataClient, propertyId } = await getAnalyticsContext(tenantSlug);
       const [response] = await analyticsDataClient.runReport({
         property: `properties/${propertyId}`,
         dateRanges: buildDateRange(startDate, endDate),
