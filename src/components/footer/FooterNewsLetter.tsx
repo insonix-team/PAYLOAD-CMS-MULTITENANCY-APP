@@ -3,7 +3,13 @@ import Link from 'next/link';
 
 import { ArrowRight, Mail, MapPin, Phone, Send } from 'lucide-react';
 
-export async function FooterNewsLetterUI({ backgroundImage, description, ctaButton, socialLinks, hours }: any) {
+export async function FooterNewsLetterUI({
+  backgroundImage,
+  description,
+  ctaButton,
+  socialLinks,
+  hours,
+}: any) {
   return (
     <>
       <footer className="relative bg-primary text-background/80 overflow-hidden">
@@ -19,8 +25,13 @@ export async function FooterNewsLetterUI({ backgroundImage, description, ctaButt
           <div className="container mx-auto px-4 py-12">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-8 max-w-5xl mx-auto">
               <div className="text-center lg:text-left">
-                <h3 className="text-xl font-bold text-background mb-2">Stay Updated with Granville Dental Group</h3>
-                <p className="text-sm text-background/50">Get dental tips, special offers, and appointment reminders delivered to your inbox.</p>
+                <h3 className="text-xl font-bold text-background mb-2">
+                  Stay Updated with Granville Dental Group
+                </h3>
+                <p className="text-sm text-background/50">
+                  Get dental tips, special offers, and appointment reminders delivered to your
+                  inbox.
+                </p>
               </div>
 
               <div className="md:flex flex-wrap w-full max-w-md gap-0">
@@ -46,7 +57,9 @@ export async function FooterNewsLetterUI({ backgroundImage, description, ctaButt
               <Link href="/" className="flex items-center">
                 <span className="text-2xl font-bold">DentalCare</span>
               </Link>
-              {description && <p className="text-sm leading-relaxed text-background/60 mb-6">{description}</p>}
+              {description && (
+                <p className="text-sm leading-relaxed text-background/60 mb-6">{description}</p>
+              )}
 
               {/* <div className="flex gap-3">
                 {[Facebook, Instagram, Twitter].map((Icon, i) => (
@@ -59,7 +72,9 @@ export async function FooterNewsLetterUI({ backgroundImage, description, ctaButt
 
             {/* Quick Links */}
             <div className="xl:col-span-1 col-span-7">
-              <h4 className="font-semibold text-background mb-5 text-sm uppercase tracking-wider">Quick Links</h4>
+              <h4 className="font-semibold text-background mb-5 text-sm uppercase tracking-wider">
+                Quick Links
+              </h4>
               <ul className="space-y-3">
                 <li className="flex items-center text-sm text-background/50 gap-2">
                   {/* group wraps both link & arrow */}
@@ -114,20 +129,34 @@ export async function FooterNewsLetterUI({ backgroundImage, description, ctaButt
 
             {/* Contact */}
             <div className="xl:col-span-2 md:col-span-3 col-span-7">
-              <h4 className="font-semibold text-background mb-5 text-sm uppercase tracking-wider">Contact Us</h4>
+              <h4 className="font-semibold text-background mb-5 text-sm uppercase tracking-wider">
+                Contact Us
+              </h4>
 
               <div className="space-y-4">
-                <a href="tel:+1 604-261-8164" rel="noopener noreferrer" className="flex items-center gap-3 text-sm group cursor-pointer">
+                <a
+                  href="tel:+1 604-261-8164"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-sm group cursor-pointer"
+                >
                   <div className="w-9 h-9 rounded-lg bg-background/5 group-hover:bg-secondary flex items-center justify-center transition-colors shrink-0">
                     <Phone className="h-4 w-4" />
                   </div>
-                  <span className="text-background/60 group-hover:text-background transition-colors">+1 604-261-8164</span>
+                  <span className="text-background/60 group-hover:text-background transition-colors">
+                    +1 604-261-8164
+                  </span>
                 </a>
-                <a href="mailto:info.granvilledental@gmail.com" rel="noopener noreferrer" className="flex items-center gap-3 text-sm group cursor-pointer">
+                <a
+                  href="mailto:info.granvilledental@gmail.com"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-sm group cursor-pointer"
+                >
                   <div className="w-9 h-9 rounded-lg bg-background/5 group-hover:bg-secondary flex items-center justify-center transition-colors shrink-0">
                     <Mail className="h-4 w-4" />
                   </div>
-                  <span className="text-background/60 group-hover:text-background transition-colors">info.granvilledental@gmail.com</span>
+                  <span className="text-background/60 group-hover:text-background transition-colors">
+                    info.granvilledental@gmail.com
+                  </span>
                 </a>
                 <a
                   href="https://www.google.com/maps?cid=11935577831049169311&amp;g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYASAA&amp;hl=en&amp;gl=IN&amp;source=embed"
@@ -138,7 +167,9 @@ export async function FooterNewsLetterUI({ backgroundImage, description, ctaButt
                   <div className="w-9 h-9 rounded-lg bg-background/5 group-hover:bg-secondary flex items-center justify-center transition-colors shrink-0">
                     <MapPin className="h-4 w-4" />
                   </div>
-                  <span className="text-background/60 group-hover:text-background transition-colors">8357 Granville St, Vancouver, BC V6P 4Z8, Canada</span>
+                  <span className="text-background/60 group-hover:text-background transition-colors">
+                    8357 Granville St, Vancouver, BC V6P 4Z8, Canada
+                  </span>
                 </a>
               </div>
             </div>
@@ -146,10 +177,15 @@ export async function FooterNewsLetterUI({ backgroundImage, description, ctaButt
             {/* Hours */}
             {Array.isArray(hours) && (
               <div className="xl:col-span-2  md:col-span-2 col-span-7">
-                <h4 className="font-semibold text-background mb-5 text-sm uppercase tracking-wider">Office Hours</h4>
+                <h4 className="font-semibold text-background mb-5 text-sm uppercase tracking-wider">
+                  Office Hours
+                </h4>
                 <div className="space-y-3 text-sm">
                   {hours.map((row, i) => (
-                    <div key={i} className="flex justify-between gap-4 xl:gap-1 items-center py-2 border-b border-background/5 last:border-0">
+                    <div
+                      key={i}
+                      className="flex justify-between gap-4 xl:gap-1 items-center py-2 border-b border-background/5 last:border-0"
+                    >
                       <span className="text-background/50">{row.day}</span>
                       <span className="text-background/80 font-medium">{row.time}</span>
                     </div>
@@ -162,12 +198,17 @@ export async function FooterNewsLetterUI({ backgroundImage, description, ctaButt
 
         <div className="relative border-t border-background/10">
           <div className="container mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center gap-2 text-xs text-background/30">
-            <p>© {new Date().getFullYear()} Granville Dental Wellness Group. All rights reserved.</p>
+            <p>
+              © {new Date().getFullYear()} Granville Dental Wellness Group. All rights reserved.
+            </p>
             <div className="flex gap-3 md:gap-6 flex-wrap md:flex-row justify-center mt-2 md:mt-0">
               <a href="/privacypolicy" className="hover:text-background/60 transition-colors">
                 Privacy Policy
               </a>
-              <a href="/terms-and-conditions" className="hover:text-background/60 transition-colors">
+              <a
+                href="/terms-and-conditions"
+                className="hover:text-background/60 transition-colors"
+              >
                 Terms and Conditions
               </a>
               <a href="/disclaimer" className="hover:text-background/60 transition-colors">

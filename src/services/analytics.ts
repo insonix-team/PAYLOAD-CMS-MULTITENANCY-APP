@@ -26,7 +26,8 @@ function formatPrivateKey(key: string): string {
   }
 
   if (key.includes('-----BEGIN PRIVATE KEY-----') && key.includes('-----END PRIVATE KEY-----')) {
-    const hasSpaces = key.includes('-----BEGIN PRIVATE KEY----- ') || key.includes(' -----END PRIVATE KEY-----');
+    const hasSpaces =
+      key.includes('-----BEGIN PRIVATE KEY----- ') || key.includes(' -----END PRIVATE KEY-----');
 
     if (hasSpaces) {
       const begin = '-----BEGIN PRIVATE KEY-----';
@@ -285,7 +286,12 @@ export const analyticsService = {
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
       dateRanges: buildDateRange(startDate, endDate),
-      metrics: [{ name: 'totalUsers' }, { name: 'sessions' }, { name: 'screenPageViews' }, { name: 'bounceRate' }],
+      metrics: [
+        { name: 'totalUsers' },
+        { name: 'sessions' },
+        { name: 'screenPageViews' },
+        { name: 'bounceRate' },
+      ],
     });
 
     const row = response.rows?.[0];
@@ -379,7 +385,11 @@ export const analyticsService = {
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
       dateRanges: buildDateRange(startDate, endDate),
-      metrics: [{ name: 'averageSessionDuration' }, { name: 'engagementRate' }, { name: 'engagedSessions' }],
+      metrics: [
+        { name: 'averageSessionDuration' },
+        { name: 'engagementRate' },
+        { name: 'engagedSessions' },
+      ],
     });
 
     const row = response.rows?.[0];

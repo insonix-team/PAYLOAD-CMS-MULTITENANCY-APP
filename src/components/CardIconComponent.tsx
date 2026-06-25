@@ -16,7 +16,13 @@ const colorMap: Record<string, string> = {
   white: 'from-white to-gray-100',
 };
 
-export const CardsWithIconsBlockUI = ({ data, tenant }: { data?: CardsWithIcons; tenant?: string }) => {
+export const CardsWithIconsBlockUI = ({
+  data,
+  tenant,
+}: {
+  data?: CardsWithIcons;
+  tenant?: string;
+}) => {
   const block = data;
   if (!block) return null;
 

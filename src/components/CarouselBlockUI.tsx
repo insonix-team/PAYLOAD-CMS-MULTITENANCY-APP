@@ -67,14 +67,27 @@ export const CarouselBlockUI = ({ data }: Props) => {
           className="pb-10"
         >
           {slides?.map((slide, i) => {
-            const image = slide.image && typeof slide.image === 'object' && 'url' in slide.image ? (slide.image as Media) : null;
+            const image =
+              slide.image && typeof slide.image === 'object' && 'url' in slide.image
+                ? (slide.image as Media)
+                : null;
 
             return (
               <SwiperSlide key={slide.id || i}>
                 <div className="bg-card rounded-xl shadow-md mb-4 overflow-hidden h-full">
-                  {image?.url ? <img src={image.url} alt={image.alt || 'Slide'} className="w-full h-64 object-cover" /> : <div className="w-full h-64 bg-gray-200" />}
+                  {image?.url ? (
+                    <img
+                      src={image.url}
+                      alt={image.alt || 'Slide'}
+                      className="w-full h-64 object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-64 bg-gray-200" />
+                  )}
 
-                  <div className="p-6 prose max-w-none">{slide.content && <RichText data={slide.content as any} />}</div>
+                  <div className="p-6 prose max-w-none">
+                    {slide.content && <RichText data={slide.content as any} />}
+                  </div>
                 </div>
               </SwiperSlide>
             );

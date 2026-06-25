@@ -212,7 +212,10 @@ export const Pages: CollectionConfig = {
             return 'Slug is required';
           }
 
-          const tenantId = typeof data?.tenant === 'object' ? data?.tenant?.value || data?.tenant?.id : data?.tenant;
+          const tenantId =
+            typeof data?.tenant === 'object'
+              ? data?.tenant?.value || data?.tenant?.id
+              : data?.tenant;
 
           if (!tenantId) {
             return 'Tenant is required';
@@ -269,7 +272,8 @@ export const Pages: CollectionConfig = {
       type: 'relationship',
       relationTo: 'home-templates',
       admin: {
-        condition: (_data: unknown, siblingData: siblingData) => siblingData?.templateType === TEMPLATE_TYPES.HOME,
+        condition: (_data: unknown, siblingData: siblingData) =>
+          siblingData?.templateType === TEMPLATE_TYPES.HOME,
       },
     },
     {
@@ -277,7 +281,8 @@ export const Pages: CollectionConfig = {
       type: 'relationship',
       relationTo: 'about-templates',
       admin: {
-        condition: (_data: unknown, siblingData: siblingData) => siblingData?.templateType === TEMPLATE_TYPES.ABOUT,
+        condition: (_data: unknown, siblingData: siblingData) =>
+          siblingData?.templateType === TEMPLATE_TYPES.ABOUT,
       },
     },
     {
@@ -285,7 +290,8 @@ export const Pages: CollectionConfig = {
       type: 'relationship',
       relationTo: 'service-templates',
       admin: {
-        condition: (_data: unknown, siblingData: siblingData) => siblingData?.templateType === TEMPLATE_TYPES.SERVICES,
+        condition: (_data: unknown, siblingData: siblingData) =>
+          siblingData?.templateType === TEMPLATE_TYPES.SERVICES,
       },
     },
 
@@ -310,7 +316,12 @@ export const Pages: CollectionConfig = {
       ],
       admin: {
         condition: (_data: unknown, siblingData: siblingData) => {
-          return !!(siblingData?.homeTemplate || siblingData?.aboutTemplate || siblingData?.contactTemplate || siblingData?.serviceTemplate);
+          return !!(
+            siblingData?.homeTemplate ||
+            siblingData?.aboutTemplate ||
+            siblingData?.contactTemplate ||
+            siblingData?.serviceTemplate
+          );
         },
       },
     },
@@ -436,7 +447,12 @@ export const Pages: CollectionConfig = {
 
             for (const key in obj) {
               const value = (obj as Record<string, unknown>)[key];
-              if (relationshipFields.includes(key) && value && typeof value === 'object' && 'id' in value) {
+              if (
+                relationshipFields.includes(key) &&
+                value &&
+                typeof value === 'object' &&
+                'id' in value
+              ) {
                 newObj[key] = (value as { id: string }).id;
               } else {
                 newObj[key] = normalizeRelationships(value);
@@ -520,7 +536,9 @@ export const Pages: CollectionConfig = {
             templateBlockIds = reliableSyncInfo?.templateBlockIds;
           }
 
-          const validTemplateBlockIds = new Set((templateBlockIds || []).map((b: TemplateBlockId) => b.id));
+          const validTemplateBlockIds = new Set(
+            (templateBlockIds || []).map((b: TemplateBlockId) => b.id)
+          );
 
           const seenTemplateIds = new Set<string>();
           const seenBlockIds = new Set<string>();
@@ -544,7 +562,9 @@ export const Pages: CollectionConfig = {
           if (!isRefreshOperation || !data.templateSyncInfo) {
             data.templateSyncInfo = {
               ...reliableSyncInfo,
-              manualBlockSignatures: data.content?.filter((b: Block) => !!b._blockId).map((b: Block) => ({ blockType: b.blockType })),
+              manualBlockSignatures: data.content
+                ?.filter((b: Block) => !!b._blockId)
+                .map((b: Block) => ({ blockType: b.blockType })),
             };
           }
         }

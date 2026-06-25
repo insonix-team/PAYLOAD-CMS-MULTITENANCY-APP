@@ -93,7 +93,9 @@ export interface Config {
     headers: HeadersSelect<false> | HeadersSelect<true>;
     footers: FootersSelect<false> | FootersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
-    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
+    'payload-locked-documents':
+      | PayloadLockedDocumentsSelect<false>
+      | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
@@ -171,12 +173,62 @@ export interface Tenant {
   smtpPassword?: string | null;
   domain?: string | null;
   primaryColor?:
-    | ('blue' | 'light-blue' | 'powder-blue' | 'sky-blue' | 'gray' | 'slate' | 'black' | 'green' | 'emerald' | 'teal' | 'purple' | 'indigo' | 'pink' | 'rose' | 'red' | 'orange' | 'amber')
+    | (
+        | 'blue'
+        | 'light-blue'
+        | 'powder-blue'
+        | 'sky-blue'
+        | 'gray'
+        | 'slate'
+        | 'black'
+        | 'green'
+        | 'emerald'
+        | 'teal'
+        | 'purple'
+        | 'indigo'
+        | 'pink'
+        | 'rose'
+        | 'red'
+        | 'orange'
+        | 'amber'
+      )
     | null;
   secondaryColor?:
-    | ('blue' | 'light-blue' | 'powder-blue' | 'sky-blue' | 'gray' | 'slate' | 'black' | 'green' | 'emerald' | 'teal' | 'purple' | 'indigo' | 'pink' | 'rose' | 'red' | 'orange' | 'amber')
+    | (
+        | 'blue'
+        | 'light-blue'
+        | 'powder-blue'
+        | 'sky-blue'
+        | 'gray'
+        | 'slate'
+        | 'black'
+        | 'green'
+        | 'emerald'
+        | 'teal'
+        | 'purple'
+        | 'indigo'
+        | 'pink'
+        | 'rose'
+        | 'red'
+        | 'orange'
+        | 'amber'
+      )
     | null;
-  fontFamily?: ('Inter' | 'Poppins' | 'Roboto' | 'Montserrat' | 'Outfit' | 'DM Sans' | 'Open Sans' | 'Lato' | 'Nunito' | 'Cursive' | 'Playfair Display') | null;
+  fontFamily?:
+    | (
+        | 'Inter'
+        | 'Poppins'
+        | 'Roboto'
+        | 'Montserrat'
+        | 'Outfit'
+        | 'DM Sans'
+        | 'Open Sans'
+        | 'Lato'
+        | 'Nunito'
+        | 'Cursive'
+        | 'Playfair Display'
+      )
+    | null;
   /**
    * Enter GA4 Measurement ID (e.g., G-XXXXXXXXXX)
    */

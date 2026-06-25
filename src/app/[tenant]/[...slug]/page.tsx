@@ -11,7 +11,13 @@ import AnalyticsTracker from 'inx-next-analytics-tracker';
 import AnalyticsScript from '@/components/AnalyticsScript';
 
 // Generate dynamic metadata for SEO
-export async function generateMetadata({ params, searchParams }: { params: { tenant?: string; slug?: string[] }; searchParams: { preview?: string; id?: string } }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: { tenant?: string; slug?: string[] };
+  searchParams: { preview?: string; id?: string };
+}): Promise<Metadata> {
   const pageParams = await params;
   const resolvedSearchParams = await searchParams;
   const tenant = pageParams?.tenant;
@@ -85,7 +91,13 @@ export async function generateMetadata({ params, searchParams }: { params: { ten
   }
 }
 
-export default async function DynamicPage({ params, searchParams }: { params: { tenant?: string; slug?: string[] }; searchParams: { preview?: string; id?: string } }) {
+export default async function DynamicPage({
+  params,
+  searchParams,
+}: {
+  params: { tenant?: string; slug?: string[] };
+  searchParams: { preview?: string; id?: string };
+}) {
   const pageParams = await params;
   const resolvedSearchParams = await searchParams;
   const tenant = pageParams?.tenant;

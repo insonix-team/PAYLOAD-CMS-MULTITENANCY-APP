@@ -3,7 +3,17 @@
 import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Box, Card, CardActionArea, Chip, Divider, Grid, Paper, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardActionArea,
+  Chip,
+  Divider,
+  Grid,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material';
 
 const themes = [
   {
@@ -353,7 +363,8 @@ export const ThemeSelector = ({ value, onChange }: any) => {
             </Typography>
 
             <Typography variant="body2" sx={{ mb: 3 }}>
-              This preview demonstrates how your tenant dashboard will appear with the selected theme.
+              This preview demonstrates how your tenant dashboard will appear with the selected
+              theme.
             </Typography>
 
             <Stack direction="row" spacing={2}>
