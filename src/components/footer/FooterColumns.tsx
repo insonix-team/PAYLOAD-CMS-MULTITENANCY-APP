@@ -20,7 +20,11 @@ type Props = {
   newsletterPlaceholder?: string;
 };
 
-export default function FooterColumns({ columns = [], newsletterTitle, newsletterPlaceholder }: Props) {
+export default function FooterColumns({
+  columns = [],
+  newsletterTitle,
+  newsletterPlaceholder,
+}: Props) {
   return (
     <Box
       component="footer"

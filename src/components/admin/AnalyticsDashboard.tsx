@@ -7,7 +7,11 @@ import { Eye, Users, Globe, MousePointerClick, BarChart3, CalendarDays } from 'l
 // Dynamically import ApexCharts to avoid SSR issues
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const AnalyticsCards = ({ data }: { data: { avgSessionDuration: number; engagementRate: number; engagedSessions: number } }) => {
+const AnalyticsCards = ({
+  data,
+}: {
+  data: { avgSessionDuration: number; engagementRate: number; engagedSessions: number };
+}) => {
   const formatDuration = (seconds: number) => {
     if (!seconds) return '0s';
     const mins = Math.floor(seconds / 60);
@@ -65,7 +69,13 @@ const valueStyle: React.CSSProperties = {
   color: '#333',
 };
 
-const ColumnChart = ({ title, data }: { title: string; data: { key: string; value: number }[] }) => {
+const ColumnChart = ({
+  title,
+  data,
+}: {
+  title: string;
+  data: { key: string; value: number }[];
+}) => {
   const categories = data.map((item) => item?.key);
   const seriesData = data.map((item) => item.value);
 
@@ -390,7 +400,13 @@ const DemographicCustomCard = ({ countries }: { countries: { country: string }[]
   );
 };
 
-const PieChart = ({ title, data }: { title: string; data: { key: string; value: string | number }[] }) => {
+const PieChart = ({
+  title,
+  data,
+}: {
+  title: string;
+  data: { key: string; value: string | number }[];
+}) => {
   const labels = data.map((item) => item?.key);
   const series = data.map((item) => Number(item?.value || 0));
 
@@ -633,9 +649,13 @@ const Title = ({ children }: { children: React.ReactNode }) => (
   </h2>
 );
 
-const BigNumber = ({ children }: { children: React.ReactNode }) => <p style={{ fontWeight: 'bold', fontSize: 22, margin: 0, color: '#333' }}>{children}</p>;
+const BigNumber = ({ children }: { children: React.ReactNode }) => (
+  <p style={{ fontWeight: 'bold', fontSize: 22, margin: 0, color: '#333' }}>{children}</p>
+);
 
-const ChipWrap = ({ children }: { children: React.ReactNode }) => <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>{children}</div>;
+const ChipWrap = ({ children }: { children: React.ReactNode }) => (
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>{children}</div>
+);
 
 const Chip = ({ children }: { children: React.ReactNode }) => (
   <div
@@ -818,7 +838,9 @@ const AnalyticsPage = () => {
   };
 
   if (loading) {
-    return <div style={{ padding: 20, textAlign: 'center', color: '#666' }}>Loading Analytics...</div>;
+    return (
+      <div style={{ padding: 20, textAlign: 'center', color: '#666' }}>Loading Analytics...</div>
+    );
   }
 
   const formatDate = (d: string) => {
@@ -841,7 +863,9 @@ const AnalyticsPage = () => {
           marginBottom: 16,
         }}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
+        <div
+          style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}
+        >
           <div>
             <h1 style={{ fontSize: 26, marginBottom: 6, color: '#333' }}>
               <BarChart3 size={24} style={{ marginRight: 10 }} />
@@ -849,7 +873,13 @@ const AnalyticsPage = () => {
             </h1>
             <p style={{ color: '#666', margin: 0 }}>Overview of site analytics</p>
           </div>
-          <DateRange onClick={handleFetchAnalytics} setStartDate={setStartDate} startDate={startDate} setEndDate={setEndDate} endDate={endDate} />
+          <DateRange
+            onClick={handleFetchAnalytics}
+            setStartDate={setStartDate}
+            startDate={startDate}
+            setEndDate={setEndDate}
+            endDate={endDate}
+          />
         </div>
       </div>
 
@@ -966,7 +996,11 @@ const AnalyticsPage = () => {
               boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
             }}
           >
-            <DemographicCustomCard countries={userWithCountries?.filter((e: any) => e.country !== '').map((e: any) => ({ country: e.country }))} />
+            <DemographicCustomCard
+              countries={userWithCountries
+                ?.filter((e: any) => e.country !== '')
+                .map((e: any) => ({ country: e.country }))}
+            />
           </div>
 
           <div

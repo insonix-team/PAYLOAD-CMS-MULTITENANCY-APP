@@ -4,7 +4,8 @@ import { analyticsService } from '@/services/analytics';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const endpoint = searchParams.get('endpoint') || searchParams.get('type') || 'dashboard-summary';
+    const endpoint =
+      searchParams.get('endpoint') || searchParams.get('type') || 'dashboard-summary';
     const startDate = searchParams.get('startDate') || undefined;
     const endDate = searchParams.get('endDate') || undefined;
     const country = searchParams.get('country') || undefined;
@@ -115,6 +116,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ success: true, data });
   } catch (error) {
     console.error('Analytics API Error:', error);
-    return NextResponse.json({ success: false, error: 'Failed to fetch analytics data' }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: 'Failed to fetch analytics data' },
+      { status: 500 }
+    );
   }
 }

@@ -35,7 +35,16 @@ const gridCols: Record<2 | 3 | 4, string> = {
 };
 
 export default function VerticleHoverCardsUI({ data }: Props) {
-  const { blockHeading, cards = [], delay = 0, loading = false, columns = 3, sectionColor = 'bg', headingColor, sectionBackground } = data;
+  const {
+    blockHeading,
+    cards = [],
+    delay = 0,
+    loading = false,
+    columns = 3,
+    sectionColor = 'bg',
+    headingColor,
+    sectionBackground,
+  } = data;
 
   const colClass = gridCols[columns];
 
@@ -49,7 +58,12 @@ export default function VerticleHoverCardsUI({ data }: Props) {
       </div>
     );
   }
-  const bgImageUrl = typeof sectionBackground === 'string' ? sectionBackground : sectionBackground?.url ? `${sectionBackground.url}` : '';
+  const bgImageUrl =
+    typeof sectionBackground === 'string'
+      ? sectionBackground
+      : sectionBackground?.url
+        ? `${sectionBackground.url}`
+        : '';
 
   return (
     <section
@@ -62,10 +76,19 @@ export default function VerticleHoverCardsUI({ data }: Props) {
       }}
     >
       <div className="container mx-auto px-2">
-        <h2 className={`text-3xl mb-10 font-bold ${headingColor === 'white' ? 'text-white' : 'text-black'}`}>{blockHeading}</h2>
+        <h2
+          className={`text-3xl mb-10 font-bold ${headingColor === 'white' ? 'text-white' : 'text-black'}`}
+        >
+          {blockHeading}
+        </h2>
         <div className={`grid grid-cols-1 gap-6 ${colClass}`}>
           {cards.map((card, index) => {
-            const imageUrl = typeof card.image === 'string' ? card.image : card.image?.url ? `${process.env.NEXT_PUBLIC_SERVER_URL || ''}${card.image.url}` : '';
+            const imageUrl =
+              typeof card.image === 'string'
+                ? card.image
+                : card.image?.url
+                  ? `${process.env.NEXT_PUBLIC_SERVER_URL || ''}${card.image.url}`
+                  : '';
 
             return (
               <motion.div
@@ -79,9 +102,15 @@ export default function VerticleHoverCardsUI({ data }: Props) {
                 }}
               >
                 <div className="w-full h-[424px] overflow-hidden shadow-lg rounded-xs">
-                  <Link href={card.cta?.link || `/services/${card.slug}`} className="group relative block w-full h-full">
+                  <Link
+                    href={card.cta?.link || `/services/${card.slug}`}
+                    className="group relative block w-full h-full"
+                  >
                     {/* ⭐ Image */}
-                    <div className="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-out scale-105 group-hover:scale-110" style={{ backgroundImage: `url('${imageUrl}')` }} />
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-out scale-105 group-hover:scale-110"
+                      style={{ backgroundImage: `url('${imageUrl}')` }}
+                    />
 
                     {/* Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-b from-primary/30 to-black/90 group-hover:from-black/0 group-hover:to-black/90 transition-all duration-700" />
