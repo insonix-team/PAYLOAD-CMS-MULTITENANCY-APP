@@ -296,19 +296,17 @@ const DateRange = ({
   );
 };
 
-const DemographicCustomCard = ({ countries }: { countries: { country: string }[] }) => {
-  const countryCounts: Record<string, number> = {};
-  countries.forEach((item) => {
-    const country = item.country || 'Unknown';
-    countryCounts[country] = (countryCounts[country] || 0) + 1;
-  });
-
-  const sortedCountries = Object.entries(countryCounts)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 10);
-
-  const maxCount = Math.max(...sortedCountries.map(([, count]) => count), 1);
-
+const DemographicCustomCard = ({
+  countries,
+  onCountrySelect,
+  selectedCountry,
+  cities,
+}: {
+  countries: { country: string; users?: number }[];
+  onCountrySelect: (country: string) => void;
+  selectedCountry: string | null;
+  cities: { city: string; users: number }[];
+}) => {
   return (
     <div
       style={{
@@ -339,7 +337,6 @@ const DemographicCustomCard = ({ countries }: { countries: { country: string }[]
           background: '#fff',
         }}
       >
-        {/* LEFT — Countries */}
         <div
           style={{
             width: '30%',
@@ -350,28 +347,30 @@ const DemographicCustomCard = ({ countries }: { countries: { country: string }[]
           }}
         >
           <h4 style={{ margin: '0 0 10px 0', color: '#333' }}>Countries</h4>
-          {sortedCountries.map(([country, count]) => (
+          {countries.map((item) => (
             <div
-              key={country}
+              key={item.country}
+              onClick={() => onCountrySelect(item.country)}
               style={{
                 padding: '8px 10px',
                 marginBottom: 6,
                 borderRadius: 6,
                 cursor: 'pointer',
-                background: '#7e7ce6',
+                background: selectedCountry === item.country ? '#7e7ce6' : 'transparent',
                 fontWeight: 'bold',
-                color: '#fff',
+                color: selectedCountry === item.country ? '#fff' : '#333',
+                transition: 'all 0.2s ease',
               }}
             >
               <p style={{ display: 'flex', justifyContent: 'space-between', margin: 0 }}>
-                <span>{country}</span>
-                <span>{count}</span>
+                <span>{item.country}</span>
+                <span style={{ fontWeight: 'normal' }}>{item.users || 0}</span>
               </p>
             </div>
           ))}
+          {countries.length === 0 && <div style={{ color: '#999' }}>No Data</div>}
         </div>
 
-        {/* RIGHT — Cities */}
         <div
           style={{
             width: '70%',
@@ -379,23 +378,32 @@ const DemographicCustomCard = ({ countries }: { countries: { country: string }[]
             overflowY: 'auto',
           }}
         >
-          <h4 style={{ margin: '0 0 10px 0', fontWeight: 'bold', color: '#333' }}>Cities</h4>
-          {sortedCountries.map(([country, count]) => (
-            <div
-              key={country}
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                padding: '8px 10px',
-                fontWeight: 'bold',
-                borderBottom: '1px solid #f1f1f1',
-              }}
-            >
-              <p style={{ margin: 0, color: '#333' }}>{country}</p>
-              <p style={{ margin: 0, fontWeight: 'bold', color: '#333' }}>{count}</p>
+          <h4 style={{ margin: '0 0 10px 0', fontWeight: 'bold', color: '#333' }}>
+            Cities {selectedCountry && `— ${selectedCountry}`}
+          </h4>
+          {cities.length > 0 ? (
+            cities
+              .filter((city) => city.city && city.city !== '')
+              .map((city) => (
+                <div
+                  key={city.city}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    padding: '8px 10px',
+                    fontWeight: 'bold',
+                    borderBottom: '1px solid #f1f1f1',
+                  }}
+                >
+                  <p style={{ margin: 0, color: '#333' }}>{city.city}</p>
+                  <p style={{ margin: 0, fontWeight: 'bold', color: '#333' }}>{city.users}</p>
+                </div>
+              ))
+          ) : (
+            <div style={{ color: '#999', textAlign: 'center', marginTop: 20 }}>
+              {selectedCountry ? 'No cities data available' : 'Select a country to view cities'}
             </div>
-          ))}
-          {sortedCountries.length === 0 && <div style={{ color: '#999' }}>No Data</div>}
+          )}
         </div>
       </div>
     </div>
@@ -688,6 +696,9 @@ const AnalyticsPage = () => {
   const [buttonClicks, setButtonClicks] = useState<{ button: string; clicks: number }[]>([]);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+  const [cities, setCities] = useState<{ city: string; users: number }[]>([]);
+  const [countriesList, setCountriesList] = useState<{ country: string; users: number }[]>([]);
 
   useEffect(() => {
     if (!startDate && !endDate) {
@@ -771,9 +782,39 @@ const AnalyticsPage = () => {
       }
       const res = await fetch(url);
       const result = await res.json();
-      setUserWithCountries(result?.data || []);
+      const data = result?.data || [];
+      setUserWithCountries(data);
+
+      const countriesData = data
+        .filter((e: any) => e.country && e.country !== '')
+        .map((e: any) => ({ country: e.country, users: Number(e.users || 0) }));
+      setCountriesList(countriesData);
+
+      if (countriesData.length > 0 && !selectedCountry) {
+        setSelectedCountry(countriesData[0].country);
+        getDemographicDetails(range, countriesData[0].country);
+      }
     } catch (err) {
       console.log(err);
+    }
+  };
+  const getDemographicDetails = async (range?: any, country?: string) => {
+    if (!country) return;
+
+    try {
+      let url = `/api/analytics?endpoint=users-by-city&country=${encodeURIComponent(country)}`;
+      if (selectedTenant) url += `&tenant=${selectedTenant}`;
+      if (range?.start && range?.end) {
+        url += `&startDate=${range.start}&endDate=${range.end}`;
+      }
+      const res = await fetch(url);
+      const result = await res.json();
+
+      const cityData = result?.data || [];
+      setCities(cityData);
+    } catch (err) {
+      console.error('Failed to fetch city details:', err);
+      setCities([]);
     }
   };
 
@@ -836,6 +877,11 @@ const AnalyticsPage = () => {
       getButtonsClicks(range),
       getEngagments(range),
     ]);
+  };
+
+  const handleCountrySelect = (country: string) => {
+    setSelectedCountry(country);
+    getDemographicDetails({ start: startDate, end: endDate }, country);
   };
 
   // Role-aware tenant selection
@@ -1074,9 +1120,10 @@ const AnalyticsPage = () => {
             }}
           >
             <DemographicCustomCard
-              countries={userWithCountries
-                ?.filter((e: any) => e.country !== '')
-                .map((e: any) => ({ country: e.country }))}
+              countries={countriesList}
+              onCountrySelect={handleCountrySelect}
+              selectedCountry={selectedCountry}
+              cities={cities}
             />
           </div>
 
