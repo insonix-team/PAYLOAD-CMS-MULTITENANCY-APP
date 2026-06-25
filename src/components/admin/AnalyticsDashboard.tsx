@@ -2,13 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { Eye, Users, Globe, MousePointerClick, BarChart3, CalendarDays } from 'lucide-react';
 
 // Dynamically import ApexCharts to avoid SSR issues
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-// ============================================
-// ANALYTICS CARDS COMPONENT
-// ============================================
 const AnalyticsCards = ({ data }: { data: { avgSessionDuration: number; engagementRate: number; engagedSessions: number } }) => {
   const formatDuration = (seconds: number) => {
     if (!seconds) return '0s';
@@ -67,9 +65,6 @@ const valueStyle: React.CSSProperties = {
   color: '#333',
 };
 
-// ============================================
-// COLUMN CHART COMPONENT - Using ApexCharts
-// ============================================
 const ColumnChart = ({ title, data }: { title: string; data: { key: string; value: number }[] }) => {
   const categories = data.map((item) => item?.key);
   const seriesData = data.map((item) => item.value);
@@ -156,6 +151,7 @@ const ColumnChart = ({ title, data }: { title: string; data: { key: string; valu
           color: '#555',
         }}
       >
+        <BarChart3 size={16} style={{ marginRight: 8 }} />
         {title}
       </h3>
 
@@ -164,9 +160,6 @@ const ColumnChart = ({ title, data }: { title: string; data: { key: string; valu
   );
 };
 
-// ============================================
-// DATE RANGE COMPONENT
-// ============================================
 const DateRange = ({
   onClick,
   setStartDate,
@@ -212,31 +205,64 @@ const DateRange = ({
         borderRadius: '8px',
       }}
     >
-      <input
-        type="date"
-        value={localStart}
-        onChange={(e) => setLocalStart(e.target.value)}
-        style={{
-          padding: '8px 12px',
-          borderRadius: '6px',
-          border: '1px solid #ddd',
-          color: '#333',
-          background: '#fff',
-        }}
-      />
+      <div style={{ position: 'relative', display: 'inline-block' }}>
+        <CalendarDays
+          size={18}
+          color="#777"
+          style={{
+            position: 'absolute',
+            left: '10px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            pointerEvents: 'none',
+            zIndex: 1,
+          }}
+        />
+        <input
+          type="date"
+          value={localStart}
+          onChange={(e) => setLocalStart(e.target.value)}
+          style={{
+            padding: '8px 12px 8px 34px',
+            borderRadius: '6px',
+            border: '1px solid #ddd',
+            color: '#333',
+            background: '#fff',
+            width: '150px',
+          }}
+        />
+      </div>
+
       <span style={{ color: '#333' }}>to</span>
-      <input
-        type="date"
-        value={localEnd}
-        onChange={(e) => setLocalEnd(e.target.value)}
-        style={{
-          padding: '8px 12px',
-          borderRadius: '6px',
-          border: '1px solid #ddd',
-          color: '#333',
-          background: '#fff',
-        }}
-      />
+
+      <div style={{ position: 'relative', display: 'inline-block' }}>
+        <CalendarDays
+          size={18}
+          color="#777"
+          style={{
+            position: 'absolute',
+            left: '10px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            pointerEvents: 'none',
+            zIndex: 1,
+          }}
+        />
+        <input
+          type="date"
+          value={localEnd}
+          onChange={(e) => setLocalEnd(e.target.value)}
+          style={{
+            padding: '8px 12px 8px 34px',
+            borderRadius: '6px',
+            border: '1px solid #ddd',
+            color: '#333',
+            background: '#fff',
+            width: '150px',
+          }}
+        />
+      </div>
+
       <button
         onClick={handleFilter}
         style={{
@@ -247,6 +273,9 @@ const DateRange = ({
           borderRadius: '6px',
           cursor: 'pointer',
           fontWeight: 500,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 6,
         }}
       >
         Apply
@@ -255,9 +284,6 @@ const DateRange = ({
   );
 };
 
-// ============================================
-// DEMOGRAPHIC CUSTOM CARD
-// ============================================
 const DemographicCustomCard = ({ countries }: { countries: { country: string }[] }) => {
   const countryCounts: Record<string, number> = {};
   countries.forEach((item) => {
@@ -288,6 +314,7 @@ const DemographicCustomCard = ({ countries }: { countries: { country: string }[]
           color: '#555',
         }}
       >
+        <Globe size={16} style={{ marginRight: 8 }} />
         User Demographics
       </h3>
       <div
@@ -363,9 +390,6 @@ const DemographicCustomCard = ({ countries }: { countries: { country: string }[]
   );
 };
 
-// ============================================
-// PIE CHART COMPONENT - Using ApexCharts
-// ============================================
 const PieChart = ({ title, data }: { title: string; data: { key: string; value: string | number }[] }) => {
   const labels = data.map((item) => item?.key);
   const series = data.map((item) => Number(item?.value || 0));
@@ -433,6 +457,7 @@ const PieChart = ({ title, data }: { title: string; data: { key: string; value: 
           color: '#555',
         }}
       >
+        <Users size={16} style={{ marginRight: 8 }} />
         {title}
       </h3>
 
@@ -441,9 +466,6 @@ const PieChart = ({ title, data }: { title: string; data: { key: string; value: 
   );
 };
 
-// ============================================
-// TOP PAGES TABLE
-// ============================================
 const TopPagesTable = ({
   data,
 }: {
@@ -486,6 +508,7 @@ const TopPagesTable = ({
             color: '#555',
           }}
         >
+          <Eye size={16} style={{ marginRight: 8 }} />
           Top Pages
         </h3>
         <div style={{ fontSize: 12, color: '#888' }}>Records: {data.length}</div>
@@ -581,9 +604,6 @@ const TopPagesTable = ({
   );
 };
 
-// ============================================
-// STYLED COMPONENTS
-// ============================================
 const Card = ({ children }: { children: React.ReactNode }) => (
   <div
     style={{
@@ -632,9 +652,6 @@ const Chip = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
-// ============================================
-// MAIN ANALYTICS PAGE
-// ============================================
 const AnalyticsPage = () => {
   const [loading, setLoading] = useState(true);
   const [totalVisits, setTotalVisits] = useState<number>(0);
@@ -662,10 +679,6 @@ const AnalyticsPage = () => {
       setEndDate(formattedToday);
     }
   }, []);
-
-  // ============================================
-  // FETCH FUNCTIONS
-  // ============================================
 
   const getTotalVisits = async (range?: any) => {
     try {
@@ -816,10 +829,6 @@ const AnalyticsPage = () => {
     return `${day}/${month}`;
   };
 
-  // ============================================
-  // UI - EXACTLY THE SAME AS STRAPI VERSION
-  // ============================================
-
   return (
     <div style={{ padding: 16, background: '#f6f6f9', minHeight: '100vh' }}>
       <div
@@ -834,7 +843,10 @@ const AnalyticsPage = () => {
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
           <div>
-            <h1 style={{ fontSize: 26, marginBottom: 6, color: '#333' }}>Analytics</h1>
+            <h1 style={{ fontSize: 26, marginBottom: 6, color: '#333' }}>
+              <BarChart3 size={24} style={{ marginRight: 10 }} />
+              Analytics
+            </h1>
             <p style={{ color: '#666', margin: 0 }}>Overview of site analytics</p>
           </div>
           <DateRange onClick={handleFetchAnalytics} setStartDate={setStartDate} startDate={startDate} setEndDate={setEndDate} endDate={endDate} />
@@ -977,6 +989,7 @@ const AnalyticsPage = () => {
                 color: '#555',
               }}
             >
+              <MousePointerClick size={16} style={{ marginRight: 8 }} />
               Button Clicks
             </h3>
 

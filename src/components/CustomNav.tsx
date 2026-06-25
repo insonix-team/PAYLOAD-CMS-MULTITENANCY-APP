@@ -17,7 +17,7 @@ export default function CustomNav() {
     { href: '/collections/pages', label: 'Pages' },
     { href: '/collections/media', label: 'Media' },
     ...(user?.role === ROLES.SUPERADMIN || user?.role === ROLES.TENANT ? [{ href: '/collections/users', label: 'Users' }] : []),
-    ...(user?.role === ROLES.SUPERADMIN ? [{ href: '/collections/tenants', label: 'Tenants' }] : []),
+    ...(user?.role === ROLES.SUPERADMIN || user?.role === ROLES.TENANT ? [{ href: '/collections/tenants', label: 'Tenants' }] : []),
   ];
 
   useEffect(() => {

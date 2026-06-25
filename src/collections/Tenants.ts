@@ -70,6 +70,17 @@ const Tenants: CollectionConfig = {
       type: 'text',
       required: true,
       unique: true,
+      access: {
+        read: ({ req: { user } }) => {
+          if (!user) return false;
+          return user.role === ROLES.SUPERADMIN || user.role === ROLES.TENANT;
+        },
+        create: ({ req: { user } }) => user?.role === ROLES.SUPERADMIN,
+        update: ({ req: { user } }) => user?.role === ROLES.SUPERADMIN,
+      },
+      admin: {
+        description: 'Note: only Administrators can change this.',
+      },
     },
     {
       name: 'smtpUser',
@@ -82,6 +93,17 @@ const Tenants: CollectionConfig = {
     {
       name: 'domain',
       type: 'text',
+      access: {
+        read: ({ req: { user } }) => {
+          if (!user) return false;
+          return user.role === ROLES.SUPERADMIN || user.role === ROLES.TENANT;
+        },
+        create: ({ req: { user } }) => user?.role === ROLES.SUPERADMIN,
+        update: ({ req: { user } }) => user?.role === ROLES.SUPERADMIN,
+      },
+      admin: {
+        description: 'Note: only Administrators can change this.',
+      },
     },
 
     {
