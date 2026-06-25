@@ -114,6 +114,42 @@ const Tenants: CollectionConfig = {
         placeholder: 'G-XXXXXXXXXX',
       },
     },
+    {
+      name: 'gaClientEmail',
+      type: 'text',
+      label: 'GA Client Email',
+      admin: {
+        description: 'Google Analytics service account client email',
+        placeholder: 'your-service-account@project.iam.gserviceaccount.com',
+      },
+    },
+    {
+      name: 'gaPrivateKey',
+      type: 'text',
+      label: 'GA Private Key',
+      admin: {
+        description: 'Google Analytics service account private key',
+        placeholder: '-----BEGIN PRIVATE KEY-----',
+      },
+    },
+    {
+      name: 'gaPropertyId',
+      type: 'text',
+      label: 'GA Property ID',
+      admin: {
+        description: 'Google Analytics property ID',
+        placeholder: '123456789',
+      },
+    },
+    {
+      name: 'gaProjectId',
+      type: 'text',
+      label: 'GA Project ID',
+      admin: {
+        description: 'Google Analytics project ID',
+        placeholder: 'your-project-id',
+      },
+    },
 
     // {
     //   name: 'theme',

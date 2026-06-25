@@ -1,64 +1,165 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+
+// Dynamically import ApexCharts to avoid SSR issues
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 // ============================================
 // ANALYTICS CARDS COMPONENT
 // ============================================
 const AnalyticsCards = ({ data }: { data: { avgSessionDuration: number; engagementRate: number; engagedSessions: number } }) => {
   const formatDuration = (seconds: number) => {
+    if (!seconds) return '0s';
     const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
+    const secs = Math.round(seconds % 60);
+    return mins ? `${mins}m ${secs}s` : `${secs}s`;
+  };
+
+  const formatPercentage = (value: number) => {
+    return `${(value * 100).toFixed(1)}%`;
   };
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
-      <Card>
-        <Title>Avg. Session Duration</Title>
-        <BigNumber>{formatDuration(data.avgSessionDuration)}</BigNumber>
-      </Card>
-      <Card>
-        <Title>Engagement Rate</Title>
-        <BigNumber>{(data.engagementRate * 100).toFixed(1)}%</BigNumber>
-      </Card>
-      <Card>
-        <Title>Engaged Sessions</Title>
-        <BigNumber>{data.engagedSessions}</BigNumber>
-      </Card>
+    <div
+      style={{
+        display: 'flex',
+        gap: 16,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+      }}
+    >
+      <div style={cardStyle}>
+        <p style={labelStyle}>Avg Session Duration</p>
+        <h2 style={valueStyle}>{formatDuration(data.avgSessionDuration || 0)}</h2>
+      </div>
+      <div style={cardStyle}>
+        <p style={labelStyle}>Engagement Rate</p>
+        <h2 style={valueStyle}>{formatPercentage(data.engagementRate || 0)}</h2>
+      </div>
+      <div style={cardStyle}>
+        <p style={labelStyle}>Engaged Sessions</p>
+        <h2 style={valueStyle}>{data.engagedSessions || 0}</h2>
+      </div>
     </div>
   );
 };
 
+const cardStyle: React.CSSProperties = {
+  flex: '1 1 200px',
+  background: '#fff',
+  padding: 16,
+  borderRadius: 10,
+  boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+};
+
+const labelStyle: React.CSSProperties = {
+  fontSize: 12,
+  color: '#777',
+  marginBottom: 6,
+};
+
+const valueStyle: React.CSSProperties = {
+  margin: 0,
+  fontSize: 22,
+  fontWeight: 700,
+  color: '#333',
+};
+
 // ============================================
-// COLUMN CHART COMPONENT
+// COLUMN CHART COMPONENT - Using ApexCharts
 // ============================================
 const ColumnChart = ({ title, data }: { title: string; data: { key: string; value: number }[] }) => {
-  const maxValue = Math.max(...data.map((d) => d.value), 1);
+  const categories = data.map((item) => item?.key);
+  const seriesData = data.map((item) => item.value);
+
+  const options: ApexCharts.ApexOptions = {
+    chart: {
+      type: 'bar',
+      toolbar: { show: false },
+      fontFamily: 'inherit',
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: '40%',
+        borderRadius: 4,
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    xaxis: {
+      categories,
+      labels: {
+        style: {
+          fontSize: '12px',
+          colors: '#333', // Added explicit color
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          fontSize: '12px',
+          colors: '#333', // Added explicit color
+        },
+      },
+    },
+    grid: {
+      strokeDashArray: 4,
+    },
+    tooltip: {
+      y: {
+        formatter: (val: number) => `${val} users`,
+      },
+    },
+    colors: ['#4945ff'],
+    responsive: [
+      {
+        breakpoint: 768,
+        options: {
+          plotOptions: {
+            bar: {
+              columnWidth: '60%',
+            },
+          },
+        },
+      },
+    ],
+  };
+
+  const series = [
+    {
+      name: 'Users',
+      data: seriesData,
+    },
+  ];
 
   return (
-    <div>
-      <h3 style={{ margin: '0 0 16px 0', fontSize: 14, fontWeight: 'bold', color: '#555' }}>{title}</h3>
-      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8, height: 150 }}>
-        {data.map((item, index) => {
-          const height = (item.value / maxValue) * 130;
-          return (
-            <div key={index} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div
-                style={{
-                  width: '100%',
-                  height: Math.max(height, 4),
-                  background: '#3b82f6',
-                  borderRadius: 4,
-                  transition: 'height 0.3s ease',
-                  minHeight: 4,
-                }}
-              />
-              <span style={{ fontSize: 10, marginTop: 6, color: '#666' }}>{item.key}</span>
-            </div>
-          );
-        })}
-      </div>
+    <div
+      style={{
+        background: '#fff',
+        padding: 16,
+        borderRadius: 10,
+        width: '100%',
+        height: '100%',
+        boxSizing: 'border-box',
+      }}
+    >
+      <h3
+        style={{
+          margin: 0,
+          marginBottom: 12,
+          fontSize: 14,
+          fontWeight: 'bold',
+          color: '#555',
+        }}
+      >
+        {title}
+      </h3>
+
+      <Chart options={options} series={series} type="bar" height={220} />
     </div>
   );
 };
@@ -90,7 +191,7 @@ const DateRange = ({
     setLocalEnd(endDate);
   }, [endDate]);
 
-  const handleApply = () => {
+  const handleFilter = () => {
     if (localStart && localEnd) {
       setStartDate(localStart);
       setEndDate(localEnd);
@@ -99,47 +200,53 @@ const DateRange = ({
   };
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <label style={{ fontSize: 14, color: '#555' }}>From:</label>
-        <input
-          type="date"
-          value={localStart}
-          onChange={(e) => setLocalStart(e.target.value)}
-          style={{
-            padding: '6px 10px',
-            borderRadius: 6,
-            border: '1px solid #ddd',
-            fontSize: 14,
-            background: '#fff',
-          }}
-        />
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <label style={{ fontSize: 14, color: '#555' }}>To:</label>
-        <input
-          type="date"
-          value={localEnd}
-          onChange={(e) => setLocalEnd(e.target.value)}
-          style={{
-            padding: '6px 10px',
-            borderRadius: 6,
-            border: '1px solid #ddd',
-            fontSize: 14,
-            background: '#fff',
-          }}
-        />
-      </div>
-      <button
-        onClick={handleApply}
+    <div
+      style={{
+        display: 'flex',
+        gap: '12px',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        marginBottom: '20px',
+        background: '#fff',
+        padding: '5px',
+        borderRadius: '8px',
+      }}
+    >
+      <input
+        type="date"
+        value={localStart}
+        onChange={(e) => setLocalStart(e.target.value)}
         style={{
-          padding: '6px 16px',
-          borderRadius: 6,
-          background: '#3b82f6',
+          padding: '8px 12px',
+          borderRadius: '6px',
+          border: '1px solid #ddd',
+          color: '#333',
+          background: '#fff',
+        }}
+      />
+      <span style={{ color: '#333' }}>to</span>
+      <input
+        type="date"
+        value={localEnd}
+        onChange={(e) => setLocalEnd(e.target.value)}
+        style={{
+          padding: '8px 12px',
+          borderRadius: '6px',
+          border: '1px solid #ddd',
+          color: '#333',
+          background: '#fff',
+        }}
+      />
+      <button
+        onClick={handleFilter}
+        style={{
+          padding: '8px 16px',
+          background: '#4945ff',
           color: '#fff',
           border: 'none',
-          fontSize: 14,
+          borderRadius: '6px',
           cursor: 'pointer',
+          fontWeight: 500,
         }}
       >
         Apply
@@ -149,7 +256,7 @@ const DateRange = ({
 };
 
 // ============================================
-// DEMOGRAPHIC CUSTOM CARD COMPONENT
+// DEMOGRAPHIC CUSTOM CARD
 // ============================================
 const DemographicCustomCard = ({ countries }: { countries: { country: string }[] }) => {
   const countryCounts: Record<string, number> = {};
@@ -165,124 +272,177 @@ const DemographicCustomCard = ({ countries }: { countries: { country: string }[]
   const maxCount = Math.max(...sortedCountries.map(([, count]) => count), 1);
 
   return (
-    <div>
-      <h3 style={{ margin: '0 0 16px 0', fontSize: 14, fontWeight: 'bold', color: '#555' }}>Top Countries</h3>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-        {sortedCountries.map(([country, count], index) => {
-          const percentage = (count / maxCount) * 100;
-          return (
-            <div key={index}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13 }}>
+    <div
+      style={{
+        padding: 10,
+        width: '100%',
+        height: '100%',
+      }}
+    >
+      <h3
+        style={{
+          margin: 0,
+          marginBottom: 12,
+          fontSize: 14,
+          fontWeight: 'bold',
+          color: '#555',
+        }}
+      >
+        User Demographics
+      </h3>
+      <div
+        style={{
+          display: 'flex',
+          height: 'calc(100% - 40px)',
+          border: '1px solid #e5e7eb',
+          borderRadius: 10,
+          overflow: 'hidden',
+          background: '#fff',
+        }}
+      >
+        {/* LEFT — Countries */}
+        <div
+          style={{
+            width: '30%',
+            borderRight: '1px solid #eee',
+            padding: 10,
+            overflowY: 'auto',
+            background: '#fafafa',
+          }}
+        >
+          <h4 style={{ margin: '0 0 10px 0', color: '#333' }}>Countries</h4>
+          {sortedCountries.map(([country, count]) => (
+            <div
+              key={country}
+              style={{
+                padding: '8px 10px',
+                marginBottom: 6,
+                borderRadius: 6,
+                cursor: 'pointer',
+                background: '#7e7ce6',
+                fontWeight: 'bold',
+                color: '#fff',
+              }}
+            >
+              <p style={{ display: 'flex', justifyContent: 'space-between', margin: 0 }}>
                 <span>{country}</span>
-                <span style={{ color: '#666' }}>{count}</span>
-              </div>
-              <div style={{ height: 4, background: '#eee', borderRadius: 4, marginTop: 2 }}>
-                <div
-                  style={{
-                    width: `${percentage}%`,
-                    height: '100%',
-                    borderRadius: 4,
-                    background: '#3b82f6',
-                  }}
-                />
-              </div>
-            </div>
-          );
-        })}
-        {sortedCountries.length === 0 && <p style={{ color: '#999', fontSize: 14, textAlign: 'center' }}>No data available</p>}
-      </div>
-    </div>
-  );
-};
-
-// ============================================
-// PIE CHART COMPONENT
-// ============================================
-const PieChart = ({ title, data }: { title: string; data: { key: string; value: number }[] }) => {
-  const total = data.reduce((sum, item) => sum + item.value, 0);
-  const colors = ['#3b82f6', '#ef4444', '#22c55e', '#f59e0b', '#8b5cf6', '#ec4899', '#14b8a6'];
-
-  const filteredData = data.filter((item) => item.value > 0);
-
-  if (filteredData.length === 0) {
-    return (
-      <div>
-        <h3 style={{ margin: '0 0 16px 0', fontSize: 14, fontWeight: 'bold', color: '#555' }}>{title}</h3>
-        <p style={{ color: '#999', textAlign: 'center' }}>No data available</p>
-      </div>
-    );
-  }
-
-  const generatePieSegments = () => {
-    let currentAngle = 0;
-    const segments: { path: string; color: string; label: string; percentage: number }[] = [];
-    const radius = 80;
-    const center = 100;
-
-    filteredData.forEach((item, index) => {
-      const percentage = item.value / total;
-      const angle = percentage * 360;
-      const startAngle = currentAngle;
-      const endAngle = currentAngle + angle;
-      currentAngle = endAngle;
-
-      const startRad = (startAngle - 90) * (Math.PI / 180);
-      const endRad = (endAngle - 90) * (Math.PI / 180);
-
-      const x1 = center + radius * Math.cos(startRad);
-      const y1 = center + radius * Math.sin(startRad);
-      const x2 = center + radius * Math.cos(endRad);
-      const y2 = center + radius * Math.sin(endRad);
-
-      const largeArc = angle > 180 ? 1 : 0;
-
-      const pathData = `
-        M ${center} ${center}
-        L ${x1} ${y1}
-        A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2}
-        Z
-      `;
-
-      segments.push({
-        path: pathData,
-        color: colors[index % colors.length],
-        label: item.key,
-        percentage: percentage,
-      });
-    });
-
-    return segments;
-  };
-
-  const segments = generatePieSegments();
-
-  return (
-    <div>
-      <h3 style={{ margin: '0 0 16px 0', fontSize: 14, fontWeight: 'bold', color: '#555' }}>{title}</h3>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
-        <div style={{ width: 200, height: 200 }}>
-          <svg viewBox="0 0 200 200">
-            {segments.map((seg, index) => (
-              <path key={index} d={seg.path} fill={seg.color} stroke="#fff" strokeWidth="1" />
-            ))}
-          </svg>
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 4, flex: 1 }}>
-          {segments.map((seg, index) => (
-            <div key={index} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13 }}>
-              <div style={{ width: 12, height: 12, borderRadius: 2, background: seg.color }} />
-              <span>{seg.label}</span>
-              <span style={{ color: '#666', marginLeft: 'auto' }}>{(seg.percentage * 100).toFixed(1)}%</span>
+                <span>{count}</span>
+              </p>
             </div>
           ))}
         </div>
+
+        {/* RIGHT — Cities */}
+        <div
+          style={{
+            width: '70%',
+            padding: 10,
+            overflowY: 'auto',
+          }}
+        >
+          <h4 style={{ margin: '0 0 10px 0', fontWeight: 'bold', color: '#333' }}>Cities</h4>
+          {sortedCountries.map(([country, count]) => (
+            <div
+              key={country}
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                padding: '8px 10px',
+                fontWeight: 'bold',
+                borderBottom: '1px solid #f1f1f1',
+              }}
+            >
+              <p style={{ margin: 0, color: '#333' }}>{country}</p>
+              <p style={{ margin: 0, fontWeight: 'bold', color: '#333' }}>{count}</p>
+            </div>
+          ))}
+          {sortedCountries.length === 0 && <div style={{ color: '#999' }}>No Data</div>}
+        </div>
       </div>
     </div>
   );
 };
 
 // ============================================
-// TOP PAGES TABLE COMPONENT
+// PIE CHART COMPONENT - Using ApexCharts
+// ============================================
+const PieChart = ({ title, data }: { title: string; data: { key: string; value: string | number }[] }) => {
+  const labels = data.map((item) => item?.key);
+  const series = data.map((item) => Number(item?.value || 0));
+
+  const options: ApexCharts.ApexOptions = {
+    chart: {
+      type: 'donut',
+      fontFamily: 'inherit',
+    },
+    labels,
+    legend: {
+      position: 'bottom',
+      fontSize: '13px',
+      labels: {
+        colors: '#333', // Added explicit color
+      },
+    },
+    dataLabels: {
+      formatter: (val: number) => `${val.toFixed(0)}%`,
+      style: {
+        colors: ['#333'], // Added explicit color
+      },
+    },
+    tooltip: {
+      y: {
+        formatter: (val: number) => `${val} users`,
+      },
+    },
+    stroke: {
+      width: 1,
+    },
+    colors: ['#4945ff', '#ef4444', '#22c55e', '#f59e0b', '#8b5cf6', '#ec4899', '#14b8a6'],
+    responsive: [
+      {
+        breakpoint: 768,
+        options: {
+          chart: {
+            height: 260,
+          },
+          legend: {
+            position: 'bottom',
+          },
+        },
+      },
+    ],
+  };
+
+  return (
+    <div
+      style={{
+        background: '#fff',
+        padding: 16,
+        borderRadius: 10,
+        width: '100%',
+        height: '100%',
+        boxSizing: 'border-box',
+      }}
+    >
+      <h3
+        style={{
+          margin: 0,
+          marginBottom: 12,
+          fontSize: 14,
+          fontWeight: 'bold',
+          color: '#555',
+        }}
+      >
+        {title}
+      </h3>
+
+      <Chart options={options} series={series} type="donut" height={250} />
+    </div>
+  );
+};
+
+// ============================================
+// TOP PAGES TABLE
 // ============================================
 const TopPagesTable = ({
   data,
@@ -291,52 +451,131 @@ const TopPagesTable = ({
     page: string;
     views: number;
     avgEngagementTime: number;
-    avgEngagementTimeFormatted: string;
   }[];
 }) => {
-  const totalViews = data.reduce((sum, item) => sum + item.views, 0);
+  const formatTime = (seconds: number) => {
+    if (!seconds) return '0s';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.round(seconds % 60);
+    return mins ? `${mins}m ${secs}s` : `${secs}s`;
+  };
 
   return (
     <div
       style={{
         background: '#fff',
-        borderRadius: 12,
+        borderRadius: 10,
         padding: 16,
-        boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+        width: '100%',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
       }}
     >
-      <h3 style={{ margin: '0 0 16px 0', fontSize: 14, fontWeight: 'bold', color: '#555' }}>Top Pages</h3>
-      <div style={{ overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
-          <thead>
-            <tr style={{ borderBottom: '1px solid #eee' }}>
-              <th style={{ textAlign: 'left', padding: '10px 8px', color: '#666', fontWeight: 600 }}>Page</th>
-              <th style={{ textAlign: 'right', padding: '10px 8px', color: '#666', fontWeight: 600 }}>Views</th>
-              <th style={{ textAlign: 'right', padding: '10px 8px', color: '#666', fontWeight: 600 }}>% of Total</th>
-              <th style={{ textAlign: 'right', padding: '10px 8px', color: '#666', fontWeight: 600 }}>Avg. Engagement</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item, index) => {
-              const percentage = totalViews > 0 ? (item.views / totalViews) * 100 : 0;
-              return (
-                <tr key={index} style={{ borderBottom: index < data.length - 1 ? '1px solid #f0f0f0' : 'none' }}>
-                  <td style={{ padding: '10px 8px' }}>{item.page}</td>
-                  <td style={{ padding: '10px 8px', textAlign: 'right', fontWeight: 600 }}>{item.views}</td>
-                  <td style={{ padding: '10px 8px', textAlign: 'right', color: '#666' }}>{percentage.toFixed(1)}%</td>
-                  <td style={{ padding: '10px 8px', textAlign: 'right', color: '#666' }}>{item.avgEngagementTimeFormatted || '0:00'}</td>
-                </tr>
-              );
-            })}
-            {data.length === 0 && (
-              <tr>
-                <td colSpan={4} style={{ padding: '20px', textAlign: 'center', color: '#999' }}>
-                  No page data available
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+      <div
+        style={{
+          marginBottom: 10,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <h3
+          style={{
+            margin: 0,
+            fontSize: 14,
+            fontWeight: 'bold',
+            color: '#555',
+          }}
+        >
+          Top Pages
+        </h3>
+        <div style={{ fontSize: 12, color: '#888' }}>Records: {data.length}</div>
+      </div>
+
+      <div
+        style={{
+          border: '1px solid #eee',
+          borderRadius: 8,
+          overflow: 'hidden',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            fontWeight: 600,
+            fontSize: 13,
+            background: '#fafafa',
+            borderBottom: '1px solid #eee',
+            padding: '10px 12px',
+          }}
+        >
+          <div style={{ flex: 1, color: '#000' }}>Page</div>
+          <div style={{ width: 100, textAlign: 'right', color: '#000' }}>Visits</div>
+          <div style={{ width: 160, textAlign: 'right', color: '#000' }}>Avg Engagement Time</div>
+        </div>
+
+        <div
+          style={{
+            maxHeight: 300,
+            overflowY: 'auto',
+          }}
+        >
+          {data.length ? (
+            data.map((item, index) => (
+              <div
+                key={index}
+                style={{
+                  display: 'flex',
+                  padding: '8px 12px',
+                  borderBottom: index < data.length - 1 ? '1px solid #f5f5f5' : 'none',
+                  fontSize: 13,
+                  alignItems: 'center',
+                }}
+              >
+                <div
+                  style={{
+                    flex: 1,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}
+                  title={item.page}
+                >
+                  <span style={{ color: '#4945ff', fontWeight: 500 }}>{item.page || '/'}</span>
+                </div>
+                <div
+                  style={{
+                    width: 100,
+                    textAlign: 'right',
+                    fontWeight: 600,
+                    color: '#333',
+                  }}
+                >
+                  {item.views}
+                </div>
+                <div
+                  style={{
+                    width: 160,
+                    textAlign: 'right',
+                    fontWeight: 600,
+                    color: '#333',
+                  }}
+                >
+                  {formatTime(item.avgEngagementTime)}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div
+              style={{
+                padding: 20,
+                textAlign: 'center',
+                color: '#999',
+              }}
+            >
+              No Data
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -374,7 +613,7 @@ const Title = ({ children }: { children: React.ReactNode }) => (
   </h2>
 );
 
-const BigNumber = ({ children }: { children: React.ReactNode }) => <p style={{ fontWeight: 'bold', fontSize: 22, margin: 0 }}>{children}</p>;
+const BigNumber = ({ children }: { children: React.ReactNode }) => <p style={{ fontWeight: 'bold', fontSize: 22, margin: 0, color: '#333' }}>{children}</p>;
 
 const ChipWrap = ({ children }: { children: React.ReactNode }) => <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>{children}</div>;
 
@@ -386,6 +625,7 @@ const Chip = ({ children }: { children: React.ReactNode }) => (
       borderRadius: 6,
       fontSize: 13,
       fontWeight: 600,
+      color: '#333',
     }}
   >
     {children}
@@ -424,7 +664,7 @@ const AnalyticsPage = () => {
   }, []);
 
   // ============================================
-  // FETCH FUNCTIONS - UPDATED FOR PAYLOAD
+  // FETCH FUNCTIONS
   // ============================================
 
   const getTotalVisits = async (range?: any) => {
@@ -594,7 +834,7 @@ const AnalyticsPage = () => {
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
           <div>
-            <h1 style={{ fontSize: 26, marginBottom: 6 }}>Analytics</h1>
+            <h1 style={{ fontSize: 26, marginBottom: 6, color: '#333' }}>Analytics</h1>
             <p style={{ color: '#666', margin: 0 }}>Overview of site analytics</p>
           </div>
           <DateRange onClick={handleFetchAnalytics} setStartDate={setStartDate} startDate={startDate} setEndDate={setEndDate} endDate={endDate} />
@@ -664,6 +904,7 @@ const AnalyticsPage = () => {
               borderRadius: 12,
               background: '#fff',
               boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+              height: 280,
             }}
           >
             <ColumnChart
@@ -677,10 +918,11 @@ const AnalyticsPage = () => {
 
           <div
             style={{
-              padding: 6,
+              padding: 16,
               borderRadius: 12,
               background: '#fff',
               boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+              height: 350,
             }}
           >
             <PieChart
@@ -705,9 +947,9 @@ const AnalyticsPage = () => {
         >
           <div
             style={{
-              padding: 10,
+              padding: 16,
               borderRadius: 12,
-              height: 410,
+              height: 280,
               background: '#fff',
               boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
             }}
@@ -719,7 +961,7 @@ const AnalyticsPage = () => {
             style={{
               padding: 16,
               borderRadius: 12,
-              height: 390,
+              height: 350,
               background: '#fff',
               boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
               display: 'flex',
@@ -738,7 +980,7 @@ const AnalyticsPage = () => {
               Button Clicks
             </h3>
 
-            <div style={{ overflowY: 'auto' }}>
+            <div style={{ overflowY: 'auto', flex: 1 }}>
               {buttonClicks.map((item: any, index: number) => {
                 const maxClicks = Math.max(...buttonClicks.map((b: any) => b.clicks));
                 const percentage = (item.clicks / maxClicks) * 100;
@@ -753,8 +995,8 @@ const AnalyticsPage = () => {
                         fontSize: 14,
                       }}
                     >
-                      <p style={{ margin: 0 }}>{item.button || 'Unknown'}</p>
-                      <p style={{ margin: 0 }}>{item.clicks}</p>
+                      <p style={{ margin: 0, color: '#333' }}>{item.button || 'Unknown'}</p>
+                      <p style={{ margin: 0, color: '#333' }}>{item.clicks}</p>
                     </div>
 
                     <div
@@ -769,7 +1011,7 @@ const AnalyticsPage = () => {
                           width: `${percentage}%`,
                           height: '100%',
                           borderRadius: 6,
-                          background: '#3b82f6',
+                          background: '#4945ff',
                         }}
                       />
                     </div>
