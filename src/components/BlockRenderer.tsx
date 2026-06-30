@@ -1,3 +1,4 @@
+import { BlockErrorBoundary } from './BlockErrorBoundary';
 import { CardsBlockUI } from './blocks/CardsBlockUI';
 import { ContentWithImageBlock } from './blocks/ContentWithImageBlocksUi';
 import { CTABlockUI } from './blocks/CTABlockUI';
@@ -31,58 +32,142 @@ export const BlockRenderer = ({ blocks, tenant }: Props) => {
       {blocks?.map((block, index) => {
         switch (block?.blockType) {
           case 'contentWithImage':
-            return <ContentWithImageBlock key={index} data={block} tenant={tenant} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="contentWithImage" blockIndex={index}>
+                <ContentWithImageBlock data={block} tenant={tenant} />
+              </BlockErrorBoundary>
+            );
 
           case 'cards':
-            return <CardsBlockUI key={index} data={block} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="cards" blockIndex={index}>
+                <CardsBlockUI data={block} />
+              </BlockErrorBoundary>
+            );
 
           case 'mediaBlockcontent':
-            return <ContentImageComponentUI key={index} data={block} tenant={tenant} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="mediaBlockcontent" blockIndex={index}>
+                <ContentImageComponentUI data={block} tenant={tenant} />
+              </BlockErrorBoundary>
+            );
 
           case 'cardsWithIcons':
-            return <CardsWithIconsBlockUI key={index} data={block} tenant={tenant} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="cardsWithIcons" blockIndex={index}>
+                <CardsWithIconsBlockUI data={block} tenant={tenant} />
+              </BlockErrorBoundary>
+            );
 
           case 'verticleHoverCardsBlock':
-            return <VerticleHoverCardsUI key={index} data={block} tenant={tenant} />;
+            return (
+              <BlockErrorBoundary
+                key={index}
+                blockType="verticleHoverCardsBlock"
+                blockIndex={index}
+              >
+                <VerticleHoverCardsUI data={block} tenant={tenant} />
+              </BlockErrorBoundary>
+            );
 
           case 'mapInfoBlock':
-            return <MapInfoBlockUI key={index} data={block} tenant={tenant} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="mapInfoBlock" blockIndex={index}>
+                <MapInfoBlockUI data={block} tenant={tenant} />
+              </BlockErrorBoundary>
+            );
 
           case 'carouselBlock':
-            return <CarouselBlockUI key={index} data={block} tenant={tenant} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="carouselBlock" blockIndex={index}>
+                <CarouselBlockUI data={block} tenant={tenant} />
+              </BlockErrorBoundary>
+            );
+
           case 'teamCarousalBlock':
-            return <TeamCarousalUI key={index} data={block} tenant={tenant} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="teamCarousalBlock" blockIndex={index}>
+                <TeamCarousalUI data={block} tenant={tenant} />
+              </BlockErrorBoundary>
+            );
 
           case 'iconFeatureBlock':
-            return <IconFeatureBoxUI key={index} data={block} tenant={tenant} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="iconFeatureBlock" blockIndex={index}>
+                <IconFeatureBoxUI data={block} tenant={tenant} />
+              </BlockErrorBoundary>
+            );
 
           case 'stepPocessBlock':
-            return <StepProcessUI key={index} data={block} tenant={tenant} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="stepPocessBlock" blockIndex={index}>
+                <StepProcessUI data={block} tenant={tenant} />
+              </BlockErrorBoundary>
+            );
 
           case 'heroLeftLayoutBlock':
-            return <HeroLeftLayoutUI key={index} data={block} tenant={tenant} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="heroLeftLayoutBlock" blockIndex={index}>
+                <HeroLeftLayoutUI data={block} tenant={tenant} />
+              </BlockErrorBoundary>
+            );
 
           case 'list':
-            return <ListBlockUI key={index} data={block} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="list" blockIndex={index}>
+                <ListBlockUI data={block} />
+              </BlockErrorBoundary>
+            );
 
           case 'faqBlock':
-            return <FAQComponentUI key={index} data={block} tenant={tenant} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="faqBlock" blockIndex={index}>
+                <FAQComponentUI data={block} tenant={tenant} />
+              </BlockErrorBoundary>
+            );
 
           case 'testimonials':
-            return <TestimonialsBlockUI key={index} data={block} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="testimonials" blockIndex={index}>
+                <TestimonialsBlockUI data={block} />
+              </BlockErrorBoundary>
+            );
 
           case 'cta':
-            return <CTABlockUI key={index} data={block} tenant={tenant} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="cta" blockIndex={index}>
+                <CTABlockUI data={block} tenant={tenant} />
+              </BlockErrorBoundary>
+            );
 
           case 'text':
-            return <TextBlockUI key={index} data={block} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="text" blockIndex={index}>
+                <TextBlockUI data={block} />
+              </BlockErrorBoundary>
+            );
 
           case 'image':
-            return <ImageBlockUI key={index} data={block} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="image" blockIndex={index}>
+                <ImageBlockUI data={block} />
+              </BlockErrorBoundary>
+            );
+
           case 'hero':
-            return <HeroBlock key={index} data={block} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="hero" blockIndex={index}>
+                <HeroBlock data={block} />
+              </BlockErrorBoundary>
+            );
+
           case 'features':
-            return <FeaturesBlock key={index} {...block} />;
+            return (
+              <BlockErrorBoundary key={index} blockType="features" blockIndex={index}>
+                <FeaturesBlock {...block} />
+              </BlockErrorBoundary>
+            );
+
           default:
             return null;
         }
