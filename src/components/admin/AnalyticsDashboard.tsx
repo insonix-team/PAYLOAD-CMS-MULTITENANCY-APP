@@ -3,7 +3,7 @@
 import { ROLES } from '@/constants/AppOptions';
 import { useAuth } from '@payloadcms/ui';
 import { BarChart3, MousePointerClick } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { AnalyticsCards } from './analytics/AnalyticsCards';
 import { ColumnChart, PieChart } from './analytics/AnalyticsCharts';
 import { AnalyticsDateRange } from './analytics/AnalyticsDateRange';
@@ -95,6 +95,7 @@ const AnalyticsPage = () => {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [cities, setCities] = useState<CityData[]>([]);
   const [countriesList, setCountriesList] = useState<CountryData[]>([]);
+  const prevTenantRef = useRef<string | undefined>(undefined);
 
   useEffect(() => {
     if (!startDate && !endDate) {
@@ -333,6 +334,26 @@ const AnalyticsPage = () => {
 
   useEffect(() => {
     if (!startDate || !endDate) return;
+
+    const prev = prevTenantRef.current;
+    if (prev !== selectedTenant) {
+      setTotalVisits(0);
+      setTrafficSources([]);
+      setUsersTypes([]);
+      setUsersTrends([]);
+      setUserWithCountries([]);
+      setViewsByPages([]);
+      setButtonClicks([]);
+      setSessionDuration(0);
+      setEngagementRate(0);
+      setEngagedSessions(0);
+      setSelectedCountry(null);
+      setCities([]);
+      setCountriesList([]);
+    }
+
+    prevTenantRef.current = selectedTenant;
+
     setLoading(true);
     fetchAnalytics({ start: startDate, end: endDate }).finally(() => setLoading(false));
   }, [selectedTenant, startDate, endDate]);
