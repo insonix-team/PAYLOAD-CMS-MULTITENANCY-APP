@@ -1,5 +1,73 @@
+import crypto from 'crypto';
 import { COLOR_OPTIONS, FONT_FAMILY_OPTIONS, ROLES } from '@/constants/AppOptions';
 import { CollectionConfig } from 'payload';
+
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
+
+const GA_FIELDS = [
+  'smtpPassword',
+  'googleAnalyticsId',
+  'gaClientEmail',
+  'gaPrivateKey',
+  'gaPropertyId',
+  'gaProjectId',
+] as const;
+
+const ensureEncryptionKey = () => {
+  if (!ENCRYPTION_KEY) {
+    throw new Error('ENCRYPTION_KEY must be configured in environment variables');
+  }
+  return crypto.createHash('sha256').update(ENCRYPTION_KEY).digest();
+};
+
+const isEncryptedValue = (value: unknown): value is string =>
+  typeof value === 'string' && value.startsWith('ENC::');
+
+const encryptValue = (value: string): string => {
+  const iv = crypto.randomBytes(12);
+  const key = ensureEncryptionKey();
+  const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
+  const encrypted = Buffer.concat([cipher.update(value, 'utf8'), cipher.final()]);
+  const tag = cipher.getAuthTag();
+  return `ENC::${iv.toString('base64')}:${tag.toString('base64')}:${encrypted.toString('base64')}`;
+};
+
+const decryptValue = (value: string): string => {
+  if (!isEncryptedValue(value)) {
+    return value;
+  }
+
+  const payload = value.slice('ENC::'.length);
+  const [ivB64, tagB64, encryptedB64] = payload.split(':');
+
+  if (!ivB64 || !tagB64 || !encryptedB64) {
+    return value;
+  }
+
+  const key = ensureEncryptionKey();
+  const iv = Buffer.from(ivB64, 'base64');
+  const tag = Buffer.from(tagB64, 'base64');
+  const encrypted = Buffer.from(encryptedB64, 'base64');
+  const decipher = crypto.createDecipheriv('aes-256-gcm', key, iv);
+  decipher.setAuthTag(tag);
+  return Buffer.concat([decipher.update(encrypted), decipher.final()]).toString('utf8');
+};
+
+const encryptedFields = (data: Record<string, string>) => {
+  GA_FIELDS.forEach((field) => {
+    if (typeof data[field] === 'string' && data[field].length && !isEncryptedValue(data[field])) {
+      data[field] = encryptValue(data[field]);
+    }
+  });
+};
+
+const decryptedFields = (doc: Record<string, string>) => {
+  GA_FIELDS.forEach((field) => {
+    if (isEncryptedValue(doc[field])) {
+      doc[field] = decryptValue(doc[field]);
+    }
+  });
+};
 
 const Tenants: CollectionConfig = {
   slug: 'tenants',
@@ -185,6 +253,32 @@ const Tenants: CollectionConfig = {
     //   },
     // },
   ],
+
+  hooks: {
+    beforeChange: [
+      ({ data }) => {
+        encryptedFields(data as Record<string, string>);
+        return data;
+      },
+    ],
+    afterRead: [
+      ({ doc, req }) => {
+        decryptedFields(doc as Record<string, string>);
+
+        const isExternalApiRequest = req.url && req.url.includes('/api/');
+
+        if (isExternalApiRequest) {
+          delete doc.smtpPassword;
+          delete doc.googleAnalyticsId;
+          delete doc.gaClientEmail;
+          delete doc.gaPrivateKey;
+          delete doc.gaPropertyId;
+          delete doc.gaProjectId;
+        }
+        return doc;
+      },
+    ],
+  },
 };
 
 export default Tenants;
