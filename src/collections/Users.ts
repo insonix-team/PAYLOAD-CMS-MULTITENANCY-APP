@@ -12,10 +12,7 @@ const Users: CollectionConfig = {
     },
   },
   access: {
-    create: ({ req }) => {
-      if (!req.user) return true;
-      return !!req.user;
-    },
+    create: tenantAccess,
     read: tenantAccess,
     update: tenantAccess,
     delete: tenantAccess,

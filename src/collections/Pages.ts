@@ -100,6 +100,15 @@ export const Pages: CollectionConfig = {
   },
 
   access: {
+    create: ({ req: { user } }) => {
+      if (!user) return false;
+      if (user.role === ROLES.SUPERADMIN) return true;
+      return {
+        tenant: {
+          equals: typeof user.tenant === 'object' ? user?.tenant?.id : user.tenant,
+        },
+      };
+    },
     read: ({ req: { user } }) => {
       if (!user) {
         return false;
