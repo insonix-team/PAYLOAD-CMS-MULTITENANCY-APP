@@ -2,17 +2,17 @@ import { FooterColumns } from '@/blocks/footers/FooterColumns';
 import { FooterNewsletter } from '@/blocks/footers/FooterNewsletter';
 import { FooterSimple } from '@/blocks/footers/FooterSimple';
 import { ROLES } from '@/constants/AppOptions';
-import { superAdminAccess, tenantAccess } from '@/lib/utils';
+import { tenantAccess } from '@/lib/utils';
 import { CollectionConfig, CollectionSlug } from 'payload';
 
 const Footers: CollectionConfig = {
   slug: 'footers',
   admin: { useAsTitle: 'name' },
   access: {
-    create: superAdminAccess,
+    create: tenantAccess,
     read: tenantAccess,
-    update: superAdminAccess,
-    delete: superAdminAccess,
+    update: tenantAccess,
+    delete: tenantAccess,
   },
 
   hooks: {

@@ -14,7 +14,7 @@ export default function CustomNav() {
 
   const navItems = [
     ...(user?.role === ROLES.SUPERADMIN || user?.role === ROLES.TENANT
-      ? [{ href: '/collections/users', label: 'Users' }]
+      ? [{ href: '/custom-dashboard', label: 'Analytics' }]
       : []),
     { href: '/collections/pages', label: 'Pages' },
     { href: '/collections/media', label: 'Media' },

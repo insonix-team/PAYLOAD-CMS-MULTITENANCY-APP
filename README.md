@@ -1,67 +1,76 @@
-# Payload Blank Template
+# Multi-Tenant CMS Platform – Access Control & Application Flow
 
-This template comes configured with the bare minimum to get started on anything you need.
+## Overview
 
-## Quick start
+This application follows a **multi-tenant architecture** where a single platform manages multiple independent websites (**tenants**) under one system.
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+The platform supports three distinct user roles, each with clearly defined permissions, ownership boundaries, and access rules to ensure security, scalability, and data isolation.
 
-## Quick Start - local setup
+```ts
+Roles = ['SUPERADMIN', 'TENANT', 'EDITOR'];
+```
 
-To spin up this template locally, follow these steps:
+---
 
-### Clone
+## Architecture & Roles
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+### SUPERADMIN
 
-### Development
+The platform owner with global access across all tenants.
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+Responsibilities:
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+- Manage tenants
+- Manage users
+- Upload and manage shared media
+- Create and assign templates
+- Control headers, footers, and pages
+- View analytics for any tenant
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+### TENANT
 
-#### Docker (Optional)
+Represents an individual website/client.
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+Responsibilities:
 
-To do so, follow these steps:
+- Manage own website configuration
+- Manage internal editors
+- Manage own pages/content
+- Use templates created by Super Admin
+- Access only own analytics
 
-- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+### EDITOR
 
-## How it works
+Internal content manager for a tenant.
 
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
+Responsibilities:
 
-### Collections
+- Manage website content
+- Upload media
+- Update headers and footers
+- Create and edit pages
 
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
+---
 
-- #### Users (Authentication)
+## Permission Matrix
 
-  Users are auth-enabled collections that have access to the admin panel.
+| Module    | SUPERADMIN  | TENANT               | EDITOR                   |
+| --------- | ----------- | -------------------- | ------------------------ |
+| Users     | CRUD        | CRUD (Own Editors)   | ❌                       |
+| Media     | CRUD        | CRUD + Read SA Media | CRUD (Tenant + SA Media) |
+| Tenants   | CRUD        | Read/Update Own      | ❌                       |
+| Pages     | CRUD        | CRUD (Assigned)      | CRUD (Tenant Only)       |
+| Header    | CRUD        | CRUD (Assigned)      | CRUD (Tenant Only)       |
+| Footer    | CRUD        | CRUD (Assigned)      | CRUD (Tenant Only)       |
+| Templates | CRUD        | Read / Use           | Read                     |
+| Analytics | All Tenants | Own Only             | ❌                       |
 
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/3.x/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
+---
 
-- #### Media
+## Security Rules
 
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
-
-### Docker
-
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
-
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
-
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
-
-## Questions
-
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+- Validate role on every API
+- Validate tenant ownership
+- Editors never access other tenants
+- Templates are read-only for tenants/editors
+- Super Admin bypasses tenant restrictions
