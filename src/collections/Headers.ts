@@ -4,7 +4,7 @@ import { HeaderCentered } from '@/blocks/headers/HeaderCentered';
 import { HeaderCTA } from '@/blocks/headers/HeaderCTA';
 import { HeaderSimple } from '@/blocks/headers/HeaderSimple';
 import { ROLES } from '@/constants/AppOptions';
-import { superAdminAccess, tenantAccess } from '@/lib/utils';
+import { tenantAccess } from '@/lib/utils';
 
 const Headers: CollectionConfig = {
   slug: 'headers',
@@ -14,10 +14,10 @@ const Headers: CollectionConfig = {
   },
 
   access: {
-    create: superAdminAccess,
+    create: tenantAccess,
     read: tenantAccess,
-    update: superAdminAccess,
-    delete: superAdminAccess,
+    update: tenantAccess,
+    delete: tenantAccess,
   },
 
   hooks: {

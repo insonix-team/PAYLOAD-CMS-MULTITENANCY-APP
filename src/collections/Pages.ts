@@ -14,6 +14,7 @@ import { CollectionSlug, CollectionConfig } from 'payload';
 import { HeroLeftLayoutBlock } from '../blocks/HeroLeftLayoutBlock';
 import { IconFeatureBlock } from '@/blocks/IconFeatureBlock';
 import { StepPocessBlock } from '@/blocks/StepPocessBlock';
+import { tenantAccess } from '@/lib/utils';
 
 // ========== INTERFACES ==========
 
@@ -100,64 +101,11 @@ export const Pages: CollectionConfig = {
   },
 
   access: {
-    create: ({ req: { user } }) => {
-      if (!user) return false;
-      if (user.role === ROLES.SUPERADMIN) return true;
-      return {
-        tenant: {
-          equals: typeof user.tenant === 'object' ? user?.tenant?.id : user.tenant,
-        },
-      };
-    },
-    read: ({ req: { user } }) => {
-      if (!user) {
-        return false;
-      }
-
-      if (user.role === ROLES.SUPERADMIN) {
-        return true;
-      }
-
-      return {
-        tenant: {
-          equals: typeof user.tenant === 'object' ? user?.tenant?.id : user.tenant,
-        },
-      };
-    },
-
-    update: ({ req: { user } }) => {
-      if (!user) {
-        return false;
-      }
-
-      if (user.role === ROLES.SUPERADMIN) {
-        return true;
-      }
-
-      return {
-        tenant: {
-          equals: typeof user.tenant === 'object' ? user?.tenant?.id : user.tenant,
-        },
-      };
-    },
-
-    delete: ({ req: { user } }) => {
-      if (!user) {
-        return false;
-      }
-
-      if (user.role === ROLES.SUPERADMIN) {
-        return true;
-      }
-
-      return {
-        tenant: {
-          equals: typeof user.tenant === 'object' ? user?.tenant?.id : user.tenant,
-        },
-      };
-    },
+    create: tenantAccess,
+    read: tenantAccess,
+    update: tenantAccess,
+    delete: tenantAccess,
   },
-
   admin: {
     livePreview: {
       url: async ({ data, req }) => {
