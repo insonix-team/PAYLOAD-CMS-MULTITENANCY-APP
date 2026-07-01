@@ -30,6 +30,10 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     components: {
+      graphics: {
+        Logo: '@/components/admin/Logo',
+        Icon: '@/components/admin/Icon',
+      },
       header: ['@/components/CustomNav'],
       Nav: '@/components/CustomSidebar',
       views: {
