@@ -1,6 +1,7 @@
 import { ROLES } from '@/constants/AppOptions';
 import { tenantAccess } from '@/lib/utils';
 import { CollectionConfig, CollectionSlug } from 'payload';
+import { APIError } from 'payload';
 
 const Users: CollectionConfig = {
   slug: 'users',
@@ -39,6 +40,20 @@ const Users: CollectionConfig = {
         }
 
         return data;
+      },
+    ],
+    beforeDelete: [
+      async ({ req, id }) => {
+        const user = req.user;
+        if (!user) {
+          throw new APIError('Not authenticated');
+        }
+        if (user?.id === id) {
+          throw new APIError('You cannot delete your own account');
+        }
+        if (user?.role === ROLES.SUPERADMIN) {
+          return;
+        }
       },
     ],
   },
