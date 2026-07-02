@@ -19,7 +19,6 @@ type Props = {
     accessibilityFeatures: boolean;
     parkingAvailable: boolean;
   };
-  tenant?: string;
 };
 
 export default function MapInfoBlockUI({ data }: Props) {

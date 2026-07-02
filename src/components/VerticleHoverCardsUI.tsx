@@ -25,7 +25,6 @@ type Props = {
     sectionBackground?: any;
     headingColor?: any;
   };
-  tenant?: string;
 };
 
 const gridCols: Record<2 | 3 | 4, string> = {

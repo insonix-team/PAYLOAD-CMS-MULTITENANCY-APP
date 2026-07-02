@@ -21,7 +21,6 @@ type Props = {
     backgroundColor?: 'bg-card' | 'bg-white';
     padding?: 'sm' | 'md' | 'lg';
   };
-  tenant?: string;
 };
 
 export const ContentImageComponentUI = ({ data }: Props) => {

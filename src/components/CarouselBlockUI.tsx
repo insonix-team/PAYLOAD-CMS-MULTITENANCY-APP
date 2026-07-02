@@ -35,7 +35,6 @@ type Props = {
     delay?: number | null;
     id?: string | null;
   };
-  tenant?: string;
 };
 export const CarouselBlockUI = ({ data }: Props) => {
   const { slides, autoplay, delay, slidesPerMobile, slidesPerTablet, slidesPerDesktop } = data;

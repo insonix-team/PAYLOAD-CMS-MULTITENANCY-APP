@@ -22,7 +22,6 @@ type Props = {
     };
     cards: Card[];
   };
-  tenant?: string;
 };
 
 export default function StepProcessUI({ data }: Props) {
