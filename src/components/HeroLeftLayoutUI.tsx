@@ -23,7 +23,6 @@ type Props = {
     description?: string;
     buttons?: ButtonType[];
   };
-  tenant?: string;
 };
 export const HeroLeftLayoutUI = ({ data }: Props) => {
   const {

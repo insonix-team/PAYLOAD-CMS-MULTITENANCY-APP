@@ -50,7 +50,6 @@ type Props = {
     delay?: number | null;
     id?: string | null;
   };
-  tenant?: string;
 };
 
 export const TeamCarousalUI = ({ data }: Props) => {

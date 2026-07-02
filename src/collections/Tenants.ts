@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import { COLOR_OPTIONS, FONT_FAMILY_OPTIONS, ROLES } from '@/constants/AppOptions';
 import { CollectionConfig } from 'payload';
+import { superAdminAccess, tenantAccess } from '@/lib/utils';
 
 const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
 
@@ -80,51 +81,10 @@ const Tenants: CollectionConfig = {
   },
 
   access: {
-    read: ({ req: { user } }) => {
-      if (!user) return false;
-
-      // Super admin can see all
-      if (user.role === ROLES.SUPERADMIN) return true;
-
-      // Tenant admin can only see their own
-      if (user.role === ROLES.TENANT) {
-        return {
-          id: {
-            equals: typeof user.tenant === 'object' ? user.tenant?.id : user.tenant,
-          },
-        };
-      }
-
-      return false;
-    },
-
-    create: ({ req: { user } }) => {
-      // Only super admin can create tenants
-      return user?.role === ROLES.SUPERADMIN;
-    },
-
-    update: ({ req: { user } }) => {
-      if (!user) return false;
-
-      // Super admin can update any
-      if (user.role === ROLES.SUPERADMIN) return true;
-
-      // Tenant admin can only update their own
-      if (user.role === ROLES.TENANT) {
-        return {
-          id: {
-            equals: typeof user.tenant === 'object' ? user.tenant?.id : user.tenant,
-          },
-        };
-      }
-
-      return false;
-    },
-
-    delete: ({ req: { user } }) => {
-      // Only super admin can delete
-      return user?.role === ROLES.SUPERADMIN;
-    },
+    read: tenantAccess,
+    create: superAdminAccess,
+    update: tenantAccess,
+    delete: superAdminAccess,
   },
 
   fields: [

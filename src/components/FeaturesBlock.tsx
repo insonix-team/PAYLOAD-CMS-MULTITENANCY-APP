@@ -7,17 +7,16 @@ interface Feature {
   description: string;
 }
 
-interface FeaturesBlockProps {
-  blockType: 'features';
-  title?: string;
-  features?: Feature[];
-  columns?: '2' | '3' | '4';
-}
+type FeaturesBlockProps = {
+  data: {
+    title?: string;
+    features?: Feature[];
+    columns?: '2' | '3' | '4';
+  };
+};
 
 export const FeaturesBlock: React.FC<FeaturesBlockProps> = ({
-  title,
-  features = [],
-  columns = '3',
+  data: { title, features = [], columns = '3' },
 }) => {
   if (features.length === 0) return null;
 
