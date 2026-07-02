@@ -289,8 +289,8 @@ export const Pages: CollectionConfig = {
       required: true,
       admin: {
         position: 'sidebar',
-        condition: (_data, _siblingData, user) => {
-          return (user as { role?: string })?.role === ROLES.SUPERADMIN;
+        condition: (_data, _siblingData, { user }) => {
+          return user?.role === ROLES.SUPERADMIN;
         },
       },
       defaultValue: ({ user }: { user?: User }) => {
